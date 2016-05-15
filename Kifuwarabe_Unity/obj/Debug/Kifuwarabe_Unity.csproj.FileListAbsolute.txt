@@ -1,0 +1,6 @@
+E:\Muzudho\Igo\Kifuwarabe_Unity\Kifuwarabe_Unity\bin\Debug\Kifuwarabe_Unity.exe.config
+E:\Muzudho\Igo\Kifuwarabe_Unity\Kifuwarabe_Unity\bin\Debug\Kifuwarabe_Unity.exe
+E:\Muzudho\Igo\Kifuwarabe_Unity\Kifuwarabe_Unity\bin\Debug\Kifuwarabe_Unity.pdb
+E:\Muzudho\Igo\Kifuwarabe_Unity\Kifuwarabe_Unity\obj\Debug\Kifuwarabe_Unity.csprojResolveAssemblyReference.cache
+E:\Muzudho\Igo\Kifuwarabe_Unity\Kifuwarabe_Unity\obj\Debug\Kifuwarabe_Unity.exe
+E:\Muzudho\Igo\Kifuwarabe_Unity\Kifuwarabe_Unity\obj\Debug\Kifuwarabe_Unity.pdb
