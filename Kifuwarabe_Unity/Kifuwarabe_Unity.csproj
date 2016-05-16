@@ -43,16 +43,63 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="header\n700_radio___\n700_RadioRobbot.cs" />
+    <Compile Include="header\n090_core____\n090_100_core.h.cs" />
+    <Compile Include="header\n190_board___\n190_050_abstractBoard.h.cs" />
+    <Compile Include="header\n190_board___\n190_100_board.h.cs" />
+    <Compile Include="header\n190_board___\n190_150_liberty.h.cs" />
+    <Compile Include="header\n190_board___\n190_200_libertyOfNodes.h.cs" />
+    <Compile Include="header\n190_board___\n190_250_markingBoard.h.cs" />
+    <Compile Include="header\n400_robotArm\n400_100_move.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_000_noHit.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_050_noHitSuicide.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_100_noHitOwnEye.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_110_noHitMouth.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_120_noHitHasinohoBocchi.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_000_hit.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_050_hitRandom.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_100_hitTuke.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_150_hitAte.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_200_hitNobiSaver.h.cs" />
+    <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_250_hitGnugo12Random.h.cs" />
+    <Compile Include="header\n700_think___\nn800_best____\n700_800_100_evaluation.h.cs" />
+    <Compile Include="header\n700_think___\nn800_best____\n700_800_200_think.h.cs" />
+    <Compile Include="header\n750_explain_\n750_100_figureType.h.cs" />
+    <Compile Include="header\n800_scene___\n800_500_endgame.h.cs" />
+    <Compile Include="header\n930_print___\n930_500_boardView.h.cs" />
+    <Compile Include="header\n930_print___\n930_520_libertyOfNodesView.h.cs" />
+    <Compile Include="header\n950_main____\n950_100_cppBoard.h.cs" />
+    <Compile Include="header\n950_main____\n950_500_cgfThink.h.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="source\n090_core____\n090_100_core.cpp.cs" />
+    <Compile Include="source\n190_board___\n190_050_abstractBoard.cpp.cs" />
+    <Compile Include="source\n190_board___\n190_100_board.cpp.cs" />
+    <Compile Include="source\n190_board___\n190_150_liberty.cpp.cs" />
+    <Compile Include="source\n190_board___\n190_200_libertyOfNodes.cpp.cs" />
+    <Compile Include="source\n190_board___\n190_250_markingBoard.cpp.cs" />
+    <Compile Include="source\n400_robotArm\n400_100_move.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_000_noHit.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_050_noHitSuicide.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_100_noHitOwnEye.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_110_noHitMouth.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn100_noHit___\n700_400_100_120_noHitHasinohoBocchi.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_000_hit.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_050_hitRandom.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_100_hitTuke.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_150_hitAte.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_200_hitNobiSaver.cpp.cs" />
+    <Compile Include="source\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_250_hitGnugo12Random.cpp.cs" />
+    <Compile Include="source\n700_think___\nn800_best____\n700_800_100_evaluation.cpp.cs" />
+    <Compile Include="source\n700_think___\nn800_best____\n700_800_200_think.cpp.cs" />
+    <Compile Include="source\n800_scene___\n800_500_endgame.cpp.cs" />
+    <Compile Include="source\n930_view____\n930_500_boardView.cpp.cs" />
+    <Compile Include="source\n930_view____\n930_520_libertyOfNodesView.cpp.cs" />
+    <Compile Include="source\n950_main____\n950_500_cgfThink.cpp.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="source\" />
-  </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.
