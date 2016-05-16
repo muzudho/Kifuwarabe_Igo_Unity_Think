@@ -1,0 +1,114 @@
+────────────────────────────────────────
+                                   ＡＰＩ一覧                         2016/05/17
+                                                                       高橋 智史
+────────────────────────────────────────
+
+
+解説は別ドキュメント参照。メソッドはアルファベット順。
+
+
+
+KifuwarabeThink クラス
+
+    （生成例）
+     KifuwarabeThink kwThink = new KifuwarabeThink();
+
+
+    【C】
+
+        ────────────────────────────────────
+
+        bool CanMove(
+                        int     board[]     ,
+                        bool    blackTurn   ,
+                        int     boardSize   
+                    )
+
+            （概要）
+            着手可能点かを調べる。
+
+            （呼出例）
+            bool canMove = kwThink.CanMove(
+                                            board   ,
+                                            true    ,
+                                            19
+                                          );
+
+        ────────────────────────────────────
+
+    【D】
+
+        ────────────────────────────────────
+
+        void DoBegin( )
+
+            （概要）
+            KifuwarabeThink インスタンスを使用する前（例えば対局開始時）に
+            １回だけ呼び出す必要がある。
+
+            （呼出例）
+            kwThink.DoBegin( );
+
+        ────────────────────────────────────
+
+        int DoBestmove(
+                            int    initBoard    []   ,
+                            int    kifu         [][3],
+                            int    tesuu             ,
+                            bool   blackTurn         ,
+                            int    boardSize         ,
+                            double komi              ,
+                            int    endgameType       ,
+                        ref int    endgameBoard []
+                      )
+
+            （概要）
+            次の指し手を求める。
+
+            （呼出例）
+            int sq = kwThink.DoBestmove( ～ );
+
+        ────────────────────────────────────
+
+        void DoEnd( )
+
+            （概要）
+            KifuwarabeThink インスタンスの使用終了時（例えば対局終了時）に
+            １回だけ呼び出す必要がある。
+
+            （呼出例）
+            kwThink.DoEnd( );
+
+        ────────────────────────────────────
+
+        void SetPause(
+                            bool    isPause
+                    )
+
+            （概要）
+            長考の一時停止、または再開。
+
+            （呼出例）
+            kwThink.SetPause( true );            // 一時停止するとき
+            kwThink.SetPause( false );           // 再開    するとき
+
+        ────────────────────────────────────
+
+    【I】
+
+        ────────────────────────────────────
+
+        bool IsPause( )
+
+            （概要）
+            一時停止／再開  の状態確認。
+
+            （呼出例）
+            bool isPause = kwThink.IsPause( );  // 真なら一時停止中、
+                                                // 偽なら思考前、思考中、
+                                                //       思考終了後のいずれか。
+
+        ────────────────────────────────────
+
+
+以上
