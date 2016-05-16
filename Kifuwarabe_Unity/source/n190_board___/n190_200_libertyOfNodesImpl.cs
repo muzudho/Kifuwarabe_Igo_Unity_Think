@@ -1,11 +1,6 @@
-﻿using n190_board___.Board;
-using n190_board___.Liberty;
-using n190_board___.LibertyOfNodes;
-
-
-namespace n190_board___
+﻿namespace n190_board___
 {
-    public class LibertyOfNodesImpl : LibertyOfNodes
+    public class LibertyOfNodesImpl : AbstractBoard, LibertyOfNodes
     {
         public LibertyOfNodes()
         {
@@ -15,22 +10,22 @@ namespace n190_board___
         {
         }
 
-        public void Initialize(Board* pBoard)
+        public void Initialize(Board board)
         {
-            this->SetSize(pBoard->GetSize());
+            this.SetSize(board.GetSize());
 
             // 枠を 0 に初期化。
-            this->ForeachAllNodesOfWaku([this](int node, bool & isBreak) {
+            this.ForeachAllNodesOfWaku((int node, ref bool isBreak)=> {
                 // 呼吸点の数を覚えておく碁盤です。
-                this->SetValue(node, 0);
+                this.SetValue(node, 0);
             });
 
-            pBoard->ForeachAllNodesWithoutWaku([this, &pBoard](int node, bool & isBreak) {
+            board.ForeachAllNodesWithoutWaku((int node, ref bool isBreak)=> {
                 Liberty liberty;
-                liberty.Count(node, pBoard->ValueOf(node), pBoard);
+                liberty.Count(node, board.ValueOf(node), board);
 
                 // 呼吸点の数を覚えておく碁盤です。
-                this->SetValue(node, liberty.liberty);
+                this.SetValue(node, liberty.liberty);
             });
         }
     }

@@ -1,6 +1,5 @@
-﻿using n190_board___.Liberty;
-using n190_board___.LibertyOfNodes;
-using n700_think___.nn400_tactics_.nnn200_hit_____.HitNobiSaver;
+﻿using n190_board___;//.Liberty;.LibertyOfNodes;
+//using n700_think___.nn400_tactics_.nnn200_hit_____.HitNobiSaver;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____
@@ -8,7 +7,6 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
     public class HitNobiSaverImpl : HitNobiSaver
     {
         public int Evaluate(
-            Core core,
             int color,
             int node,
             Board* pBoard,
@@ -20,10 +18,10 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 
             // 石を置く前の、上、右、下、左　にある自分の石（または連）の呼吸点の数の合計。
             int currentAdjLibertySum = 0;
-            pLibertyOfNodes->ForeachArroundNodes(node, [&pBoard, &pLibertyOfNodes, &currentAdjLibertySum, color](int adjNode, bool & isBreak) {
-                if (pBoard->ValueOf(adjNode) == color)//自分の石
+            pLibertyOfNodes.ForeachArroundNodes(node, [&pBoard, &pLibertyOfNodes, &currentAdjLibertySum, color](int adjNode, bool & isBreak) {
+                if (pBoard.ValueOf(adjNode) == color)//自分の石
                 {
-                    currentAdjLibertySum += pLibertyOfNodes->ValueOf(adjNode);
+                    currentAdjLibertySum += pLibertyOfNodes.ValueOf(adjNode);
                 }
             });
 

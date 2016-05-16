@@ -1,4 +1,4 @@
-﻿using n190_board___.Board;
+﻿using n190_board___;//.Board;
 
 
 namespace n800_scene___
@@ -18,29 +18,5 @@ namespace n800_scene___
         GTP_WHITE_TERRITORY,    // 3: 白地
         GTP_BLACK_TERRITORY,    // 4: 黒地
         GTP_DAME                // 5: ダメ
-    };
-
-
-    public interface Endgame {
-
-
-        // 終局処理（サンプルでは簡単な判断で死石と地の判定をしています）
-        static int EndgameStatus(
-            int arr_endgameBoard[], // 終局図の盤上の石の色
-            Board* pBoard
-        );
-
-        // 図形を描く
-        static int EndgameDrawFigure(
-            int arr_endgameBoard[],
-            Board* pBoard
-            );
-
-        // 数値を書く(0は表示されない)
-        static int EndgameDrawNumber(
-            int arr_endgameBoard[],
-            Board* pBoard
-            );
-    };
-
+    }
 }

@@ -1,4 +1,4 @@
-﻿using n700_think___.nn400_tactics_.nnn200_hit_____.Hit;
+﻿using n700_think___.nn400_tactics_.nnn200_hit_____;//.Hit;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____
@@ -8,7 +8,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
         public Hit()
         {
 
-            this->unuse = 0;
+            this.unuse = 0;
         }
     }
 }

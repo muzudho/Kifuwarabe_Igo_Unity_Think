@@ -1,7 +1,5 @@
-﻿//# include <windows.h>								// rand() 等を使用するために。
-using n190_board___.Board;
-using n190_board___.Liberty;
-using n700_think___.nn400_tactics_.nnn200_hit_____.HitGnugo12Random;
+﻿using n190_board___;//.Board;.Liberty;
+//using n700_think___.nn400_tactics_.nnn200_hit_____.HitGnugo12Random;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____
@@ -9,15 +7,15 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
     public class HitGnugo12RandomImpl : HitGnugo12Random
     {
         int Evaluate(
-            int color,
-            int node,
-            Board* pBoard
+            int         color,
+            int         node,
+            Board       pBoard
         ){
             int score = 0;
 
 # ifndef RANDOM_MOVE_ONLY
 
-            int boardSize = pBoard->GetSize();
+            int boardSize = pBoard.GetSize();
             if (boardSize < 9)
             {
                 // ９路盤より小さいものは対象外。

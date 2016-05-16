@@ -1,26 +1,15 @@
-﻿using n190_board___.Board;
+﻿//using n190_board___.Board;
 
 
 namespace n190_board___
 {
     public interface Liberty {
 
-        // 既にこの石を検索した場合は1
-        int checkedBoard[BOARD_MAX];
-
-        // 連のリバティ（石の呼吸点）の数(再帰関数で使う)
-        int liberty;
-
-        // 隣接する（１個あるいは連の）石の数(再帰関数で使う)
-        int renIshi;
-
-        Liberty();
-
         // 位置 node におけるリバティ（石の呼吸点）の数と石の数を計算。結果は liberty 変数に格納。
         void Count(
             int node,
             int color,
-            Board* pBoard
+            Board board
         );
 
         // リバティ（石の呼吸点）と石の数える再帰関数
@@ -28,7 +17,15 @@ namespace n190_board___
         void CountElement(
             int tNode,
             int color,
-            Board* pBoard
+            Board board
         );
+
+        //────────────────────────────────────────────────────────────────────────────────
+        // 呼吸点
+        //────────────────────────────────────────────────────────────────────────────────
+        int GetLiberty();
+        void SetLiberty(int value);
+        void IncreaseLiberty();
+
     }
 }

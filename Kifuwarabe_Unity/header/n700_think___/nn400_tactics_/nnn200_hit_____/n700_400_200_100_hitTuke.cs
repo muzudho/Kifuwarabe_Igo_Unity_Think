@@ -1,9 +1,8 @@
-﻿using n190_board___.Board;
-using n190_board___.Liberty;
-using n700_think___.nn400_tactics_.nnn200_hit_____.Hit;
+﻿using n190_board___;//.Board;.Liberty;
+using n700_think___.nn400_tactics_.nnn200_hit_____;//.Hit;
 
 
-namespace n700_think___.nn400_tactics_.nnn200_noHit___
+namespace n700_think___.nn400_tactics_.nnn200_hit_____
 {
     // _____
     // _ooo_
@@ -19,14 +18,14 @@ namespace n700_think___.nn400_tactics_.nnn200_noHit___
     // ツケようとします。
     public interface HitTuke : Hit {
 
-        HitTuke();
+        //HitTuke();
 
         // 評価値を出します。
         int Evaluate(
-		    int		invColor,
-		    int		node,
-		    Liberty liberties[4],
-		    Board*	pBoard
+		    int		    invColor,
+		    int		    node,
+		    Liberty[]   liberties,//[4]
+            Board 	    board
 		);
     }
 }

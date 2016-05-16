@@ -1,22 +1,24 @@
-﻿//# include <tchar.h>		// Unicode対応の _T() 関数を使用するために。
-using n090_core____.Core;
-using n930_print___.LibertyOfNodesView;
+﻿using n190_board___;
 
 
 namespace n930_view____
 {
-    public class LibertyOfNodesViewImpl : LibertyOfNodesView
+    public class LibertyOfNodesViewImpl
     {
-        void PrintBoard(Core core, LibertyOfNodes* pLibertyOfNodes)
+        /// <summary>
+        /// 現在の盤面を表示
+        /// </summary>
+        /// <param name="libertyOfNodes"></param>
+        public static void PrintBoard(LibertyOfNodes libertyOfNodes)
         {
-            pLibertyOfNodes->ForeachAllXyWithWaku([&core, &pLibertyOfNodes](int x, int y, bool & isBreak) {
-                int node = Board::ConvertToNode(x, y);
+            libertyOfNodes.ForeachAllXyWithWaku((int x, int y, ref bool isBreak) =>{
+                int node = AbstractBoard.ConvertToNode(x, y);
 
-                core.PRT(_T("%2d"), pLibertyOfNodes->ValueOf(node));
+                System.Console.WriteLine(string.Format("%2d", libertyOfNodes.ValueOf(node)));
 
-                if (x == pLibertyOfNodes->GetSize() + 1)
+                if (x == libertyOfNodes.GetSize() + 1)
                 {
-                    core.PRT(_T("\n"));
+                    System.Console.WriteLine(string.Format("\n"));
                 }
             });
         }

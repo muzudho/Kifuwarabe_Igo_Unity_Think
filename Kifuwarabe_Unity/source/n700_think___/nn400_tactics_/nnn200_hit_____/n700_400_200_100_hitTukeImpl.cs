@@ -1,6 +1,5 @@
-﻿using n190_board___.Board;
-using n190_board___.Liberty;
-using n700_think___.nn400_tactics_.nnn200_hit_____.HitTuke;
+﻿using n190_board___;//.Board;.Liberty;
+using n700_think___.nn400_tactics_.nnn200_hit_____;//.HitTuke;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____
@@ -12,18 +11,18 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
         }
 
         public int Evaluate(
-            int invColor,
-            int node,
-            Liberty liberties[4],
-            Board* pBoard
+            int         invColor,
+            int         node,
+            Liberty[]   liberties,//[4]
+            Board       pBoard
         ){
             int score = 0;
 
 # ifndef RANDOM_MOVE_ONLY
 # ifdef ENABLE_MOVE_ATTACK
             // 評価値の計算（４方向分繰り返す）
-            pBoard->ForeachArroundDirAndNodes(node, [&pBoard, &liberties, &score, invColor](int iDir, int adjNode, bool & isBreak) {
-                int adjColor = pBoard->ValueOf(adjNode);        // その色
+            pBoard.ForeachArroundDirAndNodes(node, [&pBoard, &liberties, &score, invColor](int iDir, int adjNode, bool & isBreak) {
+                int adjColor = pBoard.ValueOf(adjNode);        // その色
 
                 score +=
                     (adjColor == invColor)      // 隣の石

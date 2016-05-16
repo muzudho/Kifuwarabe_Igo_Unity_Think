@@ -1,10 +1,8 @@
-﻿using n090_core____.Core;
-using n190_board___.Board;
-using n190_board___.LibertyOfNodes;
-using n700_think___.nn400_tactics_.nnn200_hit_____.Hit;
+﻿using n190_board___;//.Board;.LibertyOfNodes;
+using n700_think___.nn400_tactics_.nnn200_hit_____;//.Hit;
 
 
-namespace n700_think___.nn400_tactics_.nnn200_noHit___
+namespace n700_think___.nn400_tactics_.nnn200_hit_____
 {
 
     // アテようとします。
@@ -30,11 +28,10 @@ namespace n700_think___.nn400_tactics_.nnn200_noHit___
 
         // 評価値を出します。
         int Evaluate(
-		    Core			core,
 		    int				color,
 		    int				node,
-		    Board*			pBoard,
-		    LibertyOfNodes*	pLibertyOfNodes
+		    Board 			board,
+		    LibertyOfNodes 	libertyOfNodes
 		);
     }
 }

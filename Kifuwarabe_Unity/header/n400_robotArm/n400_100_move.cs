@@ -1,6 +1,4 @@
-﻿//# include <windows.h> // コンソールへの出力等
-using n090_core____.Core;
-
+﻿using n190_board___;
 
 namespace n400_robotArm
 {
@@ -23,19 +21,18 @@ namespace n400_robotArm
 
     public interface Move {
 
-        Move();
-        ~Move();
+        //Move();
+        //~Move();
 
         // 1手進める。
-        int MoveOne(
-            Core core,
+        MoveResult MoveOne(
             int node,   // 座標
             int color,      // 石の色
-            Board* pBoard
-            );
+            Board board
+        );
 
         // 1手戻す。（戻せるのは１回だけです）
-        void UndoOnce(Core core, Board* pBoard);
+        void UndoOnce(Board board);
     };
 
 

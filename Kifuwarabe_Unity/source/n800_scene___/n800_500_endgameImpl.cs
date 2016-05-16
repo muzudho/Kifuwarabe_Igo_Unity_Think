@@ -1,31 +1,35 @@
-﻿//# include <windows.h> // コンソールへの出力等
-using n190_board___.Board;
-using n190_board___.Liberty;
-using n750_explain_.FigureType;
-using n800_scene___.Endgame;
+﻿using System;//Random
+using n190_board___;//.Board;.Liberty;
+using n750_explain_;//.FigureType;
 
 
 namespace n800_scene___
 {
 
-    public class EndgameImpl : Endgame
+    public class EndgameImpl
     {
-        public int EndgameStatus(int arr_endgameBoard[], Board* pBoard)
-        {
-            pBoard->ForeachAllNodesWithoutWaku([&arr_endgameBoard, &pBoard](int node, bool & isBreak) {
 
-                // ポイント☆？
-                int* ptr = arr_endgameBoard + node;
+        /// <summary>
+        /// 終局処理（サンプルでは簡単な判断で死石と地の判定をしています）
+        /// </summary>
+        /// <param name="arr_endgameBoard"></param>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        public static int EndgameStatus(
+            GtpStatusType[] arr_endgameBoard,
+            Board board
+        ){
+            board.ForeachAllNodesWithoutWaku((int node, ref bool isBreak) =>{
 
-                int color = pBoard->ValueOf(node);
-                if (color == EMPTY)
+                int color = board.ValueOf(node);
+                if (color == BoardImpl.EMPTY)
                 {
-                    *ptr = GTP_DAME;
+                    arr_endgameBoard[node] = GtpStatusType.GTP_DAME;
                     int sum = 0;
-                    pBoard->ForeachArroundNodes(node, [&pBoard, &sum](int adjNode, bool & isBreak) {
+                    board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak2)=> {
                         int adjColor;   // 隣接(adjacent)する石の色
-                        adjColor = pBoard->ValueOf(adjNode);
-                        if (adjColor == WAKU)
+                        adjColor = board.ValueOf(adjNode);
+                        if (adjColor == BoardImpl.WAKU)
                         {
                             goto gt_Next;
                         }
@@ -35,29 +39,29 @@ namespace n800_scene___
                         ;
                     });
 
-                    if (sum == BLACK)
+                    if (sum == BoardImpl.BLACK)
                     {
                         // 黒字☆
-                        *ptr = GtpStatusType::GTP_BLACK_TERRITORY;
+                        arr_endgameBoard[node] = GtpStatusType.GTP_BLACK_TERRITORY;
                     }
-                    if (sum == WHITE)
+                    if (sum == BoardImpl.WHITE)
                     {
                         // 白地☆
-                        *ptr = GtpStatusType::GTP_WHITE_TERRITORY;
+                        arr_endgameBoard[node] = GtpStatusType.GTP_WHITE_TERRITORY;
                     }
                 }
                 else {
-                    *ptr = GTP_ALIVE;
+                    arr_endgameBoard[node] = GtpStatusType.GTP_ALIVE;
 
-                    Liberty liberty;
+                    Liberty liberty = new LibertyImpl();
 
-                    liberty.Count(node, color, pBoard);
-                    //	core.PRT( "(%2d,%2d),ishi=%2d,dame=%2d\n",z&0xff,z>>8,ishi,dame);
+                    liberty.Count(node, color, board);
+                    //	System.Console.WriteLine(string.Format( "(%2d,%2d),ishi=%2d,dame=%2d\n",z&0xff,z>>8,ishi,dame));
 
-                    if (liberty.liberty <= 1)
+                    if (liberty.GetLiberty() <= 1)
                     {
                         // 石は死石☆
-                        *ptr = GtpStatusType::GTP_DEAD;
+                        arr_endgameBoard[node] = GtpStatusType.GTP_DEAD;
                     }
                 }
             });
@@ -65,52 +69,102 @@ namespace n800_scene___
             return 0;
         }
 
-        public int EndgameDrawFigure(int arr_endgameBoard[], Board* pBoard)
+        /// <summary>
+        /// 図形を描く。
+        /// FIXME: なんか適当に返してないか☆？（＾～＾）？
+        /// </summary>
+        /// <param name="arr_endgameBoard"></param>
+        /// <param name="pBoard"></param>
+        /// <returns></returns>
+        public static int EndgameDrawFigure(FigureType[] arr_endgameBoard, Board pBoard)
         {
             int x;
             int y;
             int node;
-            int* ptr;
 
-            for (y = 1; y < pBoard->GetSize() + 1; y++)
+            System.Random rand = new System.Random(1000);
+
+            for (y = 1; y < pBoard.GetSize() + 1; y++)
             {
-                for (x = 1; x < pBoard->GetSize() + 1; x++)
+                for (x = 1; x < pBoard.GetSize() + 1; x++)
                 {
-                    node = Board::ConvertToNode(x, y);
-                    ptr = arr_endgameBoard + node;
-                    if ((rand() % 2) == 0)
+                    node = AbstractBoard.ConvertToNode(x, y);
+                    if ((rand.Next() % 2) == 0)
                     {
-                        *ptr = FigureType::FIGURE_NONE;
+                        arr_endgameBoard[node] = FigureType.FIGURE_NONE;
                     }
                     else {
-                        if (rand() % 2)
+                        if (rand.Next() % 2 !=0)
                         {
-                            *ptr = FigureType::FIGURE_BLACK;
+                            arr_endgameBoard[node] = FigureType.FIGURE_BLACK;
                         }
                         else {
-                            *ptr = FigureType::FIGURE_WHITE;
+                            arr_endgameBoard[node] = FigureType.FIGURE_WHITE;
                         }
-                        *ptr |= (rand() % 9) + 1;
+
+                        FigureType randamFt;
+                        switch ((rand.Next() % 9) + 1)
+                        {
+                            case 1: randamFt = FigureType.FIGURE_TRIANGLE; break;
+                            case 2:
+                                randamFt = FigureType.FIGURE_SQUARE;
+                                break;
+                            case 3:
+                                randamFt = FigureType.FIGURE_CIRCLE;
+                                break;
+                            case 4:
+                                randamFt = FigureType.FIGURE_CROSS;
+                                break;
+                            case 5:
+                                randamFt = FigureType.FIGURE_QUESTION;
+                                break;
+                            case 6:
+                                randamFt = FigureType.FIGURE_HORIZON;
+                                break;
+                            case 7:
+                                randamFt = FigureType.FIGURE_VERTICAL;
+                                break;
+                            case 8:
+                                randamFt = FigureType.FIGURE_LINE_LEFTUP;
+                                break;
+                            case 9:
+                                randamFt = FigureType.FIGURE_LINE_RIGHTUP;
+                                break;
+                            default:
+                                // エラー☆
+                                randamFt = FigureType.FIGURE_NONE;
+                                break;
+                        }
+
+                        arr_endgameBoard[node] = arr_endgameBoard[node]
+                            |
+                            randamFt;
                     }
                 }
             }
             return 0;
         }
 
-        public int EndgameDrawNumber(int arr_endgameBoard[], Board* pBoard)
+        /// <summary>
+        /// 数値を書く(0は表示されない)
+        /// FIXME: なんかこれも適当に返してないか☆？（＾～＾）？
+        /// </summary>
+        /// <param name="arr_endgameBoard"></param>
+        /// <param name="pBoard"></param>
+        /// <returns></returns>
+        public static int EndgameDrawNumber(int[] arr_endgameBoard, Board pBoard)
         {
             int x;
             int y;
             int node;
-            int* ptr;
+            System.Random rand = new System.Random(1000);
 
-            for (y = 1; y < pBoard->GetSize() + 1; y++)
+            for (y = 1; y < pBoard.GetSize() + 1; y++)
             {
-                for (x = 1; x < pBoard->GetSize() + 1; x++)
+                for (x = 1; x < pBoard.GetSize() + 1; x++)
                 {
-                    node = Board::ConvertToNode(x, y);
-                    ptr = arr_endgameBoard + node;
-                    *ptr = (rand() % 110) - 55;
+                    node = AbstractBoard.ConvertToNode(x, y);
+                    arr_endgameBoard[node]  = (rand.Next() % 110) - 55;
                 }
             }
             return 0;

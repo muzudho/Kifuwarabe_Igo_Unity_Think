@@ -1,15 +1,13 @@
-﻿//# include <tchar.h> // Unicode対応の _T() 関数を使用するために。
-using n090_core____.Core;
-using n190_board___.Liberty;
-using n400_robotArm.Move;
-using n700_think___.nn400_tactics_.nnn200_hit_____.HitAte;
+﻿using n190_board___;//.Liberty;
+using n400_robotArm;//.Move;
+//using n700_think___.nn400_tactics_.nnn200_hit_____.HitAte;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____
 {
     public class HitAteImpl : HitAte
     {
-        public int Evaluate(Core core, int color, int node, Board* pBoard, LibertyOfNodes* pLibertyOfNodes)
+        public int Evaluate(int color, int node, Board* pBoard, LibertyOfNodes* pLibertyOfNodes)
         {
             int goodScore = 0;
             int badScore = 0;
@@ -18,21 +16,21 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 # ifdef ENABLE_MOVE_ATTACK
 
             bool isBadMove = false; // 打たない方がマシなとき。
-            int opponent = INVCLR(color);
+            int opponent = BoardImpl.INVCLR(color);
 
             // 上右下左に、相手の石がないか探します。
-            pBoard->ForeachArroundNodes(node, [&core, &pBoard, &pLibertyOfNodes, &goodScore, &badScore, &isBadMove, color, opponent](int adjNode, bool & isBreak) {
-                int libertyOfRen = pLibertyOfNodes->ValueOf(adjNode);
+            pBoard.ForeachArroundNodes(node, (int adjNode, ref bool isBreak)=> {
+                int libertyOfRen = pLibertyOfNodes.ValueOf(adjNode);
                 int x, y;
                 AbstractBoard::ConvertToXy(x, y, adjNode);
-                //core.PRT(_T("adj(%d,%d)LibRen=%d"), x, y, libertyOfRen);
+                //System.Console.WriteLine(string.Format("adj(%d,%d)LibRen=%d", x, y, libertyOfRen));
 
-                if (pBoard->ValueOf(adjNode) == opponent && libertyOfRen < 4)
+                if (pBoard.ValueOf(adjNode) == opponent && libertyOfRen < 4)
                 {
                     // 相手の石（または連）で、呼吸点が 3 箇所以下の物を選びます。
 
-                    std::vector<int> openNodes = pBoard->GetOpenNodesOfStone(core, adjNode, libertyOfRen);
-                    //core.PRT(_T("開%d"), openNodes.size());
+                    std::vector<int> openNodes = pBoard.GetOpenNodesOfStone( adjNode, libertyOfRen);
+                    //System.Console.WriteLine(string.Format("開%d", openNodes.size()));
 
                     if (!openNodes.empty())
                     {
@@ -41,7 +39,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 
                         if (openSize == 1)
                         {
-                            //core.PRT(_T("Ate!"));
+                            //System.Console.WriteLine(string.Format("Ate!"));
 
                             // アタリ　の状態です。
                             if (goodScore < 120)
@@ -73,7 +71,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
                                         {
                                             // 石を試しに置きます。
                                             Move move;
-                                            move.MoveOne(core, openNodes[me], color, pBoard);
+                                            move.MoveOne( openNodes[me], color, pBoard);
 
                                             Liberty yourLiberty;
                                             yourLiberty.Count(openNodes[you], opponent, pBoard);
@@ -97,7 +95,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
                                             }
 
                                             // 石を置く前の状態に戻します。
-                                            move.UndoOnce(core, pBoard);
+                                            move.UndoOnce( pBoard);
                                         }
                                     }
                                 }
@@ -108,7 +106,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
                     }
                 }
 
-                //core.PRT(_T(";"));
+                //System.Console.WriteLine(string.Format(";"));
             });
 
             if (badScore < 1 && isBadMove)

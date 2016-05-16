@@ -1,4 +1,4 @@
-﻿using n700_think___.nn400_tactics_.nnn100_noHit___.NoHit;
+﻿using n190_board___;
 
 
 namespace n700_think___.nn400_tactics_.nnn100_noHit___
@@ -16,16 +16,20 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
     // 相手の石の口の中に打たない仕組み。
     public interface NoHitMouth : NoHit {
 
-        int adjOppo;    // 上下左右に隣接(adjacent)する相手(opponent)の石の数。
+        /// <summary>
+        /// 上下左右に隣接(adjacent)する相手(opponent)の石の数。
+        /// </summary>
+        int GetAdjOppo();
+        void SetAdjOppo(int value);
 
 
-        NoHitMouth();
+        //NoHitMouth();
 
         // 相手の口に石を打ち込む状況でないか調査。
         void Research(
             int color,
             int node,
-            Board* pBoard
+            Board board
         );
 
         // 評価値を出します。

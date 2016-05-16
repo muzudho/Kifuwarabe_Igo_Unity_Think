@@ -3,9 +3,7 @@
 
     public interface NoHit {
 
-        int unuse;//使っていません。
-
-        NoHit();
+        //NoHit();
     };
 
 

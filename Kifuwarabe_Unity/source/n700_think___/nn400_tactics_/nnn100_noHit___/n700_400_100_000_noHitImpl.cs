@@ -1,4 +1,4 @@
-﻿using n700_think___.nn400_tactics_.nnn100_noHit___.NoHit;
+﻿//using n700_think___.nn400_tactics_.nnn100_noHit___.NoHit;
 
 
 namespace n700_think___.nn400_tactics_.nnn100_noHit___
@@ -6,7 +6,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
     public class NoHitImpl : NoHit{
         public NoHit()
         {
-            this->unuse = 0;
+            this.unuse = 0;
         }
     }
 }

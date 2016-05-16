@@ -1,12 +1,11 @@
-﻿using n090_core____.Core;
-using n190_board___.Board;
-using n190_board___.Liberty;
-using n400_robotArm.Move;
+﻿using n190_board___;//.Board;.Liberty;
+//using n400_robotArm.Move;
 
 
 namespace n400_robotArm
 {
     public class MoveImpl : Move {
+
         public MoveImpl()
         {
         }
@@ -15,24 +14,23 @@ namespace n400_robotArm
         {
         }
 
-        public int MoveOne(
-            Core core,
+        public MoveResult MoveOne(
             int node,
             int color,
-            Board* pBoard
+            Board board
         ){
             //----------------------------------------
             // Undo用に記憶
             //----------------------------------------
-            pBoard->kouNodeForUndo = pBoard->kouNode;       // コウの位置を退避
-            pBoard->moveNodeForUndo = node;             // 石を置いた位置を記憶
+            board.kouNodeForUndo = board.kouNode;       // コウの位置を退避
+            board.moveNodeForUndo = node;             // 石を置いた位置を記憶
 
             //----------------------------------------
 
             int sum;
             int delNode = 0;
             int tottaIshi = 0;              // 取った石の合計
-            int invClr = INVCLR(color); // 相手の石の色
+            int invClr = BoardImpl.INVCLR(color); // 相手の石の色
 
             //----------------------------------------
             // パスの場合
@@ -40,42 +38,42 @@ namespace n400_robotArm
             if (node == 0)
             {
                 // 操作を受け付けます。
-                pBoard->kouNodeForUndo = pBoard->kouNode;
-                pBoard->kouNode = 0;
-                return MOVE_SUCCESS;
+                board.kouNodeForUndo = board.kouNode;
+                board.kouNode = 0;
+                return MoveResult.MOVE_SUCCESS;
             }
 
             //----------------------------------------
             // コウに置こうとした場合
             //----------------------------------------
-            if (node == pBoard->kouNode)
+            if (node == board.kouNode)
             {
-                core.PRT(_T("move() Err: コウ！z=%04x\n"), node);
+                System.Console.WriteLine(string.Format("move() Err: コウ！z=%04x\n", node));
                 // 操作を弾きます。
-                return MOVE_KOU;
+                return MoveResult.MOVE_KOU;
             }
 
             //----------------------------------------
             // 空点でないところに置こうとした場合
             //----------------------------------------
-            if (pBoard->ValueOf(node) != 0)
+            if (board.ValueOf(node) != 0)
             {
-                core.PRT(_T("move() Err: 空点ではない！z=%04x\n"), node);
+                System.Console.WriteLine(string.Format("move() Err: 空点ではない！z=%04x\n", node));
                 // 操作を弾きます。
-                return MOVE_EXIST;
+                return MoveResult.MOVE_EXIST;
             }
 
-            pBoard->SetValue(node, color);  // とりあえず置いてみる
+            board.SetValue(node, color);  // とりあえず置いてみる
 
             // ここから下は、石を置いたあとの盤面です。
 
             // 自殺手になるかどうか判定するために、
             // また、新しい　コウ　を作るかどうか判定するために、
             // 相手の石を取るところまで進めます。
-            pBoard->ForeachArroundNodes(node, [&pBoard, &tottaIshi, &delNode, color, invClr](int adjNode, bool & isBreak) {
+            board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
                 Liberty liberty1;
 
-                int adjColor = pBoard->ValueOf(adjNode);
+                int adjColor = board.ValueOf(adjNode);
                 if (adjColor != invClr)
                 {
                     // 隣接する石が　相手の石　でないなら無視。
@@ -87,19 +85,19 @@ namespace n400_robotArm
                 //----------------------------------------
 
                 // 隣接する石（連）の呼吸点を数えます。
-                liberty1.Count(adjNode, adjColor, pBoard);
+                liberty1.Count(adjNode, adjColor, board);
 
                 if (liberty1.liberty == 0)
                 {
                     // 呼吸点がないようなら、石（連）は取れます。
 
                     // 囲んだ石の数を　ハマに加点。
-                    pBoard->hama[color] += liberty1.renIshi;
+                    board.hama[color] += liberty1.renIshi;
                     tottaIshi += liberty1.renIshi;
                     delNode = adjNode;  // 取られた石の座標。コウの判定で使う。
 
                     // 処理が被らないように、囲まれている相手の石（計算済み）を消します。
-                    pBoard->DeleteRenStones(adjNode, invClr);
+                    board.DeleteRenStones(adjNode, invClr);
                 }
 
                 gt_Next1:
@@ -110,16 +108,16 @@ namespace n400_robotArm
             // 自殺手になるかを判定
             //----------------------------------------
             Liberty liberty;
-            liberty.Count(node, color, pBoard);
+            liberty.Count(node, color, board);
 
             if (liberty.liberty == 0)
             {
                 // 置いた石に呼吸点がない場合。
 
                 // 操作を弾きます。
-                //core.PRT(_T("move() Err: 自殺手! z=%04x\n"), node);
-                pBoard->SetValue(node, 0);
-                return MOVE_SUICIDE;
+                //System.Console.WriteLine(string.Format("move() Err: 自殺手! z=%04x\n", node));
+                board.SetValue(node, 0);
+                return MoveResult.MOVE_SUICIDE;
             }
 
             //----------------------------------------
@@ -132,16 +130,16 @@ namespace n400_robotArm
             {
                 // 取られた石の4方向に、自分の呼吸点が1個の連が1つだけある場合、その位置はコウ。
                 sum = 0;
-                pBoard->ForeachArroundNodes(delNode, [&pBoard, &sum, color](int adjNode, bool & isBreak) {
+                board.ForeachArroundNodes(delNode, [&board, &sum, color](int adjNode, bool & isBreak) {
                     Liberty liberty2;
 
-                    int adjColor = pBoard->ValueOf(adjNode);
+                    int adjColor = board.ValueOf(adjNode);
                     if (adjColor != color)
                     {
                         goto gt_Next2;
                     }
 
-                    liberty2.Count(adjNode, adjColor, pBoard);
+                    liberty2.Count(adjNode, adjColor, board);
                     if (liberty2.liberty == 1 && liberty2.renIshi == 1)
                     {
                         sum++;
@@ -153,29 +151,30 @@ namespace n400_robotArm
 
                 if (sum >= 2)
                 {
-                    core.PRT(_T("１つ取られて、コウの位置へ打つと、１つの石を2つ以上取れる？node=%04x\n"), node);
+                    System.Console.WriteLine(string.Format(
+                        "１つ取られて、コウの位置へ打つと、１つの石を2つ以上取れる？node=%04x\n", node));
                     // これはエラー。
 
                     // 操作を弾きます。
-                    return MOVE_FATAL;
+                    return MoveResult.MOVE_FATAL;
                 }
 
                 if (sum == 0)
                 {
-                    pBoard->kouNodeForUndo = pBoard->kouNode;
-                    pBoard->kouNode = 0;    // コウにはならない。
+                    board.kouNodeForUndo = board.kouNode;
+                    board.kouNode = 0;    // コウにはならない。
                 }
                 else
                 {
-                    pBoard->kouNodeForUndo = pBoard->kouNode;
-                    pBoard->kouNode = delNode;  // 取り合えず取られた石の場所をコウの位置とする
+                    board.kouNodeForUndo = board.kouNode;
+                    board.kouNode = delNode;  // 取り合えず取られた石の場所をコウの位置とする
                 }
             }
             else
             {
                 // コウではない
-                pBoard->kouNodeForUndo = pBoard->kouNode;
-                pBoard->kouNode = 0;
+                board.kouNodeForUndo = board.kouNode;
+                board.kouNode = 0;
             }
 
             //----------------------------------------
@@ -183,17 +182,17 @@ namespace n400_robotArm
             //----------------------------------------
 
             // 操作を受け入れます。
-            return MOVE_SUCCESS;
+            return MoveResult.MOVE_SUCCESS;
         }
 
-        public void UndoOnce(Core core, Board* pBoard)
+        public void UndoOnce(Board board)
         {
             // 石を置く前の状態に戻します。
-            pBoard->kouNode = pBoard->kouNodeForUndo;           // コウの位置を元に戻します。
-            pBoard->SetValue(pBoard->moveNodeForUndo, 0);       // 置いた石を消します。
+            board.kouNode = board.kouNodeForUndo;           // コウの位置を元に戻します。
+            board.SetValue(board.moveNodeForUndo, 0);       // 置いた石を消します。
 
-            pBoard->kouNodeForUndo = 0;
-            pBoard->moveNodeForUndo = 0;
+            board.kouNodeForUndo = 0;
+            board.moveNodeForUndo = 0;
         }
     }
 }

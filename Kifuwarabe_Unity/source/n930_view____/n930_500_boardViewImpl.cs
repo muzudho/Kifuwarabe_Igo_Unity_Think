@@ -1,27 +1,29 @@
-﻿//# include <tchar.h>		// Unicode対応の _T() 関数を使用するために。
-using n090_core____.Core;
-using n930_print___.BoardView;
+﻿using n190_board___;
 
 
 namespace n930_view____
 {
-    public class BoardViewImpl : BoardView
+    public class BoardViewImpl
     {
-        public void PrintBoard(Core core, Board* pBoard)
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="pBoard"></param>
+        public static void PrintBoard(Board board)
         {
-            _TCHAR* str[4] = {
-        _T("・"),	// 空き
-		_T("●"),	// 黒石
-		_T("○"),	// 白石
-		_T("＋")		// 枠
-	};
+            string[] str = new string[4]{
+                "・",	// 空き
+		        "●",	// 黒石
+		        "○",	// 白石
+		        "＋"		// 枠
+	        };
 
-            pBoard->ForeachAllXyWithWaku([&pBoard, &core, &str](int x, int y, bool & isBreak) {
-                int node = Board::ConvertToNode(x, y);
-                core.PRT(_T("%s"), str[pBoard->ValueOf(node)]);
-                if (x == pBoard->GetSize() + 1)
+            board.ForeachAllXyWithWaku((int x, int y, ref bool isBreak) =>{
+                int node = AbstractBoard.ConvertToNode(x, y);
+                System.Console.WriteLine(string.Format("%s", str[board.ValueOf(node)]));
+                if (x == board.GetSize() + 1)
                 {
-                    core.PRT(_T("\n"));
+                    System.Console.WriteLine(string.Format("\n"));
                 }
             });
         }

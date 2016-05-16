@@ -1,5 +1,4 @@
-﻿//#include <windows.h>								// rand() 等を使用するために。
-using n700_think___.nn400_tactics_.nnn200_hit_____.HitRandom;
+﻿using n700_think___.nn400_tactics_.nnn200_hit_____;//.HitRandom;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____

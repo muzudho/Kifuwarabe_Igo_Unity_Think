@@ -1,5 +1,5 @@
-﻿using n190_board___.Liberty;
-using n700_think___.nn400_tactics_.nnn100_noHit___.NoHit;
+﻿using n190_board___;//.Liberty;
+//using n700_think___.nn400_tactics_.nnn100_noHit___.NoHit;
 
 
 namespace n700_think___.nn400_tactics_.nnn100_noHit___
@@ -21,14 +21,14 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
         int safe;
 
 
-	    NoHitOwnEye();
+	    //NoHitOwnEye();
 
         // 自分の眼に打ち込む状況か調査
         bool IsThis(
             int color,
             int node,
-            Liberty liberties[4],
-            Board* pBoard
+            Liberty[] liberties,//[4]
+            Board board
         );
     };
 
