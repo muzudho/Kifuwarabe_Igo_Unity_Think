@@ -115,7 +115,7 @@ namespace n700_think___.nn800_best____
             // 自分の眼を埋める、自殺手を打つ、のチェック終了後にする処理
             //----------------------------------------
 
-            int nNoHitMouth = noHitMouth.Evaluate(noHitSuicide.GetFlgCapture());
+            int nNoHitMouth = noHitMouth.Evaluate(noHitSuicide.IsCapture());
 
             noHitHasinoho.Research(node, board);
             int nNoHitHasinoho = noHitHasinoho.Evaluate();

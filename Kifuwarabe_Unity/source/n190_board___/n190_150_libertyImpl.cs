@@ -23,13 +23,28 @@ namespace n190_board___
             this.m_liberty_++;
         }
 
-        // 隣接する（１個あるいは連の）石の数(再帰関数で使う)
-        public int renIshi;
+        /// <summary>
+        /// 隣接する（１個あるいは連の）石の数(再帰関数で使う)
+        /// </summary>
+        public int m_renIshi_;
+        public int GetRenIshi()
+        {
+            return this.m_renIshi_;
+        }
+        public void SetRenIshi(int value)
+        {
+            this.m_renIshi_ = value;
+        }
+        public void IncreaseRenIshi()
+        {
+            this.m_renIshi_++;
+        }
+
 
         public LibertyImpl()
         {
             //this.SetLiberty(0);
-	        this.renIshi = 0;
+	        this.SetRenIshi( 0);
         }
 
         public void Count(int node, int color, Board board)
@@ -45,7 +60,7 @@ namespace n190_board___
             int i;
 
             this.SetLiberty(0);
-            this.renIshi = 0;
+            this.SetRenIshi(0);
             for (i = 0; i < AbstractBoard.BOARD_MAX; i++)
             {
                 this.checkedBoard[i] = false;
@@ -62,7 +77,7 @@ namespace n190_board___
         {
 
             this.checkedBoard[tNode] = true;    // この石は検索済み	
-            this.renIshi++;                     // 呼吸点を数えている（１個または連の）
+            this.IncreaseRenIshi();             // 呼吸点を数えている（１個または連の）
                                                 // 石の数
 
             board.ForeachArroundNodes(tNode, (int adjNode, ref bool isBreak)=> {

@@ -1,6 +1,7 @@
 ﻿using n190_board___;//.Board .BoardImpl .LibertyOfNodes;
 using n400_robotArm;//.Move;
 using n700_think___.nn800_best____;//.ThinkImpl.GameType;
+using n750_explain_;//FigureType
 using n800_scene___;//.EndgameImpl;
 using n950_main____;//.CgfThink;
 
@@ -65,8 +66,7 @@ namespace n950_main____
                 double      komi        ,   // コミ
                 GameType    endgameType ,   // 0...通常の思考、1...終局処理、2...図形を表示、3...数値を表示。
             ref int[]       endgameBoard	// 終局処理の結果を代入する。
-    )
-        {
+        ){
             int bestmoveNode = 0;   // コンピューターが打つ交点。
 
             //--------------------
@@ -109,13 +109,40 @@ namespace n950_main____
             {
                 // 「終局処理」なら
                 case GameType.GAME_END_STATUS:
-                    return EndgameImpl.EndgameStatus(endgameBoard, board);
+                    {
+                        // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
+                        GtpStatusType[] endgameBoard2 = new GtpStatusType[AbstractBoard.BOARD_MAX];
+                        int result = EndgameImpl.EndgameStatus(endgameBoard2, board);
+
+                        for(int i=0;i< AbstractBoard.BOARD_MAX; i++)
+                        {
+                            endgameBoard[i] = (int)endgameBoard2[i];
+                        }
+
+                        return result;
+                    }
+
                 // 「図形を描く」なら
                 case GameType.GAME_DRAW_FIGURE:
-                    return EndgameImpl.EndgameDrawFigure(endgameBoard, board);
+                    {
+                        // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
+                        FigureType[] endgameBoard2 = new FigureType[AbstractBoard.BOARD_MAX];
+                        int result = EndgameImpl.EndgameDrawFigure(endgameBoard2, board);
+
+                        for (int i = 0; i < AbstractBoard.BOARD_MAX; i++)
+                        {
+                            endgameBoard[i] = (int)endgameBoard2[i];
+                        }
+
+                        return result;
+                    }
+
                 // 「数値を書く」なら
                 case GameType.GAME_DRAW_NUMBER:
-                    return EndgameImpl.EndgameDrawNumber(endgameBoard, board);
+                    {
+                        return EndgameImpl.EndgameDrawNumber(endgameBoard, board);
+                    }
+
                 // 通常の指し手
                 default:
                     break;

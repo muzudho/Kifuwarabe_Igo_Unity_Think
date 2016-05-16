@@ -6,7 +6,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
 { 
     public class NoHitHasinohoBocchiImpl : NoHitHasinohoBocchi
     {
-        public NoHitHasinohoBocchi()
+        public NoHitHasinohoBocchiImpl()
         {
             //this.m_isBocchi_ = false;
             //this.m_isSoto_ = false;
@@ -73,20 +73,20 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
             Board pBoard
         ){
 
-            this.isSoto = false;
-            this.isEdge = false;
-            this.isCorner = false;
+            this.SetSoto( false);
+            this.SetEdge( false);
+            this.SetCorner( false);
 
 
 
-            this.isBocchi = true;
-            pBoard.ForeachArroundNodes(node, [this, &pBoard](int adjNode, bool & isBreak) {
+            this.SetBocchi( true);
+            pBoard.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
                 int adjColor = pBoard.ValueOf(adjNode);        // その色
 
                 if (adjColor == BoardImpl.BLACK || adjColor == BoardImpl.WHITE)
                 {
                     // ぼっちではない。
-                    this.isBocchi = false;
+                    this.SetBocchi( false);
                     isBreak = true;
                     goto gt_Next;
                 }
@@ -97,7 +97,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
 
 
             int x, y;
-            Board::ConvertToXy(x, y, node);
+            AbstractBoard.ConvertToXy(out x, out y, node);
 
             if (x < 1 || pBoard.GetSize() < x ||
                 y < 1 || pBoard.GetSize() < y
@@ -105,7 +105,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
             {
                 // 盤外
                 //System.Console.WriteLine(string.Format("(%d,%d) ban=%d ; Soto \n", x, y, boardSize));
-                this.isSoto = true;
+                this.SetSoto( true);
                 goto gt_EndMethod;
             }
 
@@ -115,7 +115,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
             {
                 // 辺
                 //System.Console.WriteLine(string.Format("(%d,%d) ban=%d ; EDGE \n", x, y, boardSize));
-                this.isEdge = true;
+                this.SetEdge( true);
             }
             else
             {
@@ -129,7 +129,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
             {
                 // 角
                 //System.Console.WriteLine(string.Format("(%d,%d) ban=%d ; CORNER \n", x, y, boardSize));
-                this.isCorner = true;
+                this.SetCorner( true);
             }
 
             gt_EndMethod:
@@ -142,22 +142,22 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
         {
             int score = 100;
 
-# ifndef RANDOM_MOVE_ONLY
+//# ifndef RANDOM_MOVE_ONLY
 
-            if (!this.isBocchi)
+            if (!this.IsBocchi())
             {
                 // ぼっち石でなければ、気にせず　端でも角でも置きます。
                 goto gt_EndMethod;
             }
 
-            if (this.isCorner)
+            if (this.IsCorner())
             {
                 // 角に　ぼっち石　を置きたくない。
                 score -= 50;
                 goto gt_EndMethod;
             }
 
-            if (this.isEdge)
+            if (this.IsEdge())
             {
                 // 辺に　ぼっち石　を置きたくない。
                 score -= 33;
@@ -166,7 +166,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
 
             gt_EndMethod:
 
-#endif
+//#endif
 
             return score;
         }

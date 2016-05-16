@@ -5,13 +5,14 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 { 
     public class HitRandomImpl : HitRandom
     {
-        public HitRandom()
+        public HitRandomImpl()
         {
         }
 
         public int Evaluate(
         ){
-            return rand() % 100; // 0 ～ 99 のランダムな評価値を与える。
+            System.Random rand = new System.Random(1000);//FIXME:
+            return rand.Next() % 100; // 0 ～ 99 のランダムな評価値を与える。
         }
     }
 }

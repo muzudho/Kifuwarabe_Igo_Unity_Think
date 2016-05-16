@@ -68,6 +68,33 @@ namespace n190_board___
         int GetKouNode();
         void SetKouNode(int value);
 
+        /// <summary>
+        /// 1手進めたことで消えたコウの場所を覚えておくものです。（戻せるのは１回だけです）
+        /// </summary>
+        int GetKouNodeForUndo();
+        void SetKouNodeForUndo(int value);
+
+        /// <summary>
+        /// 石を置いた位置を覚えておくものです。（戻せるのは１回だけです）
+        /// </summary>
+        int GetMoveNodeForUndo();
+        void SetMoveNodeForUndo(int value);
+
+        /// <summary>
+        /// セルの値
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="value"></param>
+        void SetValue(int node, int value);
+        int ValueOf(int node);
+
+        /// <summary>
+        /// ハマ。取った石の数のこと。[0]...空き。[1]... 黒が取った石の数, [2]...白が取った石の数
+        /// </summary>
+        int GetHama(int index);
+        void SetHama(int index, int value);
+        void AddHama(int index, int value);
+
 
 
         /// <summary>
@@ -115,6 +142,5 @@ namespace n190_board___
         void ForeachArroundDirAndNodes(int node, Func01 func);
 
 
-        int ValueOf(int node);
     }
 }

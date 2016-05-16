@@ -7,56 +7,56 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
 { 
     public class NoHitSuicideImpl : NoHitSuicide
     {
-        public NoHitSuicide() {
+        public NoHitSuicideImpl() {
             //this.m_flgCapture_ = 0;
         }
 
         /// <summary>
         /// 敵石を取ったフラグ
         /// </summary>
-        private int m_flgCapture_;
-        public int GetFlgCapture()
+        private bool m_isCapture_;
+        public bool IsCapture()
         {
-            return this.m_flgCapture_;
+            return this.m_isCapture_;
         }
-        public void SetFlgCapture(int value)
+        public void SetCapture(bool value)
         {
-            this.m_flgCapture_ = value;
+            this.m_isCapture_ = value;
         }
 
 
 
         // 自殺手になる状況でないか調査。
         public bool IsThis(
-            int color,
-            int node,
-            Liberty liberties[4],
-            Board* pBoard
+            int         color,
+            int         node,
+            Liberty[]   liberties,//[4]
+            Board       board
         ){
             bool result = false;
             int invColor = BoardImpl.INVCLR(color);   //白黒反転
 
-            pBoard.ForeachArroundDirAndNodes(node, [this, &pBoard, &liberties, invColor](int iDir, int adjNode, bool & isBreak) {
-                int adjColor = pBoard.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
+            board.ForeachArroundDirAndNodes(node, (int iDir, int adjNode,ref bool isBreak) =>{
+                int adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
 
                 // 隣に、呼吸点が 1 個の相手の石があれば、それは取ることができます。
-                if (adjColor == invColor && liberties[iDir].liberty == 1)
+                if (adjColor == invColor && liberties[iDir].GetLiberty() == 1)
                 {
                     //System.Console.WriteLine(string.Format("敵石を取った。 \n"));
-                    this.flgCapture = 1;   // 敵石を、取ったフラグ。
+                    this.SetCapture(true);   // 敵石を、取ったフラグ。
                 }
             });
 
             MoveResult flgMove;    // 移動結果の種類
 
-            if (this.flgCapture == 0)
+            if (!this.IsCapture())
             {                    // 石が取れない場合
                                  // 実際に置いてみて　自殺手かどうか判定
-                Move move;
-                flgMove = move.MoveOne(node, color, pBoard);      // 石を置きます。コウの位置が変わるかも。
+                Move move = new MoveImpl();
+                flgMove = move.MoveOne(node, color, board);      // 石を置きます。コウの位置が変わるかも。
 
                 // 石を置く前の状態に戻します。
-                move.UndoOnce(pBoard);
+                move.UndoOnce(board);
 
                 if (flgMove == MoveResult.MOVE_SUICIDE)
                 {      // 自殺手なら

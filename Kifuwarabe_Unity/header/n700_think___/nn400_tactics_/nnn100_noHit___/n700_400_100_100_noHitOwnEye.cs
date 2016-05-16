@@ -17,11 +17,14 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
     // 自分の眼に打たない仕組み。
     public interface NoHitOwnEye : NoHit {
 
-        // ４方向に隣接する、呼吸点が増える　つなげられる味方の石が　いくつか。0～4。
-        int safe;
+        /// <summary>
+        /// ４方向に隣接する、呼吸点が増える　つなげられる味方の石が　いくつか。0～4。
+        /// </summary>
+        int GetSafe();
+        void SetSafe(int value);
 
 
-	    //NoHitOwnEye();
+        //NoHitOwnEye();
 
         // 自分の眼に打ち込む状況か調査
         bool IsThis(

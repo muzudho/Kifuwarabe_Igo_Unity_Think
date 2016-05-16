@@ -1,19 +1,19 @@
 ﻿using n190_board___;//.Board;.Liberty;
-//using n700_think___.nn400_tactics_.nnn200_hit_____.HitGnugo12Random;
+//using n700_think___.nn400_tactics_.nnn200_hit_____;//.HitGnugo12Random;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____
 {
     public class HitGnugo12RandomImpl : HitGnugo12Random
     {
-        int Evaluate(
+        public int Evaluate(
             int         color,
             int         node,
             Board       pBoard
         ){
             int score = 0;
 
-# ifndef RANDOM_MOVE_ONLY
+//# ifndef RANDOM_MOVE_ONLY
 
             int boardSize = pBoard.GetSize();
             if (boardSize < 9)
@@ -23,7 +23,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
             }
 
             int x, y;
-            AbstractBoard::ConvertToXy(x, y, node);
+            AbstractBoard.ConvertToXy(out x, out y, node);
 
             // 置きたくない位置を avoid 点数で表す。
             int avoid = 0;
@@ -139,9 +139,9 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 
             // 避けたい場所
             // 連の呼吸点が 0 ～ 1 しかない場合。
-            Liberty liberty;
+            Liberty liberty = new LibertyImpl();
             liberty.Count(node, color, pBoard);
-            if (liberty.liberty < 2)
+            if (liberty.GetLiberty() < 2)
             {
                 avoid++;
             }
@@ -149,20 +149,21 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
             //----------------------------------------
             // avoid は 4 段階
             //----------------------------------------
+            System.Random rand = new System.Random(1000);//FIXME:
             if (2 < avoid)
             {
-                score = 6 + rand() % 94;
+                score = 6 + rand.Next() % 94;
             }
             else if (1 < avoid)
             {
-                score = 12 + rand() % 88;
+                score = 12 + rand.Next() % 88;
             }
             else if (0 < avoid)
             {
-                score = 25 + rand() % 75;
+                score = 25 + rand.Next() % 75;
             }
             else {
-                score = 50 + rand() % 50;
+                score = 50 + rand.Next() % 50;
             }
 
             //----------------------------------------
@@ -172,7 +173,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 
             gt_EndMethod:
 
-#endif
+//#endif
 
             return score;
         }

@@ -34,7 +34,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
 
         // 評価値を出します。
         int Evaluate(
-            int flgCapture      // suicide.flgCapture
+            bool isCapture      // suicide.flgCapture
         );
     };
 

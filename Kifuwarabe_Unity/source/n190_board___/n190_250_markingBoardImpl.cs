@@ -1,18 +1,13 @@
-﻿/*
-using n190_board___.Board;
-using n190_board___.MarkingBoard;
-*/
-
-namespace n190_board___
+﻿namespace n190_board___
 {
-    public class MarkingBoardImpl : MarkingBoard
+    public class MarkingBoardImpl : AbstractBoard, MarkingBoard
     {
-        public void Initialize(Board* pBoard)
+        public void Initialize(Board board)
         {
-            this.SetSize(pBoard.GetSize());
+            this.SetSize(board.GetSize());
 
             // 枠と、枠内全てを 0 に初期化。
-            this.ForeachAllNodesWithWaku([this](int node, bool & isBreak) {
+            this.ForeachAllNodesWithWaku((int node, ref bool isBreak) =>{
                 this.SetValue(node, 0);
             });
         }

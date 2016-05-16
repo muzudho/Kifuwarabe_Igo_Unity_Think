@@ -6,7 +6,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
 { 
     public class NoHitMouthImpl : NoHitMouth
     {
-        public NoHitMouth() {
+        public NoHitMouthImpl() {
             //this.m_adjOppo_ = 0;
         }
 
@@ -22,36 +22,40 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
         {
             this.m_adjOppo_ = value;
         }
+        public void IncreaseAdjOppo()
+        {
+            this.m_adjOppo_++;
+        }
 
 
         public void Research(
                 int color,
                 int node,
-                Board* pBoard
+                Board board
             )
         {
             int invColor = BoardImpl.INVCLR(color);   //白黒反転
 
-            pBoard.ForeachArroundNodes(node, [this, &pBoard, invColor](int adjNode, bool & isBreak) {
-                int adjColor = pBoard.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
+            board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
+                int adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
 
                 // 2016-03-12 16:45 Add
                 // 隣が相手の石、または枠ならカウントアップ。
                 if (adjColor == invColor || adjColor == BoardImpl.WAKU)
                 {
-                    this.adjOppo++;
+                    this.IncreaseAdjOppo();
                 }
             });
         }
 
-        public int Evaluate(int flgCapture)
+        public int Evaluate(bool isCapture)
         {
             int score = 0;
 
-# ifndef RANDOM_MOVE_ONLY
+//# ifndef RANDOM_MOVE_ONLY
 
             // 2016-03-12 16:45 Add
-            if (this.adjOppo == 3 && !flgCapture)
+            if (this.GetAdjOppo() == 3 && !isCapture)
             {
                 // 3方向が相手の石のところで
                 // 駒も取れないところには、打ち込みたくない。
@@ -63,7 +67,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
                 score += 100;
             }
 
-#endif
+//#endif
 
             return score;
         }

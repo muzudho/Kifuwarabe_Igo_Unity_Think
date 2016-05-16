@@ -18,8 +18,8 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
         /// <summary>
         /// 敵石を取ったフラグ
         /// </summary>
-        int GetFlgCapture();
-        void SetFlgCapture(int value);
+        bool IsCapture();
+        void SetCapture(bool value);
 
 
         //NoHitSuicide();

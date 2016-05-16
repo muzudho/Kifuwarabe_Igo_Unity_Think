@@ -22,8 +22,8 @@ namespace n400_robotArm
             //----------------------------------------
             // Undo用に記憶
             //----------------------------------------
-            board.kouNodeForUndo = board.kouNode;       // コウの位置を退避
-            board.moveNodeForUndo = node;             // 石を置いた位置を記憶
+            board.SetKouNodeForUndo( board.GetKouNode());       // コウの位置を退避
+            board.SetMoveNodeForUndo( node);             // 石を置いた位置を記憶
 
             //----------------------------------------
 
@@ -38,15 +38,15 @@ namespace n400_robotArm
             if (node == 0)
             {
                 // 操作を受け付けます。
-                board.kouNodeForUndo = board.kouNode;
-                board.kouNode = 0;
+                board.SetKouNodeForUndo( board.GetKouNode());
+                board.SetKouNode(0);
                 return MoveResult.MOVE_SUCCESS;
             }
 
             //----------------------------------------
             // コウに置こうとした場合
             //----------------------------------------
-            if (node == board.kouNode)
+            if (node == board.GetKouNode())
             {
                 System.Console.WriteLine(string.Format("move() Err: コウ！z=%04x\n", node));
                 // 操作を弾きます。
@@ -71,7 +71,7 @@ namespace n400_robotArm
             // また、新しい　コウ　を作るかどうか判定するために、
             // 相手の石を取るところまで進めます。
             board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
-                Liberty liberty1;
+                Liberty liberty1 = new LibertyImpl();
 
                 int adjColor = board.ValueOf(adjNode);
                 if (adjColor != invClr)
@@ -87,13 +87,13 @@ namespace n400_robotArm
                 // 隣接する石（連）の呼吸点を数えます。
                 liberty1.Count(adjNode, adjColor, board);
 
-                if (liberty1.liberty == 0)
+                if (liberty1.GetLiberty() == 0)
                 {
                     // 呼吸点がないようなら、石（連）は取れます。
 
                     // 囲んだ石の数を　ハマに加点。
-                    board.hama[color] += liberty1.renIshi;
-                    tottaIshi += liberty1.renIshi;
+                    board.AddHama(color, liberty1.GetRenIshi());
+                    tottaIshi += liberty1.GetRenIshi();
                     delNode = adjNode;  // 取られた石の座標。コウの判定で使う。
 
                     // 処理が被らないように、囲まれている相手の石（計算済み）を消します。
@@ -107,10 +107,10 @@ namespace n400_robotArm
             //----------------------------------------
             // 自殺手になるかを判定
             //----------------------------------------
-            Liberty liberty;
+            Liberty liberty = new LibertyImpl();
             liberty.Count(node, color, board);
 
-            if (liberty.liberty == 0)
+            if (liberty.GetLiberty() == 0)
             {
                 // 置いた石に呼吸点がない場合。
 
@@ -130,8 +130,9 @@ namespace n400_robotArm
             {
                 // 取られた石の4方向に、自分の呼吸点が1個の連が1つだけある場合、その位置はコウ。
                 sum = 0;
-                board.ForeachArroundNodes(delNode, [&board, &sum, color](int adjNode, bool & isBreak) {
-                    Liberty liberty2;
+                board.ForeachArroundNodes(delNode, (int adjNode, ref bool isBreak) =>{
+
+                    Liberty liberty2 = new LibertyImpl();
 
                     int adjColor = board.ValueOf(adjNode);
                     if (adjColor != color)
@@ -140,7 +141,7 @@ namespace n400_robotArm
                     }
 
                     liberty2.Count(adjNode, adjColor, board);
-                    if (liberty2.liberty == 1 && liberty2.renIshi == 1)
+                    if (liberty2.GetLiberty() == 1 && liberty2.GetRenIshi() == 1)
                     {
                         sum++;
                     }
@@ -161,20 +162,20 @@ namespace n400_robotArm
 
                 if (sum == 0)
                 {
-                    board.kouNodeForUndo = board.kouNode;
-                    board.kouNode = 0;    // コウにはならない。
+                    board.SetKouNodeForUndo( board.GetKouNode());
+                    board.SetKouNode( 0);    // コウにはならない。
                 }
                 else
                 {
-                    board.kouNodeForUndo = board.kouNode;
-                    board.kouNode = delNode;  // 取り合えず取られた石の場所をコウの位置とする
+                    board.SetKouNodeForUndo( board.GetKouNode());
+                    board.SetKouNode( delNode);  // 取り合えず取られた石の場所をコウの位置とする
                 }
             }
             else
             {
                 // コウではない
-                board.kouNodeForUndo = board.kouNode;
-                board.kouNode = 0;
+                board.SetKouNodeForUndo( board.GetKouNode());
+                board.SetKouNode(0);
             }
 
             //----------------------------------------
@@ -188,11 +189,11 @@ namespace n400_robotArm
         public void UndoOnce(Board board)
         {
             // 石を置く前の状態に戻します。
-            board.kouNode = board.kouNodeForUndo;           // コウの位置を元に戻します。
-            board.SetValue(board.moveNodeForUndo, 0);       // 置いた石を消します。
+            board.SetKouNode( board.GetKouNodeForUndo());           // コウの位置を元に戻します。
+            board.SetValue(board.GetMoveNodeForUndo(), 0);       // 置いた石を消します。
 
-            board.kouNodeForUndo = 0;
-            board.moveNodeForUndo = 0;
+            board.SetKouNodeForUndo(0);
+            board.SetMoveNodeForUndo( 0);
         }
     }
 }

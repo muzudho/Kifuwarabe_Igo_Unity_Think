@@ -5,10 +5,8 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 { 
     public class HitImpl : Hit
     {
-        public Hit()
+        public HitImpl()
         {
-
-            this.unuse = 0;
         }
     }
 }

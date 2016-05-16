@@ -9,19 +9,19 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
         public int Evaluate(
             int color,
             int node,
-            Board* pBoard,
-            LibertyOfNodes* pLibertyOfNodes
+            Board board,
+            LibertyOfNodes libertyOfNodes
         ){
             int score = 0;
 
-    # ifndef RANDOM_MOVE_ONLY
+    //# ifndef RANDOM_MOVE_ONLY
 
             // 石を置く前の、上、右、下、左　にある自分の石（または連）の呼吸点の数の合計。
             int currentAdjLibertySum = 0;
-            pLibertyOfNodes.ForeachArroundNodes(node, [&pBoard, &pLibertyOfNodes, &currentAdjLibertySum, color](int adjNode, bool & isBreak) {
-                if (pBoard.ValueOf(adjNode) == color)//自分の石
+            libertyOfNodes.ForeachArroundNodes(node, (int adjNode, ref bool isBreak)=> {
+                if (board.ValueOf(adjNode) == color)//自分の石
                 {
-                    currentAdjLibertySum += pLibertyOfNodes.ValueOf(adjNode);
+                    currentAdjLibertySum += libertyOfNodes.ValueOf(adjNode);
                 }
             });
 
@@ -36,11 +36,11 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
             // これで0による除算も回避☆
 
             // 呼吸点に自分の石を置いたと考えて、石を置いた局面のその自分の石（または連）の呼吸点を数えます。
-            Liberty futureLiberty;
-            futureLiberty.Count(node, color, pBoard);
+            Liberty futureLiberty = new LibertyImpl();
+            futureLiberty.Count(node, color, board);
 
             // 評価値計算
-            if (futureLiberty.liberty <= currentAdjLibertySum)
+            if (futureLiberty.GetLiberty() <= currentAdjLibertySum)
             {
                 // ツケて　呼吸点が増えていないようでは話しになりません。
                 //score += 0;
@@ -48,7 +48,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
             else
             {
                 // ツケて　呼吸点が増えているので、どれだけ増えたかを数えます。
-                int upLiberty = futureLiberty.liberty - currentAdjLibertySum;
+                int upLiberty = futureLiberty.GetLiberty() - currentAdjLibertySum;
 
                 //score += 40  // 40を基本に。
                 score += 1  // 1 を基本に。
@@ -73,7 +73,7 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
 
             gt_EndMethod:
 
-    #endif
+    //#endif
 
             return score;
         }

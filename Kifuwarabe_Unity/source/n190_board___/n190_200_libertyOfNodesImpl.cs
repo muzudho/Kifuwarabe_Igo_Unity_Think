@@ -2,11 +2,11 @@
 {
     public class LibertyOfNodesImpl : AbstractBoard, LibertyOfNodes
     {
-        public LibertyOfNodes()
+        public LibertyOfNodesImpl()
         {
         }
 
-        ~LibertyOfNodes()
+        ~LibertyOfNodesImpl()
         {
         }
 
@@ -21,11 +21,12 @@
             });
 
             board.ForeachAllNodesWithoutWaku((int node, ref bool isBreak)=> {
-                Liberty liberty;
+
+                Liberty liberty = new LibertyImpl();
                 liberty.Count(node, board.ValueOf(node), board);
 
                 // 呼吸点の数を覚えておく碁盤です。
-                this.SetValue(node, liberty.liberty);
+                this.SetValue(node, liberty.GetLiberty());
             });
         }
     }
