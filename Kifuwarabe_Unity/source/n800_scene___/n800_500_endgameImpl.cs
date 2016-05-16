@@ -1,4 +1,4 @@
-﻿using System;//Random
+﻿using n090_core____;
 using n190_board___;//.Board;.Liberty;
 using n750_explain_;//.FigureType;
 
@@ -56,7 +56,7 @@ namespace n800_scene___
                     Liberty liberty = new LibertyImpl();
 
                     liberty.Count(node, color, board);
-                    //	System.Console.WriteLine(string.Format( "(%2d,%2d),ishi=%2d,dame=%2d\n",z&0xff,z>>8,ishi,dame));
+                    //	System.Console.WriteLine(string.Format( "({0:D2},{1:D2}),ishi=%2d,dame={2:D2}\n",z&0xff,z>>8,ishi,dame));
 
                     if (liberty.GetLiberty() <= 1)
                     {
@@ -82,19 +82,17 @@ namespace n800_scene___
             int y;
             int node;
 
-            System.Random rand = new System.Random(1000);
-
             for (y = 1; y < pBoard.GetSize() + 1; y++)
             {
                 for (x = 1; x < pBoard.GetSize() + 1; x++)
                 {
                     node = AbstractBoard.ConvertToNode(x, y);
-                    if ((rand.Next() % 2) == 0)
+                    if ((Core.GetRandom() % 2) == 0)
                     {
                         arr_endgameBoard[node] = FigureType.FIGURE_NONE;
                     }
                     else {
-                        if (rand.Next() % 2 !=0)
+                        if (Core.GetRandom() % 2 !=0)
                         {
                             arr_endgameBoard[node] = FigureType.FIGURE_BLACK;
                         }
@@ -103,7 +101,7 @@ namespace n800_scene___
                         }
 
                         FigureType randamFt;
-                        switch ((rand.Next() % 9) + 1)
+                        switch ((Core.GetRandom() % 9) + 1)
                         {
                             case 1: randamFt = FigureType.FIGURE_TRIANGLE; break;
                             case 2:
@@ -157,14 +155,13 @@ namespace n800_scene___
             int x;
             int y;
             int node;
-            System.Random rand = new System.Random(1000);
 
             for (y = 1; y < pBoard.GetSize() + 1; y++)
             {
                 for (x = 1; x < pBoard.GetSize() + 1; x++)
                 {
                     node = AbstractBoard.ConvertToNode(x, y);
-                    arr_endgameBoard[node]  = (rand.Next() % 110) - 55;
+                    arr_endgameBoard[node]  = (Core.GetRandom() % 110) - 55;
                 }
             }
             return 0;

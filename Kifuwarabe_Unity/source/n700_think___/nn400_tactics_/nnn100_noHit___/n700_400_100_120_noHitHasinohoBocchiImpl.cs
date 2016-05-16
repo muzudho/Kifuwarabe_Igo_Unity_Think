@@ -104,7 +104,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
                 )
             {
                 // 盤外
-                //System.Console.WriteLine(string.Format("(%d,%d) ban=%d ; Soto \n", x, y, boardSize));
+                //System.Console.WriteLine(string.Format("({0:D},{1:D}) ban={2:D} ; Soto \n", x, y, boardSize));
                 this.SetSoto( true);
                 goto gt_EndMethod;
             }
@@ -114,12 +114,12 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
             )
             {
                 // 辺
-                //System.Console.WriteLine(string.Format("(%d,%d) ban=%d ; EDGE \n", x, y, boardSize));
+                //System.Console.WriteLine(string.Format("({0:D},{1:D}) ban={2:D} ; EDGE \n", x, y, boardSize));
                 this.SetEdge( true);
             }
             else
             {
-                //System.Console.WriteLine(string.Format("(%d,%d) ban=%d ; ------ \n", x, y, boardSize));
+                //System.Console.WriteLine(string.Format("({0:D},{1:D}) ban={2:D} ; ------ \n", x, y, boardSize));
                 goto gt_EndMethod;
             }
 
@@ -128,7 +128,7 @@ namespace n700_think___.nn400_tactics_.nnn100_noHit___
             )
             {
                 // 角
-                //System.Console.WriteLine(string.Format("(%d,%d) ban=%d ; CORNER \n", x, y, boardSize));
+                //System.Console.WriteLine(string.Format("({0:D},{1:D}) ban={2:D} ; CORNER \n", x, y, boardSize));
                 this.SetCorner( true);
             }
 

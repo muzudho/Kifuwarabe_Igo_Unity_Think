@@ -37,7 +37,7 @@ namespace n950_main____
         // 初期化
         //────────────────────────────────────────────────────────────────────────────────
         // GUI は、対局開始時に一度だけ呼びだしてください。
-        void DoBegin() {
+        public void DoBegin() {
             System.Console.Title = "CgfgobanDLL Infomation Window";
             System.Console.WriteLine(string.Format("デバッグ用の窓だぜ☆（＾ｑ＾）　PRT()関数で出力できるんだぜ☆\n"));
 
@@ -53,9 +53,9 @@ namespace n950_main____
         //
         // 次の1手の座標を返す。PASSの場合0。
         // 終局処理時に呼び出した場合は、終局判断の結果を返す。
-        int DoBestmove(
+        public int DoBestmove(
                 int[]       initBoard	,   // 初期盤面（置碁の場合は、ここに置石が入る）
-                int[][]     kifu        ,   // 棋譜  [][3]
+                int[,]     kifu        ,   // 棋譜  [2048][3]
                                             //      [手数][0]...座標
                                             //		[手数][1]...石の色
                                             //		[手数][2]...消費時間（秒)
@@ -92,9 +92,9 @@ namespace n950_main____
 
             // 棋譜を進めていくぜ☆
             for (iTesuu = 0; iTesuu < curTesuu; iTesuu++) {
-                node = kifu[iTesuu][0]; // 座標、y*256 + x の形で入っている
-                color = kifu[iTesuu][1];    // 石の色
-                time = kifu[iTesuu][2]; // 消費時間
+                node = kifu[iTesuu,0]; // 座標、y*256 + x の形で入っている
+                color = kifu[iTesuu,1];    // 石の色
+                time = kifu[iTesuu,2]; // 消費時間
                 thoughtTime[iTesuu & 1] += time; // 手数の下1桁を見て [0]先手、[1]後手。
                 Move move = new MoveImpl();
                 if (move.MoveOne(node, color, board) != MoveResult.MOVE_SUCCESS) {
@@ -165,9 +165,17 @@ namespace n950_main____
             // １手指します。
             bestmoveNode = ThinkImpl.Bestmove(color, board, libertyOfNodes);
 
-            System.Console.WriteLine(string.Format("先手%4d秒　　　後手%4d秒　　　着手(%2d,%2d)\n", thoughtTime[0], thoughtTime[1], (bestmoveNode & 0xff), (bestmoveNode >> 8)));
-            //System.Console.WriteLine(string.Format("思考時間：先手=%d秒、後手=%d秒\n", thoughtTime[0], thoughtTime[1]));
-            //System.Console.WriteLine(string.Format("着手=(%2d,%2d)(%04x), 手数=%d,手番=%d,盤size=%d,komi=%.1f\n",(bestmoveNode&0xff),(bestmoveNode>>8),bestmoveNode, curTesuu,flgBlackTurn,boardSize,komi));
+            System.Console.WriteLine(
+                string.Format(
+                    "先手{0:D4}秒　　　後手{1:D4}秒　　　着手({2:D2},{3:D2})\n",
+                    thoughtTime[0],
+                    thoughtTime[1],
+                    (bestmoveNode & 0xff),
+                    (bestmoveNode >> 8)
+                )
+            );
+            //System.Console.WriteLine(string.Format("思考時間：先手={0:D}秒、後手={1:D}秒\n", thoughtTime[0], thoughtTime[1]));
+            //System.Console.WriteLine(string.Format("着手=({0:D2},{1:2D})({2:x4}), 手数={3:D},手番={4:D},盤size={5:D},komi={6:f1}\n",(bestmoveNode&0xff),(bestmoveNode>>8),bestmoveNode, curTesuu,flgBlackTurn,boardSize,komi));
 
             //BoardViewImpl.PrintBoard(g_hConsoleWindow, &board);
 
@@ -180,7 +188,7 @@ namespace n950_main____
         //
         // GUIは、対局終了時に一度だけ呼びだしてください。
         // 思考部は、メモリの解放などが必要な場合にここに記述してください。
-        void DoEnd() {
+        public void DoEnd() {
             System.Console.Clear();
             // この下に、メモリの解放など必要な場合のコードを記述してください。
         }

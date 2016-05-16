@@ -28,14 +28,14 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
                 int libertyOfRen = libertyOfNodes.ValueOf(adjNode);
                 int x, y;
                 AbstractBoard.ConvertToXy(out x, out y, adjNode);
-                //System.Console.WriteLine(string.Format("adj(%d,%d)LibRen=%d", x, y, libertyOfRen));
+                //System.Console.WriteLine(string.Format("adj({0:D},{1:D})LibRen={2:D}", x, y, libertyOfRen));
 
                 if (board.ValueOf(adjNode) == opponent && libertyOfRen < 4)
                 {
                     // 相手の石（または連）で、呼吸点が 3 箇所以下の物を選びます。
 
                     List<int> openNodes = board.GetOpenNodesOfStone( adjNode, libertyOfRen);
-                    //System.Console.WriteLine(string.Format("開%d", openNodes.size()));
+                    //System.Console.WriteLine(string.Format("開{0:D}", openNodes.size()));
 
                     if (0<openNodes.Count)
                     {

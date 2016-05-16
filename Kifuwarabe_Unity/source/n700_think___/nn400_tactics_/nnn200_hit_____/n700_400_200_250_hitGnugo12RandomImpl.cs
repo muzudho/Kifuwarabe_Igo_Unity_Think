@@ -1,5 +1,5 @@
-﻿using n190_board___;//.Board;.Liberty;
-//using n700_think___.nn400_tactics_.nnn200_hit_____;//.HitGnugo12Random;
+﻿using n090_core____;
+using n190_board___;//.Board;.Liberty;
 
 
 namespace n700_think___.nn400_tactics_.nnn200_hit_____
@@ -149,21 +149,20 @@ namespace n700_think___.nn400_tactics_.nnn200_hit_____
             //----------------------------------------
             // avoid は 4 段階
             //----------------------------------------
-            System.Random rand = new System.Random(1000);//FIXME:
             if (2 < avoid)
             {
-                score = 6 + rand.Next() % 94;
+                score = 6 + Core.GetRandom() % 94;
             }
             else if (1 < avoid)
             {
-                score = 12 + rand.Next() % 88;
+                score = 12 + Core.GetRandom() % 88;
             }
             else if (0 < avoid)
             {
-                score = 25 + rand.Next() % 75;
+                score = 25 + Core.GetRandom() % 75;
             }
             else {
-                score = 50 + rand.Next() % 50;
+                score = 50 + Core.GetRandom() % 50;
             }
 
             //----------------------------------------

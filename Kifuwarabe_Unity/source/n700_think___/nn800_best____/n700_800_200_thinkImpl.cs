@@ -48,7 +48,7 @@ namespace n700_think___.nn800_best____
                 //{
                 //int x, y;
                 //AbstractBoard::ConvertToXy(x, y, node);
-                //System.Console.WriteLine(string.Format("#(%d,%d) ", x, y));
+                //System.Console.WriteLine(string.Format("#({0:D},{1:D}) ", x, y));
                 //}
 
                 // この局面で、石を置いたときの評価値
@@ -63,7 +63,7 @@ namespace n700_think___.nn800_best____
                 }
 
                 // ベストムーブを更新します。
-                // System.Console.WriteLine( string.Format("x,y=(%d,%d)=%d\n",x,y,score));
+                // System.Console.WriteLine( string.Format("x,y=({0:D},{1:D})={2:D}\n",x,y,score));
                 if (maxScore < score)
                 {
                     maxScore = score;
@@ -93,26 +93,31 @@ namespace n700_think___.nn800_best____
             else if (board.ValueOf(bestmoveNode) == BoardImpl.BLACK || board.ValueOf(bestmoveNode) == BoardImpl.WHITE)
             {
                 // 石があるなら
-                System.Console.WriteLine(string.Format("(%d,%d)　石がある。　リトライ☆！　[%d]\n", x, y, retry));
+                System.Console.WriteLine(string.Format("({0:D},{1:D})　石がある。　リトライ☆！　[{2:D}]\n", x, y, retry));
                 retry++;
                 goto gt_Retry;
             }
             else if (board.ValueOf(bestmoveNode) == BoardImpl.WAKU)
             {
                 // 枠なら
-                System.Console.WriteLine(string.Format("(%d,%d)　枠だった。　リトライ☆！　[%d]\n", x, y, retry));
+                System.Console.WriteLine(string.Format("({0:D},{1:D})　枠だった。　リトライ☆！　[{2:D}]\n", x, y, retry));
                 retry++;
                 goto gt_Retry;
             }
             else if (bestmoveNode == board.GetKouNode())
             {
                 // コウになる位置なら
-                System.Console.WriteLine(string.Format("(%d,%d)　コウになる。　リトライ☆！　[%d]\n", x, y, retry));
+                System.Console.WriteLine(string.Format("({0:D},{1:D})　コウになる。　リトライ☆！　[{2:D}]\n", x, y, retry));
                 retry++;
                 goto gt_Retry;
             }
 
-            Liberty[] liberties = new Liberty[4];// 上隣 → 右隣 → 下隣 → 左隣
+            Liberty[] liberties = new Liberty[4]{// 上隣 → 右隣 → 下隣 → 左隣
+                new LibertyImpl(),
+                new LibertyImpl(),
+                new LibertyImpl(),
+                new LibertyImpl(),
+            };
             board.ForeachArroundDirAndNodes(bestmoveNode, (int iDir, int adjNode, ref bool isBreak) =>{
                 int adjColor = board.ValueOf(adjNode);            // 上下左右隣(adjacent)の石の色
                 liberties[iDir].Count(adjNode, adjColor, board);   // 隣の石（または連）の呼吸点　の数を数えます。
@@ -123,7 +128,7 @@ namespace n700_think___.nn800_best____
                 NoHitOwnEye noHitOwnEye = new NoHitOwnEyeImpl();        // 自分の眼に打たない仕組み。
                 if (noHitOwnEye.IsThis(color, bestmoveNode, liberties, board))
                 {// 自分の眼に打ち込む状況か調査
-                    System.Console.WriteLine(string.Format("(%d,%d)　自分の眼に打ち込む。　リトライ☆！　[%d]\n", x, y, retry));
+                    System.Console.WriteLine(string.Format("({0:D},{1:D})　自分の眼に打ち込む。　リトライ☆！　[{2:D}]\n", x, y, retry));
                     retry++;
                     goto gt_Retry;
                 }
@@ -135,7 +140,7 @@ namespace n700_think___.nn800_best____
 
                 if (noHitSuicide.IsThis( color, bestmoveNode, liberties, board))
                 {// 自殺手になる状況でないか調査。
-                    System.Console.WriteLine(string.Format("(%d,%d)　自殺手になる。　リトライ☆！　[%d]\n", x, y, retry));
+                    System.Console.WriteLine(string.Format("({0:D},{1:D})　自殺手になる。　リトライ☆！　[{2:D}]\n", x, y, retry));
                     retry++;
                     goto gt_Retry;
                 }

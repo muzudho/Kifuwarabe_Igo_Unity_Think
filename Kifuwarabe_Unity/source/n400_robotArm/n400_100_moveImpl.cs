@@ -48,7 +48,7 @@ namespace n400_robotArm
             //----------------------------------------
             if (node == board.GetKouNode())
             {
-                System.Console.WriteLine(string.Format("move() Err: コウ！z=%04x\n", node));
+                System.Console.WriteLine(string.Format("move() Err: コウ！z={0,x4}\n", node));
                 // 操作を弾きます。
                 return MoveResult.MOVE_KOU;
             }
@@ -58,7 +58,7 @@ namespace n400_robotArm
             //----------------------------------------
             if (board.ValueOf(node) != 0)
             {
-                System.Console.WriteLine(string.Format("move() Err: 空点ではない！z=%04x\n", node));
+                System.Console.WriteLine(string.Format("move() Err: 空点ではない！z={0,x4}\n", node));
                 // 操作を弾きます。
                 return MoveResult.MOVE_EXIST;
             }
@@ -115,7 +115,7 @@ namespace n400_robotArm
                 // 置いた石に呼吸点がない場合。
 
                 // 操作を弾きます。
-                //System.Console.WriteLine(string.Format("move() Err: 自殺手! z=%04x\n", node));
+                //System.Console.WriteLine(string.Format("move() Err: 自殺手! z={0,x4}\n", node));
                 board.SetValue(node, 0);
                 return MoveResult.MOVE_SUICIDE;
             }
@@ -153,7 +153,7 @@ namespace n400_robotArm
                 if (sum >= 2)
                 {
                     System.Console.WriteLine(string.Format(
-                        "１つ取られて、コウの位置へ打つと、１つの石を2つ以上取れる？node=%04x\n", node));
+                        "１つ取られて、コウの位置へ打つと、１つの石を2つ以上取れる？node={0,x4}\n", node));
                     // これはエラー。
 
                     // 操作を弾きます。

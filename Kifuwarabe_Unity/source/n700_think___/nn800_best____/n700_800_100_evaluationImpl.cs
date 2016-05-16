@@ -70,7 +70,12 @@ namespace n700_think___.nn800_best____
             noHitMouth.Research(color, node, board);       // 相手の口に石を打ち込む状況でないか調査。
 
 
-            Liberty[] liberties = new Liberty[4];// 上隣 → 右隣 → 下隣 → 左隣
+            Liberty[] liberties = new Liberty[4] {// 上隣 → 右隣 → 下隣 → 左隣
+                new LibertyImpl(),
+                new LibertyImpl(),
+                new LibertyImpl(),
+                new LibertyImpl(),
+            };
             board.ForeachArroundDirAndNodes(node, (int iDir, int adjNode, ref bool isBreak) =>{
                 int adjColor = board.ValueOf(adjNode);            // 上下左右隣(adjacent)の石の色
                 liberties[iDir].Count(adjNode, adjColor, board);   // 隣の石（または連）の呼吸点　の数を数えます。
@@ -105,8 +110,8 @@ namespace n700_think___.nn800_best____
             }
 
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("$(%d,%d) "), x, y);
-            //System.Console.WriteLine(string.Format("LibRen=%d スコア="), libertyOfRen);
+            //System.Console.WriteLine(string.Format("$({0:D},{1:D}) ", x, y));
+            //System.Console.WriteLine(string.Format("LibRen={0:D} スコア=", libertyOfRen));
             //#endif
 
             int nHitRandom = hitRandom.Evaluate(); // 0 ～ 99 のランダムな評価値を与える。
@@ -132,48 +137,48 @@ namespace n700_think___.nn800_best____
 
             // ばらしたい
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("b%d,", nHitRandom));
+            //System.Console.WriteLine(string.Format("b{0:D},", nHitRandom));
             //#endif
             score += nHitRandom;
 
             // マウスに打ちたくない
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("m%d,", nNoHitMouth));
+            //System.Console.WriteLine(string.Format("m{0:D},", nNoHitMouth));
             //#endif
             score += nNoHitMouth;
 
             // ツケたい
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("t%d,", nTuke));
+            //System.Console.WriteLine(string.Format("t{0:D},", nTuke));
             //#endif
             score += nTuke;
 
             // アテたい
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("a%d,", nAte));
+            //System.Console.WriteLine(string.Format("a{0:D},", nAte));
             //#endif
             score += nAte;
 
             // ノビたい
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("n%d,", nNobiSaver));
+            //System.Console.WriteLine(string.Format("n{0:D},", nNobiSaver));
             //#endif
             score += nNobiSaver;
 
             // 端の方に打ちたくない
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("h%d,", nNoHitHasinoho));
+            //System.Console.WriteLine(string.Format("h{0:D},", nNoHitHasinoho));
             //#endif
             score += nNoHitHasinoho;
 
             // Gnugo1.2みたいに打ちたい
             //# ifdef EVAL_LOG
-            //System.Console.WriteLine(string.Format("g%d,", nHitGnugo12Random));
+            //System.Console.WriteLine(string.Format("g{0:D},", nHitGnugo12Random));
             //#endif
             score += nHitGnugo12Random;
 
             //# ifdef EVAL_LOG
-            //            System.Console.WriteLine(string.Format("[%d] \n", score));
+            //            System.Console.WriteLine(string.Format("[{0:D}] \n", score));
             //#endif
 
             gt_EndMethod:

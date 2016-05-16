@@ -14,7 +14,7 @@ namespace n930_view____
             libertyOfNodes.ForeachAllXyWithWaku((int x, int y, ref bool isBreak) =>{
                 int node = AbstractBoard.ConvertToNode(x, y);
 
-                System.Console.WriteLine(string.Format("%2d", libertyOfNodes.ValueOf(node)));
+                System.Console.WriteLine(string.Format("{0:D2}", libertyOfNodes.ValueOf(node)));
 
                 if (x == libertyOfNodes.GetSize() + 1)
                 {
