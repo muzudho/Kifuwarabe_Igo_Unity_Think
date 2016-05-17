@@ -1,7 +1,4 @@
-﻿using n190_board___;//.Board;.LibertyOfNodes;
-
-
-namespace n700_think___.nn800_best____
+﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
 {
     //--------------------------------------------------------------------------------
     // enum

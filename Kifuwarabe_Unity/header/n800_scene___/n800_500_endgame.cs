@@ -1,7 +1,4 @@
-﻿using n190_board___;//.Board;
-
-
-namespace n800_scene___
+﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
 {
 
     //--------------------------------------------------------------------------------

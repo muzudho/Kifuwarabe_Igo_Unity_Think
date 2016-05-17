@@ -1,7 +1,7 @@
-﻿using n700_think___.nn800_best____;//.ThinkImpl.GameType;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____;//.ThinkImpl.GameType;
 
 
-namespace n950_main____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
 {
 
     // Unity／スマートフォン・アプリと連携するぜ☆

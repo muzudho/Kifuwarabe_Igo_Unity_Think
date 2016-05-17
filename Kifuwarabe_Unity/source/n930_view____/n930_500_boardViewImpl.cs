@@ -1,7 +1,7 @@
-﻿using n190_board___;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;
 
 
-namespace n930_view____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n930_view____
 {
     public class BoardViewImpl
     {

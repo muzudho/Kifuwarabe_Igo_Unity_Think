@@ -1,9 +1,9 @@
-﻿using n190_board___;//n190_100_board.h" /n190_150_liberty.h"
-using n400_robotArm;///n400_100_move.h"
-using n700_think___.nn400_tactics_.nnn100_noHit___;///n700_400_100_050_noHitSuicide.h"
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//n190_100_board.h" /n190_150_liberty.h"
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____;///n400_100_move.h"
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn100_noHit___;///n700_400_100_050_noHitSuicide.h"
 
 
-namespace n700_think___.nn400_tactics_.nnn100_noHit___
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn100_noHit___
 { 
     public class NoHitSuicideImpl : NoHitSuicide
     {

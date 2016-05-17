@@ -1,4 +1,4 @@
-﻿namespace n750_explain_
+﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n750_explain_
 {
 
     //--------------------------------------------------------------------------------

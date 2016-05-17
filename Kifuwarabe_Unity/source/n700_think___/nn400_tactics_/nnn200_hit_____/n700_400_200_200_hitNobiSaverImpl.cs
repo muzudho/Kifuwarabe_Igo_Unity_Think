@@ -1,8 +1,7 @@
-﻿using n190_board___;//.Liberty;.LibertyOfNodes;
-//using n700_think___.nn400_tactics_.nnn200_hit_____.HitNobiSaver;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Liberty;.LibertyOfNodes;
 
 
-namespace n700_think___.nn400_tactics_.nnn200_hit_____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn200_hit_____
 {
     public class HitNobiSaverImpl : HitNobiSaver
     {

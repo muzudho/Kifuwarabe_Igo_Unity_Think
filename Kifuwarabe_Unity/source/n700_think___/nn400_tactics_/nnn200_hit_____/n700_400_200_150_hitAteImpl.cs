@@ -1,10 +1,9 @@
 ﻿using System.Collections.Generic;
-using n190_board___;//.Liberty;
-using n400_robotArm;//.Move;
-//using n700_think___.nn400_tactics_.nnn200_hit_____.HitAte;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Liberty;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____;//.Move;
 
 
-namespace n700_think___.nn400_tactics_.nnn200_hit_____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn200_hit_____
 {
     public class HitAteImpl : HitAte
     {

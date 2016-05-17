@@ -1,8 +1,7 @@
-﻿using n190_board___;//.Board;.Liberty;
-//using n400_robotArm.Move;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;
 
 
-namespace n400_robotArm
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
 {
     public class MoveImpl : Move {
 

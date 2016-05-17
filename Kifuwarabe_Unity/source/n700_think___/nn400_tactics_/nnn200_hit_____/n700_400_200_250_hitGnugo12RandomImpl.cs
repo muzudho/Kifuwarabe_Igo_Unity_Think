@@ -1,8 +1,8 @@
-﻿using n090_core____;
-using n190_board___;//.Board;.Liberty;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n090_core____;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Board;.Liberty;
 
 
-namespace n700_think___.nn400_tactics_.nnn200_hit_____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn200_hit_____
 {
     public class HitGnugo12RandomImpl : HitGnugo12Random
     {

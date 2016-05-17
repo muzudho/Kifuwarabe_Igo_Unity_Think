@@ -52,14 +52,14 @@ KifuwarabeThink クラス
         ────────────────────────────────────
 
         int DoBestmove(
-                            int    initBoard    []   ,
-                            int    kifu         [][3],
+                            int[]  initBoard         ,
+                            int[,] kifu              ,  //[2048,3]
                             int    tesuu             ,
                             bool   blackTurn         ,
                             int    boardSize         ,
                             double komi              ,
                             int    endgameType       ,
-                        ref int    endgameBoard []
+                        ref int[]  endgameBoard
                       )
 
             （概要）

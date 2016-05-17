@@ -1,8 +1,7 @@
-﻿using n190_board___;//.Liberty;
-//using n700_think___.nn400_tactics_.nnn100_noHit___.NoHit;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Liberty;
 
 
-namespace n700_think___.nn400_tactics_.nnn100_noHit___
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn100_noHit___
 {
 
     // _____

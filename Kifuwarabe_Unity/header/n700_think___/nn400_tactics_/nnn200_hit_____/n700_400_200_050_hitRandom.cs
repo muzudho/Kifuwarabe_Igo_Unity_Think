@@ -1,7 +1,4 @@
-﻿//using nnn200_hit_____.Hit;
-
-
-namespace n700_think___.nn400_tactics_.nnn200_hit_____
+﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn200_hit_____
 {
 
     // 0～99 の数字をランダムに返します。

@@ -1,7 +1,4 @@
-﻿//using n190_board___.Liberty;
-
-
-namespace n190_board___
+﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 { 
     public class LibertyImpl : Liberty
     {

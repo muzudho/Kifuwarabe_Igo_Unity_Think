@@ -1,9 +1,10 @@
-﻿using n190_board___;//.Board .BoardImpl .LibertyOfNodes;
-using n400_robotArm;//.Move;
-using n700_think___.nn800_best____;//.ThinkImpl.GameType;
-using n750_explain_;//FigureType
-using n800_scene___;//.EndgameImpl;
-using n950_main____;//.CgfThink;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Board .BoardImpl .LibertyOfNodes;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____;//.Move;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____;//.ThinkImpl.GameType;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n750_explain_;//FigureType
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___;//.EndgameImpl;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____;//.CgfThink;
+
 
 //
 // コンピューター囲碁ソフト『きふわらべ』の思考エンジン
@@ -12,7 +13,7 @@ using n950_main____;//.CgfThink;
 //
 // 『2005/06/04 - 2005/07/15 山下 宏』版を元に改造。
 // 乱数で手を返すだけです。
-namespace n950_main____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
 { 
     //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     // 別のアプリケーションから呼び出される関数をまとめている
@@ -189,7 +190,7 @@ namespace n950_main____
         // GUIは、対局終了時に一度だけ呼びだしてください。
         // 思考部は、メモリの解放などが必要な場合にここに記述してください。
         public void DoEnd() {
-            System.Console.Clear();
+            //System.Console.Clear();
             // この下に、メモリの解放など必要な場合のコードを記述してください。
         }
     }

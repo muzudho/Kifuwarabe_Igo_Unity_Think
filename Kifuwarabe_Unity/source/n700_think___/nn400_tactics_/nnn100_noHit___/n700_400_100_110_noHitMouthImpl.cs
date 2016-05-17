@@ -1,8 +1,8 @@
-﻿using n190_board___;//.Board;
-using n700_think___.nn400_tactics_.nnn100_noHit___;//.NoHitMouth;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Board;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn100_noHit___;//.NoHitMouth;
 
 
-namespace n700_think___.nn400_tactics_.nnn100_noHit___
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn100_noHit___
 { 
     public class NoHitMouthImpl : NoHitMouth
     {

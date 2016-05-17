@@ -1,10 +1,10 @@
-﻿using n190_board___;//.Board;.LibertyOfNodes;
-using n400_robotArm;//.Move;
-using n700_think___.nn400_tactics_.nnn100_noHit___;//.NoHitSuicide;.NoHitOwnEye;.NoHitMouth;.NoHitHasinohoBocchi;
-using n700_think___.nn400_tactics_.nnn200_hit_____;//.HitRandom;.HitTuke;.HitAte;.HitNobiSaver;.HitGnugo12Random;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Board;.LibertyOfNodes;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn100_noHit___;//.Move;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn100_noHit___;//.NoHitSuicide;.NoHitOwnEye;.NoHitMouth;.NoHitHasinohoBocchi;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn200_hit_____;//.HitRandom;.HitTuke;.HitAte;.HitNobiSaver;.HitGnugo12Random;
 
 
-namespace n700_think___.nn800_best____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
 {
     public class EvaluationImpl
     {

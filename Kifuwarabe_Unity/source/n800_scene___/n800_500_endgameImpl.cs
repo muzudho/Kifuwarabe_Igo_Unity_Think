@@ -1,9 +1,9 @@
-﻿using n090_core____;
-using n190_board___;//.Board;.Liberty;
-using n750_explain_;//.FigureType;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n090_core____;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Board;.Liberty;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n750_explain_;//.FigureType;
 
 
-namespace n800_scene___
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
 {
 
     public class EndgameImpl

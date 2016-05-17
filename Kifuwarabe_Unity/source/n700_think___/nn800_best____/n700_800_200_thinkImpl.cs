@@ -1,15 +1,13 @@
-﻿//#include <time.h>		// clock() を使用するために。
-using n190_board___;//.Board;.LibertyOfNodes;
-using n400_robotArm;//.Move;
-using n700_think___.nn400_tactics_.nnn100_noHit___;//.NoHitSuicide;.NoHitOwnEye;
-using n800_scene___;//.EndgameImpl;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Board;.LibertyOfNodes;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn100_noHit___;//.NoHitSuicide;.NoHitOwnEye;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____;//.Move;
+//using Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___;//.EndgameImpl;
 
 
-namespace n700_think___.nn800_best____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
 { 
     public class ThinkImpl
     {
-
         /// <summary>
         /// 乱数に近い評価関数。少し石を取りに行くように。
         /// </summary>
@@ -75,8 +73,6 @@ namespace n700_think___.nn800_best____
 
 //# ifdef ENABLE_MOVE_RETRY
 
-            int x, y;
-            AbstractBoard.ConvertToXy(out x, out y, bestmoveNode);
 
             // 異常回避☆！　リトライ☆！
             if (bestmoveNode == 0)
@@ -90,60 +86,47 @@ namespace n700_think___.nn800_best____
                 bestmoveNode = 0;
                 goto gt_EndMethod;
             }
-            else if (board.ValueOf(bestmoveNode) == BoardImpl.BLACK || board.ValueOf(bestmoveNode) == BoardImpl.WHITE)
-            {
-                // 石があるなら
-                System.Console.WriteLine(string.Format("({0:D},{1:D})　石がある。　リトライ☆！　[{2:D}]\n", x, y, retry));
-                retry++;
-                goto gt_Retry;
-            }
-            else if (board.ValueOf(bestmoveNode) == BoardImpl.WAKU)
-            {
-                // 枠なら
-                System.Console.WriteLine(string.Format("({0:D},{1:D})　枠だった。　リトライ☆！　[{2:D}]\n", x, y, retry));
-                retry++;
-                goto gt_Retry;
-            }
-            else if (bestmoveNode == board.GetKouNode())
-            {
-                // コウになる位置なら
-                System.Console.WriteLine(string.Format("({0:D},{1:D})　コウになる。　リトライ☆！　[{2:D}]\n", x, y, retry));
-                retry++;
-                goto gt_Retry;
-            }
 
-            Liberty[] liberties = new Liberty[4]{// 上隣 → 右隣 → 下隣 → 左隣
-                new LibertyImpl(),
-                new LibertyImpl(),
-                new LibertyImpl(),
-                new LibertyImpl(),
-            };
-            board.ForeachArroundDirAndNodes(bestmoveNode, (int iDir, int adjNode, ref bool isBreak) =>{
-                int adjColor = board.ValueOf(adjNode);            // 上下左右隣(adjacent)の石の色
-                liberties[iDir].Count(adjNode, adjColor, board);   // 隣の石（または連）の呼吸点　の数を数えます。
-            });
-
-            // 自分の眼潰しチェック
+            NoMoveReason noMoveReason;
+            if (!UtilMove.CanMove(
+                color,
+                bestmoveNode,
+                board,
+                out noMoveReason
+                ))
             {
-                NoHitOwnEye noHitOwnEye = new NoHitOwnEyeImpl();        // 自分の眼に打たない仕組み。
-                if (noHitOwnEye.IsThis(color, bestmoveNode, liberties, board))
-                {// 自分の眼に打ち込む状況か調査
-                    System.Console.WriteLine(string.Format("({0:D},{1:D})　自分の眼に打ち込む。　リトライ☆！　[{2:D}]\n", x, y, retry));
-                    retry++;
-                    goto gt_Retry;
+                // 着手禁止点（または自分の眼をつぶす手の場合）
+
+                int x, y;
+                AbstractBoard.ConvertToXy(out x, out y, bestmoveNode);
+
+                switch (noMoveReason)
+                {
+                    case NoMoveReason.ExistsStone:
+                        // 石があるなら
+                        System.Console.WriteLine(string.Format("({0:D},{1:D})　石がある。　リトライ☆！　[{2:D}]\n", x, y, retry));
+                        break;
+                    case NoMoveReason.OutOfBoard:
+                        // 枠なら
+                        System.Console.WriteLine(string.Format("({0:D},{1:D})　枠だった。　リトライ☆！　[{2:D}]\n", x, y, retry));
+                        break;
+                    case NoMoveReason.Kou:
+                        // コウになる位置なら
+                        System.Console.WriteLine(string.Format("({0:D},{1:D})　コウになる。　リトライ☆！　[{2:D}]\n", x, y, retry));
+                        break;
+                    case NoMoveReason.Suicide:
+                        // 自殺手になるなら
+                        System.Console.WriteLine(string.Format("({0:D},{1:D})　自殺手になる。　リトライ☆！　[{2:D}]\n", x, y, retry));
+                        break;
+                    case NoMoveReason.OwnEye:
+                        // 自分の眼になるなら
+                        System.Console.WriteLine(string.Format("({0:D},{1:D})　自分の眼に打ち込む。　リトライ☆！　[{2:D}]\n", x, y, retry));
+                        break;
                 }
-            }
 
-            // 自殺手チェック
-            {
-                NoHitSuicide noHitSuicide = new NoHitSuicideImpl();      // 自殺手を打たないようにする仕組み。
-
-                if (noHitSuicide.IsThis( color, bestmoveNode, liberties, board))
-                {// 自殺手になる状況でないか調査。
-                    System.Console.WriteLine(string.Format("({0:D},{1:D})　自殺手になる。　リトライ☆！　[{2:D}]\n", x, y, retry));
-                    retry++;
-                    goto gt_Retry;
-                }
+                // 石を置けないなら☆
+                retry++;
+                goto gt_Retry;
             }
 //#endif
 

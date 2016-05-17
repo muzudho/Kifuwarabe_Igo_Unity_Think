@@ -1,4 +1,4 @@
-﻿namespace n090_core____ {
+﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n090_core____ {
 
     public abstract class Core {
 

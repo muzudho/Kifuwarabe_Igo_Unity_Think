@@ -1,8 +1,8 @@
-﻿using n190_board___;//.Board;
-//using n700_think___.nn400_tactics_.nnn100_noHit___.NoHit;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;//.Board;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn100_noHit___;
 
 
-namespace n700_think___.nn400_tactics_.nnn100_noHit___
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn100_noHit___
 {
     // 盤上の端の方に　ぼっちの石（隣接する石がない石）　を打たない仕組み。
     // 呼吸点が塞いでしまって　得をしにくい。
