@@ -186,5 +186,17 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             out int[] thoughtTime
             );
 
+        /// <summary>
+        /// 棋譜はいじらず、盤面だけ更新します。
+        /// </summary>
+        /// <param name="bestmoveNode"></param>
+        /// <param name="color"></param>
+        /// <param name="board"></param>
+        void DropStone_UpdateBoard(
+            int bestmoveNode,
+            Color color,
+            Board board
+            );
+
     }
 }

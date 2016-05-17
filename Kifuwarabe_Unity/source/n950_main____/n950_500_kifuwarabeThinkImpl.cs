@@ -292,6 +292,21 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             // この下に、メモリの解放など必要な場合のコードを記述してください。
         }
 
+        public void DropStone_UpdateBoard(
+            int bestmoveNode,
+            Color color,
+            Board board            
+            )
+        {
+            this.DropStone(bestmoveNode, color, board);// 石を置く
+            List<KifuElement> tempKifu = new List<KifuElement>();
+            tempKifu.Add(new KifuElementImpl(bestmoveNode, color, 0));// 一時的な棋譜を書く。
+            int[] thoughtTime;
+            this.PlayKifu(board, tempKifu, tempKifu.Count, out thoughtTime);//棋譜を手繰って盤面更新。
+            //tempKifu.Clear();// 棋譜はクリアー。もう使わない。
+            this.PrintBestmove(bestmoveNode, thoughtTime);// 表示。
+        }
+
         /// <summary>
         /// 石を置きます。
         /// </summary>

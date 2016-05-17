@@ -172,16 +172,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
 
                 // 石を置きます。
                 bestmoveNode = 0x0b11;//黒番、コウを作る☆
-                {
-                    Color color = Color.Black;
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
-                }
+                // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                kwThink.DropStone_UpdateBoard(bestmoveNode, Color.Black, board01);
 
                 // 次、エラーになる。
                 bestmoveNode = 0x0b10;//白番、コウに打ち込もうとする（エラー）☆
@@ -302,13 +294,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
 
                     System.Console.WriteLine("（＾ｑ＾）黒１  ☆！");
@@ -326,13 +313,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）白１  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -349,13 +331,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）黒２  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -372,13 +349,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）白２  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -395,13 +367,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）黒３  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -418,13 +385,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）白３  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -441,13 +403,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）黒４  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -464,13 +421,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）白４  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -487,13 +439,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）黒５  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -510,13 +457,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）白５  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
@@ -528,7 +470,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
             System.Console.WriteLine("両者がパスするか、１０００手に達したら最後だぜ☆（＾▽＾）");
             System.Console.ReadKey();
             int passCount = 0;
-            while(kifu01.Count<1000)//無限ループ☆！
+            int plyCount = 0;
+            while(plyCount < 1000)//無限ループ☆！
             {
                 int bestmoveNode;
                 {
@@ -542,16 +485,13 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）黒１  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
+
+                    plyCount++;
                 }
 
                 if(bestmoveNode==0)
@@ -568,7 +508,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                     passCount = 0;
                 }
 
-                if(!(kifu01.Count < 1000))
+                if(!(plyCount < 1000))
                 {
                     break;//ループを抜けるぜ☆
                 }
@@ -584,16 +524,13 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                         color,
                         komi
                         );
-                    kwThink.DropStone(bestmoveNode, color, board01);
-                    kifu01.Add(new KifuElementImpl(bestmoveNode, color, 0));// FIXME: とりあえず 0 秒で打ち込んだことにするか☆？
-                    // 棋譜を手繰って、局面を更新します。
-                    int[] thoughtTime;
-                    kwThink.PlayKifu(board01, kifu01, kifu01.Count, out thoughtTime);
-                    kifu01.Clear();// 棋譜はクリアー。
-                    kwThink.PrintBestmove(bestmoveNode, thoughtTime);
+                    // （│●│○│●│○│打）棋譜はいじらず、盤面だけ更新します。
+                    kwThink.DropStone_UpdateBoard(bestmoveNode, color, board01);
 
                     System.Console.WriteLine("（＾ｑ＾）白１  ☆！");
                     kwThink.PrintBoard(board01);// （│●│○│●│○）碁盤表示
+
+                    plyCount++;
                 }
 
                 if (bestmoveNode == 0)
