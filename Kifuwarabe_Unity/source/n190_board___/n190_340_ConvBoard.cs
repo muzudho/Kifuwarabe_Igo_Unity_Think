@@ -9,10 +9,14 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         /// <summary>
         /// intの配列を、colorの配列に変換します。
         /// </summary>
+        /// <param name="board"></param>
         /// <param name="manualTable"></param>
         /// <param name="size">19路盤なら19。</param>
-        /// <param name="board"></param>
-        public static void IntToColor(int[] manualTable, int boardSize, out Board board)
+        public static void IntToColor(
+            out Board board,
+            int[] manualTable,
+            int boardSize
+        )
         {
             // 手で打ち込んだテーブル（manualTable） は　例えば 19路盤の場合 21x21 サイズで渡される。
             // 内部的なテーブルは 横幅が 256 ある。

@@ -15,7 +15,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// <param name="arr_endgameBoard"></param>
         /// <param name="board"></param>
         /// <returns></returns>
-        public static int EndgameStatus(
+        public static void EndgameStatus(
             GtpStatusType[] arr_endgameBoard,
             Table<Color> board
         ){
@@ -65,8 +65,6 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
                     }
                 }
             });
-
-            return 0;
         }
 
         /// <summary>
@@ -75,8 +73,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// </summary>
         /// <param name="arr_endgameBoard"></param>
         /// <param name="board"></param>
-        /// <returns></returns>
-        public static int EndgameDrawFigure(
+        public static void EndgameDrawFigure(
             FigureType[] arr_endgameBoard, Board board)
         {
             int x;
@@ -141,7 +138,6 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
                     }
                 }
             }
-            return 0;
         }
 
         /// <summary>
@@ -150,8 +146,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// </summary>
         /// <param name="arr_endgameBoard"></param>
         /// <param name="board"></param>
-        /// <returns></returns>
-        public static int EndgameDrawNumber(
+        public static void EndgameDrawNumber(
             int[] arr_endgameBoard, Board board)
         {
             int x;
@@ -166,7 +161,6 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
                     arr_endgameBoard[node]  = (Core.GetRandom() % 110) - 55;
                 }
             }
-            return 0;
         }
     }
 }

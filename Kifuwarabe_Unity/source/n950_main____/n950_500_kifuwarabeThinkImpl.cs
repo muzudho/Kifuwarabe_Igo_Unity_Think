@@ -3,7 +3,7 @@ using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____;//.Move;
 using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____;//.ThinkImpl.GameType;
 using Grayscale.Kifuwarabe_Igo_Unity_Think.n750_explain_;//FigureType
 using Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___;//.EndgameImpl;
-using Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____;//.CgfThink;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n850_print___;
 
 
 //
@@ -14,12 +14,75 @@ using Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____;//.CgfThink;
 // 『2005/06/04 - 2005/07/15 山下 宏』版を元に改造。
 // 乱数で手を返すだけです。
 namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
-{ 
+{
     //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     // 別のアプリケーションから呼び出される関数をまとめている
     //━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
     public class KifuwarabeThinkImpl : KifuwarabeThink
     {
+
+        /// <summary>
+        /// Board を作成します。
+        /// </summary>
+        /// <param name="boardSize">何路盤のサイズ。9～19。</param>
+        /// <param name="manualTable">手で打ち込んだテーブル。要説明書参照。</param>
+        /// <returns>盤面オブジェクト。</returns>
+        public Board CreateBoard(
+            int boardSize,
+            int[] manualTable
+        )
+        {
+            Board board01;
+
+            // これで盤面を作るぜ☆！（＾ｑ＾）
+            ConvBoard.IntToColor(
+                out board01,
+                manualTable,
+                boardSize
+                );
+
+            return board01;
+        }
+
+        /// <summary>
+        /// 盤面を表示するぜ☆！（＾▽＾）
+        /// </summary>
+        /// <param name="board"></param>
+        public void PrintBoard(Board board)
+        {
+            BoardViewImpl.PrintBoard(board);
+        }
+
+        /// <summary>
+        /// 石を置けるか調べます。
+        /// </summary>
+        /// <returns></returns>
+        public bool CanMove(
+            Color color,
+            int node,
+            Board board,
+            out NoMoveReason noMoveReason // 理由
+        )
+        {
+            return UtilMove.CanMove(
+                    Color.BLACK,
+                    node,
+                    board,
+                    out noMoveReason
+                    );
+        }
+
+        /// <summary>
+        /// エラーメッセージ作成。
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="noMoveReason"></param>
+        /// <returns></returns>
+        public string CreateErrorMessage(int node, NoMoveReason noMoveReason)
+        {
+            return ConvBoard.ToErrorMessage(node, noMoveReason);
+        }
+
 
         //────────────────────────────────────────────────────────────────────────────────
         // 思考中断フラグ。
@@ -38,115 +101,165 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         // 初期化
         //────────────────────────────────────────────────────────────────────────────────
         // GUI は、対局開始時に一度だけ呼びだしてください。
-        public void DoBegin() {
-            System.Console.Title = "CgfgobanDLL Infomation Window";
-            System.Console.WriteLine(string.Format("デバッグ用の窓だぜ☆（＾ｑ＾）　PRT()関数で出力できるんだぜ☆\n"));
+        public void DoBegin()
+        {
+            System.Console.Title = "Kifuwarabe_Igo_Unity_Think Infomation Window";
+            System.Console.WriteLine(string.Format("デバッグ用の窓だぜ☆（＾ｑ＾）\n"));
 
             // この下に、メモリの確保など必要な場合のコードを記述してください。
         }
 
-
-        //────────────────────────────────────────────────────────────────────────────────
-        // ベストムーブ呼び出し
-        //────────────────────────────────────────────────────────────────────────────────
-        // GUI は、コンピューターの手番で呼び出してください。
-        // その際、現在の局面情報を渡してください。
-        //
-        // 次の1手の座標を返す。PASSの場合0。
-        // 終局処理時に呼び出した場合は、終局判断の結果を返す。
-        public int DoBestmove(
-                Board       initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
-                int[,]      kifu        ,   // 棋譜  [2048][3]
-                                            //      [手数][0]...座標
-                                            //		[手数][1]...石の色
-                                            //		[手数][2]...消費時間（秒)
-                                            // 手数は 0 から始まり、curTesuu の1つ手前まである。
-                int         curTesuu,       // 現在の手数
-                bool        isBlackTurn,   // 黒手番フラグ(黒番...1、白番...0)。ここだけ定数と違ってややこしい。
-                double      komi        ,   // コミ
-                GameType    endgameType ,   // 0...通常の思考、1...終局処理、2...図形を表示、3...数値を表示。
-            ref int[]       endgameBoard	// 終局処理の結果を代入する。
-        ){
-            int bestmoveNode = 0;   // コンピューターが打つ交点。
-
-            //--------------------
-            // 初期化
-            //--------------------
+        /// <summary>
+        /// 棋譜を進めるぜ☆（＾▽＾）
+        /// </summary>
+        private void GoToCurrent(
+            Board initBoard,
+            int[,] kifu,
+            int curTesuu,
+            out int[] thoughtTime
+            )
+        {
             int node;           // 囲碁盤上の交点（将棋盤でいうマス目）
             Color color;          // 石の色
             int time;           // 消費時間
             int iTesuu;
-
             // 累計思考時間 [0]先手 [1]後手。置碁の場合、白の先手なので、常に黒が先手とは限らない。
-            int[] thoughtTime = { 0, 0 };  // 配列[2]
-
-            // 棋譜を進めていくぜ☆
-            for (iTesuu = 0; iTesuu < curTesuu; iTesuu++) {
-                node = kifu[iTesuu,0]; // 座標、y*256 + x の形で入っている
-                color = ConvColor.FromNumber(kifu[iTesuu,1]);    // 石の色
-                time = kifu[iTesuu,2]; // 消費時間
+            thoughtTime = new int[] { 0, 0 };  // 配列[2]
+            for (iTesuu = 0; iTesuu < curTesuu; iTesuu++)
+            {
+                node = kifu[iTesuu, 0]; // 座標、y*256 + x の形で入っている
+                color = ConvColor.FromNumber(kifu[iTesuu, 1]);    // 石の色
+                time = kifu[iTesuu, 2]; // 消費時間
                 thoughtTime[iTesuu & 1] += time; // 手数の下1桁を見て [0]先手、[1]後手。
-                Move move = new MoveImpl();
-                if (move.MoveOne(node, color, initBoard) != MoveResult.MOVE_SUCCESS) {
+                if (UtilRobotArm.DropStone(node, color, initBoard) != DroppedResult.Success)
+                {
                     // 動かせなければそこで止める。（エラーがあった？？）
                     System.Console.WriteLine(string.Format("棋譜を進められなかったので止めた☆ \n"));
                     break;
                 }
             }
+        }
 
-            // モード別対応
-            switch (endgameType)
+        /// <summary>
+        /// ────────────────────────────────────────────────────────────────────────────────
+        /// 終局処理
+        /// ────────────────────────────────────────────────────────────────────────────────
+        /// </summary>
+        /// <param name="initBoard"></param>
+        /// <param name="kifu"></param>
+        /// <param name="curTesuu"></param>
+        /// <param name="resultTable"></param>
+        public void DoEndGame(
+                Board initBoard,    // 初期盤面（置碁の場合は、ここに置石が入る）
+                int[,] kifu,        // 棋譜  [2048][3]
+                                    //      [手数][0]...座標
+                                    //		[手数][1]...石の色
+                                    //		[手数][2]...消費時間（秒)
+                                    // 手数は 0 から始まり、curTesuu の1つ手前まである。
+                int curTesuu,       // 現在の手数
+            ref int[] resultTable	// 終局処理の結果を数字で代入する。
+            )
+        {
+            //────────────────────────────────────────────────────────────────────────────────
+            // 棋譜を進めていくぜ☆
+            //────────────────────────────────────────────────────────────────────────────────
+            int[] thoughtTime;
+            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
+
+            // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
+            GtpStatusType[] endgameBoard2 = new GtpStatusType[AbstractTable<Color>.ANOMALY_BOARD_MAX];
+            EndgameImpl.EndgameStatus(endgameBoard2, initBoard);
+
+            for (int i = 0; i < AbstractTable<Color>.ANOMALY_BOARD_MAX; i++)
             {
-                // 「終局処理」なら
-                case GameType.GAME_END_STATUS:
-                    {
-                        // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
-                        GtpStatusType[] endgameBoard2 = new GtpStatusType[AbstractTable<Color>.ANOMALY_BOARD_MAX];
-                        int result = EndgameImpl.EndgameStatus(endgameBoard2, initBoard);
-
-                        for(int i=0;i< AbstractTable<Color>.ANOMALY_BOARD_MAX; i++)
-                        {
-                            endgameBoard[i] = (int)endgameBoard2[i];
-                        }
-
-                        return result;
-                    }
-
-                // 「図形を描く」なら
-                case GameType.GAME_DRAW_FIGURE:
-                    {
-                        // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
-                        FigureType[] endgameBoard2 = new FigureType[AbstractTable<Color>.ANOMALY_BOARD_MAX];
-                        int result = EndgameImpl.EndgameDrawFigure(endgameBoard2, initBoard);
-
-                        for (int i = 0; i < AbstractTable<Color>.ANOMALY_BOARD_MAX; i++)
-                        {
-                            endgameBoard[i] = (int)endgameBoard2[i];
-                        }
-
-                        return result;
-                    }
-
-                // 「数値を書く」なら
-                case GameType.GAME_DRAW_NUMBER:
-                    {
-                        return EndgameImpl.EndgameDrawNumber(endgameBoard, initBoard);
-                    }
-
-                // 通常の指し手
-                default:
-                    break;
+                resultTable[i] = (int)endgameBoard2[i];
             }
+        }
+
+        /// <summary>
+        /// ────────────────────────────────────────────────────────────────────────────────
+        /// 図形描画
+        /// ────────────────────────────────────────────────────────────────────────────────
+        /// </summary>
+        /// <param name="initBoard"></param>
+        /// <param name="kifu"></param>
+        /// <param name="curTesuu"></param>
+        /// <param name="resultTable"></param>
+        public void DoDrawFigure(
+                Board initBoard,    // 初期盤面（置碁の場合は、ここに置石が入る）
+                int[,] kifu,        // 棋譜  [2048][3]
+                                    //      [手数][0]...座標
+                                    //		[手数][1]...石の色
+                                    //		[手数][2]...消費時間（秒)
+                                    // 手数は 0 から始まり、curTesuu の1つ手前まである。
+                int curTesuu,       // 現在の手数
+            ref int[] resultTable	// 終局処理の結果を代入する。
+            )
+        {
+            //────────────────────────────────────────────────────────────────────────────────
+            // 棋譜を進めていくぜ☆
+            //────────────────────────────────────────────────────────────────────────────────
+            int[] thoughtTime;
+            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
+
+            // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
+            FigureType[] endgameBoard2 = new FigureType[AbstractTable<Color>.ANOMALY_BOARD_MAX];
+            EndgameImpl.EndgameDrawFigure(endgameBoard2, initBoard);
+
+            for (int i = 0; i < AbstractTable<Color>.ANOMALY_BOARD_MAX; i++)
+            {
+                resultTable[i] = (int)endgameBoard2[i];
+            }
+        }
+
+        /// <summary>
+        /// ────────────────────────────────────────────────────────────────────────────────
+        /// 数字描画
+        /// ────────────────────────────────────────────────────────────────────────────────
+        /// </summary>
+        /// <param name="initBoard"></param>
+        /// <param name="kifu"></param>
+        /// <param name="curTesuu"></param>
+        /// <param name="resultTable"></param>
+        public void DoDrawNumber(
+                Board initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
+                int[,] kifu,        // 棋譜  [2048][3]
+                                    //      [手数][0]...座標
+                                    //		[手数][1]...石の色
+                                    //		[手数][2]...消費時間（秒)
+                                    // 手数は 0 から始まり、curTesuu の1つ手前まである。
+                int curTesuu,       // 現在の手数
+            ref int[] resultTable	// 終局処理の結果を代入する。
+            )
+        {
+            //────────────────────────────────────────────────────────────────────────────────
+            // 棋譜を進めていくぜ☆
+            //────────────────────────────────────────────────────────────────────────────────
+            int[] thoughtTime;
+            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
+
+            EndgameImpl.EndgameDrawNumber(resultTable, initBoard);
+        }
+
+        public int DoBestmove(
+                Board initBoard,
+                int[,] kifu,
+                int curTesuu,
+                Color color,
+                double komi
+        ){
+
+            //────────────────────────────────────────────────────────────────────────────────
+            // 棋譜を進めていくぜ☆
+            //────────────────────────────────────────────────────────────────────────────────
+            int[] thoughtTime;
+            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
+
 
             //--------------------------------------------------------------------------------
             // 思考ルーチン
             //--------------------------------------------------------------------------------
-
-            if (isBlackTurn) {
-                color = Color.BLACK;
-            } else {
-                color = Color.WHITE;
-            }
+            int bestmoveNode = 0;   // コンピューターが打つ交点。
 
             // 石（または連）の呼吸点を数えて、各交点に格納しておきます。
             LibertyOfNodes libertyOfNodes = new LibertyOfNodesImpl();
@@ -179,9 +292,36 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         //
         // GUIは、対局終了時に一度だけ呼びだしてください。
         // 思考部は、メモリの解放などが必要な場合にここに記述してください。
-        public void DoEnd() {
+        public void DoEnd()
+        {
             //System.Console.Clear();
             // この下に、メモリの解放など必要な場合のコードを記述してください。
         }
+
+        /// <summary>
+        /// 石を置きます。
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="color"></param>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        public DroppedResult DropStone(
+            int node,
+            Color color,
+            Board board
+        )
+        {
+            return UtilRobotArm.DropStone(node, Color.BLACK, board);
+        }
+
+        /// <summary>
+        /// 石を置く前の状態に戻します。置いた石に対して１回のみ使用可能です。
+        /// </summary>
+        /// <param name="board"></param>
+        public void UndropStoneOnce(Board board)
+        {
+            UtilRobotArm.UndropStoneOnce(board);
+        }
+
     }
 }

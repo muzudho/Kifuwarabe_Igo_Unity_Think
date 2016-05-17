@@ -8,10 +8,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
     public class HitAteImpl : HitAte
     {
         public int Evaluate(
-            Color color,
-            int node,
-            Table<Color> board,
-            LibertyOfNodes libertyOfNodes
+            Color           color,
+            int             node,
+            Board           board,
+            LibertyOfNodes  libertyOfNodes
         ){
             int goodScore = 0;
             int badScore = 0;
@@ -74,8 +74,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
                                         if (0 < myLiberty.GetLiberty())    // 妥当性チェック
                                         {
                                             // 石を試しに置きます。
-                                            Move move = new MoveImpl();
-                                            move.MoveOne( openNodes[me], color, board);
+                                            UtilRobotArm.DropStone( openNodes[me], color, board);
 
                                             Liberty yourLiberty = new LibertyImpl();
                                             yourLiberty.Count(openNodes[you], opponent, board);
@@ -99,7 +98,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
                                             }
 
                                             // 石を置く前の状態に戻します。
-                                            move.UndoOnce( board);
+                                            UtilRobotArm.UndropStoneOnce( board);
                                         }
                                     }
                                 }

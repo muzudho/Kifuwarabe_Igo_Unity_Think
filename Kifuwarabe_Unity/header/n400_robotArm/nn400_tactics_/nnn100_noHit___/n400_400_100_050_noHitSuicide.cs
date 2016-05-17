@@ -25,10 +25,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
 
         // 自殺手になる状況でないか調査。
         bool IsThis(
-            Color color,
-            int node,
-            Liberty[] liberties,//[4]
-            Table<Color> board
+            Color       color,
+            int         node,
+            Liberty[]   liberties,//[4]
+            Board       board
         );
     };
 

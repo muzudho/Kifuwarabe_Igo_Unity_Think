@@ -31,7 +31,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
             Color       color,
             int         node,
             Liberty[]   liberties,//[4]
-            Table<Color> board
+            Board       board
         ){
             bool result = false;
             Color invColor = ConvColor.INVCLR(color);   //白黒反転
@@ -47,18 +47,17 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
                 }
             });
 
-            MoveResult flgMove;    // 移動結果の種類
+            DroppedResult droppedResult;    // 移動結果の種類
 
             if (!this.IsCapture())
             {                    // 石が取れない場合
                                  // 実際に置いてみて　自殺手かどうか判定
-                Move move = new MoveImpl();
-                flgMove = move.MoveOne(node, color, board);      // 石を置きます。コウの位置が変わるかも。
+                droppedResult = UtilRobotArm.DropStone(node, color, board);      // 石を置きます。コウの位置が変わるかも。
 
                 // 石を置く前の状態に戻します。
-                move.UndoOnce(board);
+                UtilRobotArm.UndropStoneOnce(board);
 
-                if (flgMove == MoveResult.MOVE_SUICIDE)
+                if (droppedResult == DroppedResult.Suicide)
                 {      // 自殺手なら
                        //System.Console.WriteLine(string.Format("自殺手は打たない。 \n"));
                        // ベストムーブにはなりえない

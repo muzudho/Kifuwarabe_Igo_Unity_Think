@@ -1,7 +1,7 @@
 ﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;
 
 
-namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n930_view____
+namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n850_print___
 {
     public class BoardViewImpl
     {

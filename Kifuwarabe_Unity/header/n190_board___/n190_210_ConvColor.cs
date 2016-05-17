@@ -8,7 +8,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 {
     public abstract class ConvColor
     {
-        public static Color INVCLR(Color color)//int x
+        public static Color INVCLR(Color color)
         {
             return (Color)(3 - (int)color);// 石の色を反転させる
         }

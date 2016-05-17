@@ -52,8 +52,9 @@
     <Compile Include="header\n190_board___\n190_400_liberty.cs" />
     <Compile Include="header\n190_board___\n190_420_libertyOfNodes.cs" />
     <Compile Include="header\n190_board___\n190_500_markingBoard.cs" />
-    <Compile Include="header\n400_robotArm\nn800_move____\n400_800_100_move.cs" />
-    <Compile Include="header\n400_robotArm\nn800_move____\n400_800_200_utilMove.cs" />
+    <Compile Include="header\n400_robotArm\nn800_move____\n400_800_100_droppedResult.cs" />
+    <Compile Include="header\n400_robotArm\nn800_move____\n400_800_200_noMoveResult.cs" />
+    <Compile Include="header\n400_robotArm\nn800_move____\n400_800_220_utilMove.cs" />
     <Compile Include="header\n400_robotArm\nn400_tactics_\nnn100_noHit___\n400_400_100_000_noHit.cs" />
     <Compile Include="header\n400_robotArm\nn400_tactics_\nnn100_noHit___\n400_400_100_050_noHitSuicide.cs" />
     <Compile Include="header\n400_robotArm\nn400_tactics_\nnn100_noHit___\n400_400_100_100_noHitOwnEye.cs" />
@@ -76,7 +77,7 @@
     <Compile Include="source\n190_board___\n190_400_libertyImpl.cs" />
     <Compile Include="source\n190_board___\n190_420_libertyOfNodesImpl.cs" />
     <Compile Include="source\n190_board___\n190_500_markingBoardImpl.cs" />
-    <Compile Include="source\n400_robotArm\nn800_move____\n400_800_100_moveImpl.cs" />
+    <Compile Include="source\n400_robotArm\nn800_move____\n400_800_120_utilRobotArm.cs" />
     <Compile Include="source\n400_robotArm\nn400_tactics_\nnn100_noHit___\n400_400_100_000_noHitImpl.cs" />
     <Compile Include="source\n400_robotArm\nn400_tactics_\nnn100_noHit___\n400_400_100_050_noHitSuicideImpl.cs" />
     <Compile Include="source\n400_robotArm\nn400_tactics_\nnn100_noHit___\n400_400_100_100_noHitOwnEyeImpl.cs" />
@@ -91,8 +92,8 @@
     <Compile Include="source\n700_think___\nn800_best____\n700_800_100_evaluationImpl.cs" />
     <Compile Include="source\n700_think___\nn800_best____\n700_800_200_thinkImpl.cs" />
     <Compile Include="source\n800_scene___\n800_500_endgameImpl.cs" />
-    <Compile Include="source\n930_view____\n930_500_boardViewImpl.cs" />
-    <Compile Include="source\n930_view____\n930_520_libertyOfNodesViewImpl.cs" />
+    <Compile Include="source\n850_print___\n850_500_boardViewImpl.cs" />
+    <Compile Include="source\n850_print___\n850_520_libertyOfNodesViewImpl.cs" />
     <Compile Include="source\n950_main____\n950_500_kifuwarabeThinkImpl.cs" />
   </ItemGroup>
   <ItemGroup>

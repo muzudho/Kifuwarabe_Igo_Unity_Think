@@ -3,20 +3,19 @@
 
 namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
 {
-    public class MoveImpl : Move {
+    public abstract class UtilRobotArm {
 
-        public MoveImpl()
-        {
-        }
-
-        ~MoveImpl()
-        {
-        }
-
-        public MoveResult MoveOne(
+        /// <summary>
+        /// 石を置きます。
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="color"></param>
+        /// <param name="board"></param>
+        /// <returns></returns>
+        public static DroppedResult DropStone(
             int node,
             Color color,
-            Table<Color> board
+            Board board
         ){
             //----------------------------------------
             // Undo用に記憶
@@ -39,7 +38,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
                 // 操作を受け付けます。
                 board.SetKouNodeForUndo( board.GetKouNode());
                 board.SetKouNode(0);
-                return MoveResult.MOVE_SUCCESS;
+                return DroppedResult.Success;
             }
 
             //----------------------------------------
@@ -49,7 +48,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             {
                 System.Console.WriteLine(string.Format("move() Err: コウ！z={0,x4}\n", node));
                 // 操作を弾きます。
-                return MoveResult.MOVE_KOU;
+                return DroppedResult.Kou;
             }
 
             //----------------------------------------
@@ -59,7 +58,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             {
                 System.Console.WriteLine(string.Format("move() Err: 空点ではない！z={0,x4}\n", node));
                 // 操作を弾きます。
-                return MoveResult.MOVE_EXIST;
+                return DroppedResult.ExistsStone;
             }
 
             board.SetValue(node, color);  // とりあえず置いてみる
@@ -116,7 +115,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
                 // 操作を弾きます。
                 //System.Console.WriteLine(string.Format("move() Err: 自殺手! z={0,x4}\n", node));
                 board.SetValue(node, 0);
-                return MoveResult.MOVE_SUICIDE;
+                return DroppedResult.Suicide;
             }
 
             //----------------------------------------
@@ -156,7 +155,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
                     // これはエラー。
 
                     // 操作を弾きます。
-                    return MoveResult.MOVE_FATAL;
+                    return DroppedResult.Fatal;
                 }
 
                 if (sum == 0)
@@ -182,10 +181,14 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             //----------------------------------------
 
             // 操作を受け入れます。
-            return MoveResult.MOVE_SUCCESS;
+            return DroppedResult.Success;
         }
 
-        public void UndoOnce(Table<Color> board)
+        /// <summary>
+        /// 石を置く前の状態に戻します。置いた石に対して１回のみ使用可能です。
+        /// </summary>
+        /// <param name="board"></param>
+        public static void UndropStoneOnce(Board board)
         {
             // 石を置く前の状態に戻します。
             board.SetKouNode( board.GetKouNodeForUndo());           // コウの位置を元に戻します。

@@ -4,43 +4,6 @@ using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn100_n
 
 namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
 {
-    /// <summary>
-    /// 石を置けない理由。
-    /// </summary>
-    public enum NoMoveReason
-    {
-
-        /// <summary>
-        /// 石は置ける。
-        /// </summary>
-        None,
-
-        /// <summary>
-        /// 石があるから。
-        /// </summary>
-        ExistsStone,
-
-        /// <summary>
-        /// 枠だから。
-        /// </summary>
-        OutOfBoard,
-
-        /// <summary>
-        /// コウだから。
-        /// </summary>
-        Kou,
-
-        /// <summary>
-        /// 自殺手だから。
-        /// </summary>
-        Suicide,
-
-        /// <summary>
-        /// 自分の眼だから。（着手禁止点ではないが）
-        /// </summary>
-        OwnEye
-    }
-
     public class UtilMove
     {
         /// <summary>
@@ -48,10 +11,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
         /// </summary>
         /// <returns></returns>
         public static bool CanMove(
-                Color color,
-                int node,
-                Table<Color> board,
-            out NoMoveReason noMoveReason // 理由
+                Color           color,
+                int             node,
+                Board           board,
+            out NoMoveReason    noMoveReason // 理由
             )
         {
             bool canMove;
