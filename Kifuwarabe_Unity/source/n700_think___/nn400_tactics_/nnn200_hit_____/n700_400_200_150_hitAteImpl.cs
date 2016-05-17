@@ -8,9 +8,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
     public class HitAteImpl : HitAte
     {
         public int Evaluate(
-            int color,
+            Color color,
             int node,
-            Board board,
+            Table<Color> board,
             LibertyOfNodes libertyOfNodes
         ){
             int goodScore = 0;
@@ -20,20 +20,20 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
 //# ifdef ENABLE_MOVE_ATTACK
 
             bool isBadMove = false; // 打たない方がマシなとき。
-            int opponent = BoardImpl.INVCLR(color);
+            Color opponent = ConvColor.INVCLR(color);
 
             // 上右下左に、相手の石がないか探します。
             board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak)=> {
                 int libertyOfRen = libertyOfNodes.ValueOf(adjNode);
                 int x, y;
-                AbstractBoard.ConvertToXy(out x, out y, adjNode);
+                AbstractTable<Color>.ConvertToXy(out x, out y, adjNode);
                 //System.Console.WriteLine(string.Format("adj({0:D},{1:D})LibRen={2:D}", x, y, libertyOfRen));
 
                 if (board.ValueOf(adjNode) == opponent && libertyOfRen < 4)
                 {
                     // 相手の石（または連）で、呼吸点が 3 箇所以下の物を選びます。
 
-                    List<int> openNodes = board.GetOpenNodesOfStone( adjNode, libertyOfRen);
+                    List<int> openNodes = BoardImpl.GetOpenNodesOfStone(board, adjNode, libertyOfRen);
                     //System.Console.WriteLine(string.Format("開{0:D}", openNodes.size()));
 
                     if (0<openNodes.Count)

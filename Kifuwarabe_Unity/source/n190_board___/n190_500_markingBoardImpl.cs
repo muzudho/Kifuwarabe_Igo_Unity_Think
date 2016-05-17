@@ -1,8 +1,8 @@
 ﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 {
-    public class MarkingBoardImpl : AbstractBoard, MarkingBoard
+    public class MarkingBoardImpl : AbstractTable<int>, MarkingBoard
     {
-        public void Initialize(Board board)
+        public void Initialize(Table<int> board)
         {
             this.SetSize(board.GetSize());
 

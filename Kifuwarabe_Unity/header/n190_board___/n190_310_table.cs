@@ -24,37 +24,15 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
     public delegate void Func01(int iDir, int adjNode, ref bool isBreak);
 
 
-
-    public interface Board{
-
-
-
-        void Initialize( int[] initBoard);
-
-        //Board();
-        //~Board();
+    /// <summary>
+    /// Color型にすれば碁盤、int型にすればマーキング・シート☆（＾▽＾）
+    /// </summary>
+    /// <typeparam name="ELM"></typeparam>
+    public interface Table<ELM>
+    {
 
 
-        /// <summary>
-        /// 指定したnode（石）に隣接している空きスペース（1以上3以下）を配列に入れて返します。
-        /// </summary>
-        /// <param name="node"></param>
-        /// <param name="size123"></param>
-        /// <returns></returns>
-        List<int> GetOpenNodesOfStone(
-		    int		node	,
-		    int		size123		// 1～3 のいずれかを指定してください。
-		);
-
-        /// <summary>
-        /// 連になっている石を消す。１個の石でも消す。
-        /// </summary>
-        /// <param name="tNode"></param>
-        /// <param name="color"></param>
-        void DeleteRenStones(
-		    int tNode,
-		    int color
-	    );
+        void Initialize(ELM[] initBoard);
 
         /// <summary>
         /// 何路盤
@@ -85,15 +63,15 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         /// </summary>
         /// <param name="node"></param>
         /// <param name="value"></param>
-        void SetValue(int node, int value);
-        int ValueOf(int node);
+        void SetValue(int node, ELM value);
+        ELM ValueOf(int node);
 
         /// <summary>
-        /// ハマ。取った石の数のこと。[0]...空き。[1]... 黒が取った石の数, [2]...白が取った石の数
+        /// ハマ。取った石の数のこと。[0]...使わない。[1]... 黒が取った石の数, [2]...白が取った石の数
         /// </summary>
-        int GetHama(int index);
-        void SetHama(int index, int value);
-        void AddHama(int index, int value);
+        int GetHama(Color color);
+        void SetHama(Color color, int value);
+        void AddHama(Color color, int value);
 
 
 

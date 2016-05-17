@@ -1,6 +1,6 @@
 ﻿namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 {
-    public class LibertyOfNodesImpl : AbstractBoard, LibertyOfNodes
+    public class LibertyOfNodesImpl : AbstractTable<int>, LibertyOfNodes
     {
         public LibertyOfNodesImpl()
         {
@@ -10,7 +10,7 @@
         {
         }
 
-        public void Initialize(Board board)
+        public void Initialize(Table<Color> board)
         {
             this.SetSize(board.GetSize());
 
@@ -23,7 +23,7 @@
             board.ForeachAllNodesWithoutWaku((int node, ref bool isBreak)=> {
 
                 Liberty liberty = new LibertyImpl();
-                liberty.Count(node, board.ValueOf(node), board);
+            liberty.Count(node, board.ValueOf(node), board);
 
                 // 呼吸点の数を覚えておく碁盤です。
                 this.SetValue(node, liberty.GetLiberty());

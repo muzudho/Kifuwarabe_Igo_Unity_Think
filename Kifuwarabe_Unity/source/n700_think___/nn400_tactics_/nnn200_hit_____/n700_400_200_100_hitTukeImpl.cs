@@ -11,10 +11,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
         }
 
         public int Evaluate(
-            int         invColor,
+            Color invColor,
             int         node,
             Liberty[]   liberties,//[4]
-            Board       pBoard
+            Table<Color> pBoard
         ){
             int score = 0;
 
@@ -22,7 +22,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
 //# ifdef ENABLE_MOVE_ATTACK
             // 評価値の計算（４方向分繰り返す）
             pBoard.ForeachArroundDirAndNodes(node, (int iDir, int adjNode, ref bool isBreak) =>{
-                int adjColor = pBoard.ValueOf(adjNode);        // その色
+                Color adjColor = pBoard.ValueOf(adjNode);        // その色
 
                 score +=
                     (adjColor == invColor ? 1 : 0)                      // 隣の石

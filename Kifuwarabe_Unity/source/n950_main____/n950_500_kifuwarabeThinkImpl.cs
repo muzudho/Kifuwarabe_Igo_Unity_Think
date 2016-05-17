@@ -55,7 +55,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         // 次の1手の座標を返す。PASSの場合0。
         // 終局処理時に呼び出した場合は、終局判断の結果を返す。
         public int DoBestmove(
-                int[]       initBoard	,   // 初期盤面（置碁の場合は、ここに置石が入る）
+                Color[]       initBoard	,   // 初期盤面（置碁の場合は、ここに置石が入る）
                 int[,]     kifu        ,   // 棋譜  [2048][3]
                                             //      [手数][0]...座標
                                             //		[手数][1]...石の色
@@ -73,7 +73,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             //--------------------
             // 何路盤
             //--------------------
-            Board board = new BoardImpl();
+            Table<Color> board = new BoardImpl();
             board.SetSize(boardSize);
 
             // 現在局面を棋譜と初期盤面から作る
@@ -84,7 +84,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             // 初期化
             //--------------------
             int node;           // 囲碁盤上の交点（将棋盤でいうマス目）
-            int color;          // 石の色
+            Color color;          // 石の色
             int time;           // 消費時間
             int iTesuu;
 
@@ -94,7 +94,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             // 棋譜を進めていくぜ☆
             for (iTesuu = 0; iTesuu < curTesuu; iTesuu++) {
                 node = kifu[iTesuu,0]; // 座標、y*256 + x の形で入っている
-                color = kifu[iTesuu,1];    // 石の色
+                color = ConvColor.FromNumber(kifu[iTesuu,1]);    // 石の色
                 time = kifu[iTesuu,2]; // 消費時間
                 thoughtTime[iTesuu & 1] += time; // 手数の下1桁を見て [0]先手、[1]後手。
                 Move move = new MoveImpl();
@@ -112,10 +112,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
                 case GameType.GAME_END_STATUS:
                     {
                         // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
-                        GtpStatusType[] endgameBoard2 = new GtpStatusType[AbstractBoard.BOARD_MAX];
+                        GtpStatusType[] endgameBoard2 = new GtpStatusType[AbstractTable<Color>.BOARD_MAX];
                         int result = EndgameImpl.EndgameStatus(endgameBoard2, board);
 
-                        for(int i=0;i< AbstractBoard.BOARD_MAX; i++)
+                        for(int i=0;i< AbstractTable<Color>.BOARD_MAX; i++)
                         {
                             endgameBoard[i] = (int)endgameBoard2[i];
                         }
@@ -127,10 +127,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
                 case GameType.GAME_DRAW_FIGURE:
                     {
                         // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
-                        FigureType[] endgameBoard2 = new FigureType[AbstractBoard.BOARD_MAX];
+                        FigureType[] endgameBoard2 = new FigureType[AbstractTable<Color>.BOARD_MAX];
                         int result = EndgameImpl.EndgameDrawFigure(endgameBoard2, board);
 
-                        for (int i = 0; i < AbstractBoard.BOARD_MAX; i++)
+                        for (int i = 0; i < AbstractTable<Color>.BOARD_MAX; i++)
                         {
                             endgameBoard[i] = (int)endgameBoard2[i];
                         }
@@ -154,9 +154,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             //--------------------------------------------------------------------------------
 
             if (isBlackTurn) {
-                color = BoardImpl.BLACK;
+                color = Color.BLACK;
             } else {
-                color = BoardImpl.WHITE;
+                color = Color.WHITE;
             }
 
             // 石（または連）の呼吸点を数えて、各交点に格納しておきます。

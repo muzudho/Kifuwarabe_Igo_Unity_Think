@@ -29,19 +29,19 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
 
         public void Research(
-                int color,
+                Color color,
                 int node,
-                Board board
+                Table<Color> board
             )
         {
-            int invColor = BoardImpl.INVCLR(color);   //白黒反転
+            Color invColor = ConvColor.INVCLR(color);   //白黒反転
 
             board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
-                int adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
+                Color adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
 
                 // 2016-03-12 16:45 Add
                 // 隣が相手の石、または枠ならカウントアップ。
-                if (adjColor == invColor || adjColor == BoardImpl.WAKU)
+                if (adjColor == invColor || adjColor == Color.WAKU)
                 {
                     this.IncreaseAdjOppo();
                 }

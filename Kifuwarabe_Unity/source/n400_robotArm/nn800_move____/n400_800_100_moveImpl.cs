@@ -15,8 +15,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
 
         public MoveResult MoveOne(
             int node,
-            int color,
-            Board board
+            Color color,
+            Table<Color> board
         ){
             //----------------------------------------
             // Undo用に記憶
@@ -29,7 +29,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             int sum;
             int delNode = 0;
             int tottaIshi = 0;              // 取った石の合計
-            int invClr = BoardImpl.INVCLR(color); // 相手の石の色
+            Color invClr = ConvColor.INVCLR(color); // 相手の石の色
 
             //----------------------------------------
             // パスの場合
@@ -72,7 +72,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
                 Liberty liberty1 = new LibertyImpl();
 
-                int adjColor = board.ValueOf(adjNode);
+                Color adjColor = board.ValueOf(adjNode);
                 if (adjColor != invClr)
                 {
                     // 隣接する石が　相手の石　でないなら無視。
@@ -96,7 +96,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
                     delNode = adjNode;  // 取られた石の座標。コウの判定で使う。
 
                     // 処理が被らないように、囲まれている相手の石（計算済み）を消します。
-                    board.DeleteRenStones(adjNode, invClr);
+                    BoardImpl.DeleteRenStones(board, adjNode, invClr);
                 }
 
                 gt_Next1:
@@ -133,7 +133,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
 
                     Liberty liberty2 = new LibertyImpl();
 
-                    int adjColor = board.ValueOf(adjNode);
+                    Color adjColor = board.ValueOf(adjNode);
                     if (adjColor != color)
                     {
                         goto gt_Next2;
@@ -185,7 +185,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             return MoveResult.MOVE_SUCCESS;
         }
 
-        public void UndoOnce(Board board)
+        public void UndoOnce(Table<Color> board)
         {
             // 石を置く前の状態に戻します。
             board.SetKouNode( board.GetKouNodeForUndo());           // コウの位置を元に戻します。

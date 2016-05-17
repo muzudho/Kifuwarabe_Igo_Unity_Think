@@ -12,7 +12,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n930_view____
         public static void PrintBoard(LibertyOfNodes libertyOfNodes)
         {
             libertyOfNodes.ForeachAllXyWithWaku((int x, int y, ref bool isBreak) =>{
-                int node = AbstractBoard.ConvertToNode(x, y);
+                int node = AbstractTable<Color>.ConvertToNode(x, y);
 
                 System.Console.WriteLine(string.Format("{0:D2}", libertyOfNodes.ValueOf(node)));
 

@@ -28,16 +28,16 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
 
         // 自殺手になる状況でないか調査。
         public bool IsThis(
-            int         color,
+            Color       color,
             int         node,
             Liberty[]   liberties,//[4]
-            Board       board
+            Table<Color> board
         ){
             bool result = false;
-            int invColor = BoardImpl.INVCLR(color);   //白黒反転
+            Color invColor = ConvColor.INVCLR(color);   //白黒反転
 
             board.ForeachArroundDirAndNodes(node, (int iDir, int adjNode,ref bool isBreak) =>{
-                int adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
+                Color adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
 
                 // 隣に、呼吸点が 1 個の相手の石があれば、それは取ることができます。
                 if (adjColor == invColor && liberties[iDir].GetLiberty() == 1)

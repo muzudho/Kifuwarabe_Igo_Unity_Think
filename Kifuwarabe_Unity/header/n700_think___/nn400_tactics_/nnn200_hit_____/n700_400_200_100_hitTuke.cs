@@ -21,10 +21,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
 
         // 評価値を出します。
         int Evaluate(
-		    int		    invColor,
+            Color invColor,
 		    int		    node,
 		    Liberty[]   liberties,//[4]
-            Board 	    board
+            Table<Color> board
 		);
     }
 }

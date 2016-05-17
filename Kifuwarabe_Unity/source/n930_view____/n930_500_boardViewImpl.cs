@@ -9,7 +9,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n930_view____
         /// 
         /// </summary>
         /// <param name="pBoard"></param>
-        public static void PrintBoard(Board board)
+        public static void PrintBoard(Table<Color> board)
         {
             string[] str = new string[4]{
                 "・",	// 空き
@@ -19,8 +19,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n930_view____
 	        };
 
             board.ForeachAllXyWithWaku((int x, int y, ref bool isBreak) =>{
-                int node = AbstractBoard.ConvertToNode(x, y);
-                System.Console.WriteLine(string.Format("{0}", str[board.ValueOf(node)]));
+                int node = AbstractTable<Color>.ConvertToNode(x, y);
+                System.Console.WriteLine(string.Format("{0}", str[(int)board.ValueOf(node)]));
                 if (x == board.GetSize() + 1)
                 {
                     System.Console.WriteLine(string.Format("\n"));

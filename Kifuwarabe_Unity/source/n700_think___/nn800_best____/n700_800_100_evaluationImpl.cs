@@ -11,13 +11,13 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
         // 指定局面の評価値を求めます。
         public static int EvaluateAtNode(
             ref bool		    isAbort         ,// 解なしなら 真。
-                int             color           ,// 手番の色
+                Color color           ,// 手番の色
                 int             node            ,// 石を置く位置
-                Board           board           ,
+                Table<Color> board           ,
                 LibertyOfNodes  libertyOfNodes
         )
         {
-            int invColor = BoardImpl.INVCLR(color); //白黒反転
+            Color invColor = ConvColor.INVCLR(color); //白黒反転
             NoHitSuicide        noHitSuicide    =new NoHitSuicideImpl()         ;   // 自殺手を打たないようにする仕組み。
             NoHitOwnEye         noHitOwnEye     =new NoHitOwnEyeImpl()          ;   // 自分の眼に打たない仕組み。
             NoHitMouth          noHitMouth      =new NoHitMouthImpl()           ;   // 相手の口に打たない仕組み。
@@ -30,7 +30,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
             int score = 0;                          // 読んでいる手の評価値
 
 
-            if (board.ValueOf(node) == BoardImpl.BLACK || board.ValueOf(node) == BoardImpl.WHITE)
+            if (board.ValueOf(node) == Color.BLACK || board.ValueOf(node) == Color.WHITE)
             {
                 // 石があるなら
                 //# ifdef CHECK_LOG
@@ -40,7 +40,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
                 isAbort = true;
                 goto gt_EndMethod;
             }
-            else if (board.ValueOf(node) == BoardImpl.WAKU)
+            else if (board.ValueOf(node) == Color.WAKU)
             {
                 // 枠なら
                 //# ifdef CHECK_LOG
@@ -62,7 +62,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
             }
 
             int x, y;
-            AbstractBoard.ConvertToXy(out x, out y, node);
+            AbstractTable<Color>.ConvertToXy(out x, out y, node);
             int libertyOfRen = libertyOfNodes.ValueOf(node);
 
 
@@ -77,7 +77,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
                 new LibertyImpl(),
             };
             board.ForeachArroundDirAndNodes(node, (int iDir, int adjNode, ref bool isBreak) =>{
-                int adjColor = board.ValueOf(adjNode);            // 上下左右隣(adjacent)の石の色
+                Color adjColor = board.ValueOf(adjNode);            // 上下左右隣(adjacent)の石の色
                 liberties[iDir].Count(adjNode, adjColor, board);   // 隣の石（または連）の呼吸点　の数を数えます。
             });
 

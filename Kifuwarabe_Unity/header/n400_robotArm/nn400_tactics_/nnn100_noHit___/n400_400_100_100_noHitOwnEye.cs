@@ -23,14 +23,12 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
         void SetSafe(int value);
 
 
-        //NoHitOwnEye();
-
         // 自分の眼に打ち込む状況か調査
         bool IsThis(
-            int color,
+            Color color,
             int node,
             Liberty[] liberties,//[4]
-            Board board
+            Table<Color> board
         );
     };
 

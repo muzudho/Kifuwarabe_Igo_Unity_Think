@@ -22,18 +22,15 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
 
     public interface Move {
 
-        //Move();
-        //~Move();
-
         // 1手進める。
         MoveResult MoveOne(
             int node,   // 座標
-            int color,      // 石の色
-            Board board
+            Color color,      // 石の色
+            Table<Color> board
         );
 
         // 1手戻す。（戻せるのは１回だけです）
-        void UndoOnce(Board board);
+        void UndoOnce(Table<Color> board);
     };
 
 

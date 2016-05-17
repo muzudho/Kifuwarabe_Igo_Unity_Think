@@ -1,4 +1,5 @@
-﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____;//.ThinkImpl.GameType;
+﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____;//.ThinkImpl.GameType;
 
 
 namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
@@ -29,7 +30,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         // 次の1手の座標を返す。PASSの場合0。
         // 終局処理時に呼び出した場合は、終局判断の結果を返す。
         int DoBestmove(
-                int[] initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
+                Color[] initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
                 int[,] kifu,   // 棋譜  [2048,3]
                                 //      [手数,0]...座標
                                 //		[手数,1]...石の色

@@ -24,10 +24,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                 //board.SetSize(boardSize);
 
                 // 初期盤面（置碁の場合は、ここに置石が入る）
-                int[] initBoard = new int[AbstractBoard.BOARD_MAX];
-                for (int i = 0; i < AbstractBoard.BOARD_MAX; i++)
+                Color[] initBoard = new Color[AbstractTable<Color>.BOARD_MAX];
+                for (int i = 0; i < AbstractTable<Color>.BOARD_MAX; i++)
                 {
-                    initBoard[i] = 0;//空点
+                    initBoard[i] = Color.EMPTY;//空点
                 }
                 /*
                 // 枠を 3 に初期化。
@@ -59,7 +59,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                 GameType endgameType = GameType.GAME_MOVE;
 
                 // 終局処理の結果を代入する。
-                int[] endgameBoard = new int[AbstractBoard.BOARD_MAX];
+                int[] endgameBoard = new int[AbstractTable<Color>.BOARD_MAX];
 
                 int bestmove = kwThink.DoBestmove(
                     initBoard,
@@ -81,17 +81,17 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
             // 着手禁止点のテスト
             {
                 int bestmoveNode = 0x0303;
-                int color = 1;
+                Color color = Color.BLACK;
                 // 盤面
-                int[] boardArr = new int[AbstractBoard.BOARD_MAX];
-                for (int i = 0; i < AbstractBoard.BOARD_MAX; i++)
+                Color[] boardArr = new Color[AbstractTable<Color>.BOARD_MAX];
+                for (int i = 0; i < AbstractTable<Color>.BOARD_MAX; i++)
                 {
                     boardArr[i] = 0;//空点
                 }
                 // 入れなおす☆
-                Board board = new BoardImpl();
+                Table<Color> board = new BoardImpl();
                 board.Initialize(boardArr);
-                board.SetValue(bestmoveNode, BoardImpl.BLACK);//黒石を置いておくぜ☆
+                board.SetValue(bestmoveNode, Color.BLACK);//黒石を置いておくぜ☆
 
                 NoMoveReason noMoveReason;
                 if (!UtilMove.CanMove(
@@ -104,7 +104,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                     // 着手禁止点（または自分の眼をつぶす手の場合）
 
                     int x, y;
-                    AbstractBoard.ConvertToXy(out x, out y, bestmoveNode);
+                    AbstractTable<Color>.ConvertToXy(out x, out y, bestmoveNode);
 
                     switch (noMoveReason)
                     {

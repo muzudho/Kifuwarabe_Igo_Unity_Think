@@ -70,7 +70,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
         public void Research(
             int node,
-            Board pBoard
+            Table<Color> pBoard
         ){
 
             this.SetSoto( false);
@@ -81,9 +81,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
             this.SetBocchi( true);
             pBoard.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
-                int adjColor = pBoard.ValueOf(adjNode);        // その色
+                Color adjColor = pBoard.ValueOf(adjNode);        // その色
 
-                if (adjColor == BoardImpl.BLACK || adjColor == BoardImpl.WHITE)
+                if (adjColor == Color.BLACK || adjColor == Color.WHITE)
                 {
                     // ぼっちではない。
                     this.SetBocchi( false);
@@ -97,7 +97,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
 
             int x, y;
-            AbstractBoard.ConvertToXy(out x, out y, node);
+            AbstractTable<Color>.ConvertToXy(out x, out y, node);
 
             if (x < 1 || pBoard.GetSize() < x ||
                 y < 1 || pBoard.GetSize() < y

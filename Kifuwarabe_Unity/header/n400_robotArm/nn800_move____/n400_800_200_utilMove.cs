@@ -48,25 +48,25 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
         /// </summary>
         /// <returns></returns>
         public static bool CanMove(
-                int color,
+                Color color,
                 int node,
-                Board board,
+                Table<Color> board,
             out NoMoveReason noMoveReason // 理由
             )
         {
             bool canMove;
 
             int x, y;
-            AbstractBoard.ConvertToXy(out x, out y, node);
+            AbstractTable<Color>.ConvertToXy(out x, out y, node);
 
-            if (board.ValueOf(node) == BoardImpl.BLACK || board.ValueOf(node) == BoardImpl.WHITE)
+            if (board.ValueOf(node) == Color.BLACK || board.ValueOf(node) == Color.WHITE)
             {
                 // 石があるなら
                 canMove = false;
                 noMoveReason = NoMoveReason.ExistsStone;
                 goto gt_EndMethod;
             }
-            else if (board.ValueOf(node) == BoardImpl.WAKU)
+            else if (board.ValueOf(node) == Color.WAKU)
             {
                 // 枠なら
                 canMove = false;
@@ -90,7 +90,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             };
             board.ForeachArroundDirAndNodes(node, (int iDir, int adjNode, ref bool isBreak) => {
 
-                int adjColor = board.ValueOf(adjNode);            // 上下左右隣(adjacent)の石の色
+                Color adjColor = board.ValueOf(adjNode);            // 上下左右隣(adjacent)の石の色
 
                 liberties[iDir].Count(adjNode, adjColor, board);   // 隣の石（または連）の呼吸点　の数を数えます。
 

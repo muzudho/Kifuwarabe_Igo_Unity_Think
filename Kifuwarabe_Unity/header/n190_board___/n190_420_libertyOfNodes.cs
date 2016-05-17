@@ -2,8 +2,9 @@
 { 
 
     // 自分の位置を含む石、または連の総呼吸点の数を、各交点に格納したテーブルです。
-    public interface LibertyOfNodes : Board{
+    public interface LibertyOfNodes : Table<int>
+    {
 
-        void Initialize(Board board);
+        void Initialize(Table<Color> board);
     }
 }

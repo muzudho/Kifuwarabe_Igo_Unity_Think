@@ -17,19 +17,19 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// <returns></returns>
         public static int EndgameStatus(
             GtpStatusType[] arr_endgameBoard,
-            Board board
+            Table<Color> board
         ){
             board.ForeachAllNodesWithoutWaku((int node, ref bool isBreak) =>{
 
-                int color = board.ValueOf(node);
-                if (color == BoardImpl.EMPTY)
+                Color color = board.ValueOf(node);
+                if (color == Color.EMPTY)
                 {
                     arr_endgameBoard[node] = GtpStatusType.GTP_DAME;
-                    int sum = 0;
+                    Color sum = 0;
                     board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak2)=> {
-                        int adjColor;   // 隣接(adjacent)する石の色
+                        Color adjColor;   // 隣接(adjacent)する石の色
                         adjColor = board.ValueOf(adjNode);
-                        if (adjColor == BoardImpl.WAKU)
+                        if (adjColor == Color.WAKU)
                         {
                             goto gt_Next;
                         }
@@ -39,12 +39,12 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
                         ;
                     });
 
-                    if (sum == BoardImpl.BLACK)
+                    if (sum == Color.BLACK)
                     {
                         // 黒字☆
                         arr_endgameBoard[node] = GtpStatusType.GTP_BLACK_TERRITORY;
                     }
-                    if (sum == BoardImpl.WHITE)
+                    if (sum == Color.WHITE)
                     {
                         // 白地☆
                         arr_endgameBoard[node] = GtpStatusType.GTP_WHITE_TERRITORY;
@@ -76,7 +76,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// <param name="arr_endgameBoard"></param>
         /// <param name="pBoard"></param>
         /// <returns></returns>
-        public static int EndgameDrawFigure(FigureType[] arr_endgameBoard, Board pBoard)
+        public static int EndgameDrawFigure(FigureType[] arr_endgameBoard, Table<Color> pBoard)
         {
             int x;
             int y;
@@ -86,7 +86,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
             {
                 for (x = 1; x < pBoard.GetSize() + 1; x++)
                 {
-                    node = AbstractBoard.ConvertToNode(x, y);
+                    node = AbstractTable<Color>.ConvertToNode(x, y);
                     if ((Core.GetRandom() % 2) == 0)
                     {
                         arr_endgameBoard[node] = FigureType.FIGURE_NONE;
@@ -150,7 +150,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// <param name="arr_endgameBoard"></param>
         /// <param name="pBoard"></param>
         /// <returns></returns>
-        public static int EndgameDrawNumber(int[] arr_endgameBoard, Board pBoard)
+        public static int EndgameDrawNumber(int[] arr_endgameBoard, Table<Color> pBoard)
         {
             int x;
             int y;
@@ -160,7 +160,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
             {
                 for (x = 1; x < pBoard.GetSize() + 1; x++)
                 {
-                    node = AbstractBoard.ConvertToNode(x, y);
+                    node = AbstractTable<Color>.ConvertToNode(x, y);
                     arr_endgameBoard[node]  = (Core.GetRandom() % 110) - 55;
                 }
             }

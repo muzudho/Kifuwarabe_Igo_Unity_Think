@@ -16,8 +16,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
         /// <param name="libertyOfNodes"></param>
         /// <returns></returns>
         public static int Bestmove(
-            int             color,
-            Board           board,
+            Color color,
+            Table<Color> board,
             LibertyOfNodes  libertyOfNodes
         ){
 
@@ -98,7 +98,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
                 // 着手禁止点（または自分の眼をつぶす手の場合）
 
                 int x, y;
-                AbstractBoard.ConvertToXy(out x, out y, bestmoveNode);
+                AbstractTable<Color>.ConvertToXy(out x, out y, bestmoveNode);
 
                 switch (noMoveReason)
                 {

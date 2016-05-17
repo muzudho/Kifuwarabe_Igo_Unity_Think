@@ -2,8 +2,8 @@
 
 
     // 自分の位置を含む石、または連の総呼吸点の数を、各交点に格納したテーブルです。
-    public interface MarkingBoard : Board {
+    public interface MarkingBoard : Table<int> {
 
-	    void Initialize(Board board);
+	    void Initialize(Table<int> board);
     }
 }

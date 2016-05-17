@@ -33,12 +33,10 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
         void SetCorner(bool value);
 
 
-        //NoHitHasinohoBocchi();
-
         // どのような状況か調査。
         void Research(
             int node,
-            Board pBoard
+            Table<Color> board
         );
 
         // 評価値を出します。

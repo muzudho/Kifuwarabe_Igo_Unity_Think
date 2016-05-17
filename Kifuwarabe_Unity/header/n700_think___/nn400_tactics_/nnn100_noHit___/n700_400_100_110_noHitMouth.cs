@@ -28,9 +28,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
         // 相手の口に石を打ち込む状況でないか調査。
         void Research(
-            int color,
+            Color color,
             int node,
-            Board board
+            Table<Color> board
         );
 
         // 評価値を出します。

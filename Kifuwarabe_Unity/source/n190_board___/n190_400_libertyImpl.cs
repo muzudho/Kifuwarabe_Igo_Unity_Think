@@ -3,7 +3,7 @@
     public class LibertyImpl : Liberty
     {
         // 既にこの石を検索した場合は真
-        public bool[] checkedBoard = new bool[AbstractBoard.BOARD_MAX];
+        public bool[] checkedBoard = new bool[AbstractTable<Color>.BOARD_MAX];
 
         // 連のリバティ（石の呼吸点）の数(再帰関数で使う)
         public int m_liberty_;
@@ -44,10 +44,10 @@
 	        this.SetRenIshi( 0);
         }
 
-        public void Count(int node, int color, Board board)
+        public void Count(int node, Color color, Table<Color> board)
         {
             // 眼に打ち込まないか、口の中に打ち込まないか、の処理のあとに
-            if (color == BoardImpl.EMPTY || color == BoardImpl.WAKU)
+            if (color == Color.EMPTY || color == Color.WAKU)
             {
                 // 空っぽか、枠なら。
                 //System.Console.WriteLine( "空っぽか、枠。 \n" );
@@ -58,7 +58,7 @@
 
             this.SetLiberty(0);
             this.SetRenIshi(0);
-            for (i = 0; i < AbstractBoard.BOARD_MAX; i++)
+            for (i = 0; i < AbstractTable<Color>.BOARD_MAX; i++)
             {
                 this.checkedBoard[i] = false;
             }
@@ -70,7 +70,7 @@
             return;
         }
 
-        public void CountElement(int tNode, int color, Board board)
+        public void CountElement(int tNode, Color color, Table<Color> board)
         {
 
             this.checkedBoard[tNode] = true;    // この石は検索済み	

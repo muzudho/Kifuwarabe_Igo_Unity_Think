@@ -5,8 +5,12 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 {
 
 
-    // 碁盤を想定した、枠付きのテーブルです。
-    public abstract class AbstractBoard : Board
+    /// <summary>
+    /// Color型にすれば碁盤、int型にすればマーキング・シート☆（＾▽＾）
+    /// 碁盤の要請を入れるぜ☆（＾▽＾）
+    /// </summary>
+    /// <typeparam name="ELM">盤の要素の型。Colorやint。</typeparam>
+    public abstract class AbstractTable<ELM> : Table<ELM>
     {
         /// <summary>
         ///  19路盤を最大サイズとする
@@ -15,63 +19,14 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
 
         //public abstract void Initialize(int[] initBoard);
-        public void Initialize(int[] initBoard)
+        public void Initialize(ELM[] initBoard)
         {
             // 現在局面を棋譜と初期盤面から作る
-            for (int iNode = 0; iNode < AbstractBoard.BOARD_MAX; iNode++)
+            for (int iNode = 0; iNode < AbstractTable<ELM>.BOARD_MAX; iNode++)
             {
                 this.SetValue(iNode, initBoard[iNode]);    // 初期盤面をコピー
             }
         }
-
-        // vector→
-        public List<int> GetOpenNodesOfStone(
-            int node,
-            int size123     // 1～3 のいずれかを指定してください。
-        ){
-            List<int> openNodes = new List<int>();
-
-            // 上側 → 右側 → 下側 → 左側
-            this.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) => {
-
-                if (this.ValueOf(adjNode) == BoardImpl.EMPTY && adjNode != this.GetKouNode())
-                {
-                    // 空きスペースで、コウにならない位置なら。
-                    openNodes.Add(adjNode);
-
-                    if (openNodes.Count == size123)
-                    {
-                        // 計算を打ち切り。
-                        isBreak = true;
-                        goto gt_Next;
-                    }
-                }
-
-                gt_Next:
-                ;
-            });
-
-            //gt_EndMethod:
-            return openNodes;
-        }
-
-        public void DeleteRenStones(
-            int tNode,
-            int color
-        ){
-            // 指定した位置の石を削除。
-            this.SetValue(tNode, 0);
-
-            // ４方向の石にも同じ処理を行います。
-            this.ForeachArroundNodes(tNode, (int adjNode, ref bool isBreak) => {
-                if (this.ValueOf(adjNode) == color)
-                {
-                    this.DeleteRenStones(adjNode, color);
-                }
-            });
-        }
-
-
 
         /// <summary>
         /// 1手進めたことで消えたコウの場所を覚えておくものです。（戻せるのは１回だけです）
@@ -113,20 +68,20 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         }
 
         /// <summary>
-        /// ハマ。取った石の数のこと。[0]...空き。[1]... 黒が取った石の数, [2]...白が取った石の数
+        /// ハマ。取った石の数のこと。[0]...使わない。[1]... 黒が取った石の数, [2]...白が取った石の数
         /// </summary>
         protected int[] m_hama_ = new int[3];
-        public int GetHama(int index)
+        public int GetHama(Color color)
         {
-            return this.m_hama_[index];
+            return this.m_hama_[(int)color];
         }
-        public void SetHama(int index, int value)
+        public void SetHama(Color color, int value)
         {
-            this.m_hama_[index] = value;
+            this.m_hama_[(int)color] = value;
         }
-        public void AddHama(int index, int value)
+        public void AddHama(Color color, int value)
         {
-            this.m_hama_[index] += value;
+            this.m_hama_[(int)color] += value;
         }
 
 
@@ -144,18 +99,18 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         }
 
         // 盤上の石の色。
-        private int[] table = new int[AbstractBoard.BOARD_MAX];
+        private ELM[] table = new ELM[AbstractTable<ELM>.BOARD_MAX];
 
 
         /// <summary>
         /// コンストラクター☆
         /// </summary>
-        public AbstractBoard()
+        public AbstractTable()
         {
             this.m_size_ = 0;
         }
 
-        ~AbstractBoard()
+        ~AbstractTable()
         {
         }
 
@@ -190,25 +145,25 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         }
 
         // 上側に隣接している位置
-        public int NorthOf(int node)
+        public ELM NorthOf(int node)
         {
             return this.ValueOf(node + this.dir4[0]);
         }
 
         // 右側に隣接している位置
-        public int EastOf(int node)
+        public ELM EastOf(int node)
         {
             return this.ValueOf(node + this.dir4[1]);
         }
 
         // 下側に隣接している位置
-        public int SouthOf(int node)
+        public ELM SouthOf(int node)
         {
             return this.ValueOf(node + this.dir4[2]);
         }
 
         // 左側に隣接している位置
-        public int WestOf(int node)
+        public ELM WestOf(int node)
         {
             return this.ValueOf(node + this.dir4[3]);
         }
@@ -217,12 +172,12 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         /// セルの値
         /// </summary>
         /// <param name="node"></param>
-        /// <param name="value"></param>
-        public void SetValue(int node, int value)
+        /// <param name="color"></param>
+        public void SetValue(int node, ELM color)
         {
-            this.table[node] = value;
+            this.table[node] = color;
         }
-        public int ValueOf(int node)
+        public ELM ValueOf(int node)
         {
             return this.table[node];
         }
@@ -235,7 +190,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
                 int y = 0;
                 for (int x = 0; x < this.m_size_ + 2 - 1; x++)
                 {
-                    int node = AbstractBoard.ConvertToNode(x, y);
+                    int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
                     bool isBreak = false;
                     func(node, ref isBreak);
@@ -251,7 +206,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
                 int x = this.m_size_ + 2 - 1;
                 for (int y = 0; y < this.m_size_ + 2 - 1; y++)
                 {
-                    int node = AbstractBoard.ConvertToNode(x, y);
+                    int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
                     bool isBreak = false;
                     func(node, ref isBreak);
@@ -267,7 +222,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
                 int y = this.m_size_ + 2 - 1;
                 for (int x = this.m_size_ + 2 - 1; 0 < x; x--)
                 {
-                    int node = AbstractBoard.ConvertToNode(x, y);
+                    int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
                     bool isBreak = false;
                     func(node, ref isBreak);
@@ -283,7 +238,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
                 int x = 0;
                 for (int y = this.m_size_ + 2 - 1; 0 < y; y--)
                 {
-                    int node = AbstractBoard.ConvertToNode(x, y);
+                    int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
                     bool isBreak = false;
                     func(node, ref isBreak);
@@ -301,7 +256,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
             {
                 for (int x = 0; x < this.m_size_ + 2; x++)
                 {
-                    int node = AbstractBoard.ConvertToNode(x, y);
+                    int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
                     bool isBreak = false;
                     func(node, ref isBreak);
@@ -335,7 +290,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
             {
                 for (int x = 1; x < this.m_size_ + 1; x++)
                 {
-                    int node = AbstractBoard.ConvertToNode(x, y);
+                    int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
                     bool isBreak = false;
                     func(node,ref isBreak);

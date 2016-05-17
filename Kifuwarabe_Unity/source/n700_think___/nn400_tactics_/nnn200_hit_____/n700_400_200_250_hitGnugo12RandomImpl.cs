@@ -7,9 +7,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
     public class HitGnugo12RandomImpl : HitGnugo12Random
     {
         public int Evaluate(
-            int         color,
+            Color color,
             int         node,
-            Board       pBoard
+            Table<Color> pBoard
         ){
             int score = 0;
 
@@ -23,7 +23,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
             }
 
             int x, y;
-            AbstractBoard.ConvertToXy(out x, out y, node);
+            AbstractTable<Color>.ConvertToXy(out x, out y, node);
 
             // 置きたくない位置を avoid 点数で表す。
             int avoid = 0;

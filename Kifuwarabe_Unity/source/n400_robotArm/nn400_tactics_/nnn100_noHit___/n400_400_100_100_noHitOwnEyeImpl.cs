@@ -30,22 +30,22 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
 
 
         public bool IsThis(
-            int         color,
+            Color       color,
             int         node,
             Liberty[]   liberties,//[4]
-            Board       board
+            Table<Color> board
         ){
             bool result = false;
 
             board.ForeachArroundDirAndNodes(node, (int iDir, int adjNode, ref bool isBreak) =>{
-                int adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
+                Color adjColor = board.ValueOf(adjNode);        // 上下左右隣(adjacent)の石の色
 
                 // 次の２つは　安全なつながり方です。
                 // (１)枠につなげる。
                 // (２)呼吸点が 2 以上ある（＝石を置いても呼吸点が 1 以上残る、
                 //     自殺手にはならない）味方につながる。
                 if (
-                    adjColor == BoardImpl.WAKU
+                    adjColor == Color.WAKU
                     ||
                     (adjColor == color && 2 <= liberties[iDir].GetLiberty())
                     )
