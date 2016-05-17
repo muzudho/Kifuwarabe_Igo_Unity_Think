@@ -46,7 +46,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             //----------------------------------------
             if (node == board.GetKouNode())
             {
-                System.Console.WriteLine(string.Format("move() Err: コウ！z={0,x4}\n", node));
+                System.Console.WriteLine(string.Format("move() Err: コウ！z={0:x4}\n", node));
                 // 操作を弾きます。
                 return DroppedResult.Kou;
             }
@@ -56,7 +56,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             //----------------------------------------
             if (board.ValueOf(node) != 0)
             {
-                System.Console.WriteLine(string.Format("move() Err: 空点ではない！z={0,x4}\n", node));
+                System.Console.WriteLine(string.Format("move() Err: 空点ではない！z={0:x4}\n", node));
                 // 操作を弾きます。
                 return DroppedResult.ExistsStone;
             }
@@ -113,7 +113,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
                 // 置いた石に呼吸点がない場合。
 
                 // 操作を弾きます。
-                //System.Console.WriteLine(string.Format("move() Err: 自殺手! z={0,x4}\n", node));
+                //System.Console.WriteLine(string.Format("move() Err: 自殺手! z={0:x4}\n", node));
                 board.SetValue(node, 0);
                 return DroppedResult.Suicide;
             }
@@ -151,7 +151,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
                 if (sum >= 2)
                 {
                     System.Console.WriteLine(string.Format(
-                        "１つ取られて、コウの位置へ打つと、１つの石を2つ以上取れる？node={0,x4}\n", node));
+                        "１つ取られて、コウの位置へ打つと、１つの石を2つ以上取れる？node={0:x4}\n", node));
                     // これはエラー。
 
                     // 操作を弾きます。

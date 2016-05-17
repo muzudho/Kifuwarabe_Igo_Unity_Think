@@ -1,12 +1,15 @@
-﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;
+﻿using System.Collections.Generic;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;
 using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____;//NoMoveReason
-using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____;//.ThinkImpl.GameType;
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n720_kifu____;
 
 
 namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
 {
 
-    // Unity／スマートフォン・アプリと連携するぜ☆
+    /// <summary>
+    /// Unity／スマートフォン・アプリと連携するぜ☆
+    /// </summary>
     public interface KifuwarabeThink {
 
         //────────────────────────────────────────────────────────────────────────────────
@@ -27,19 +30,15 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// 終局処理
         /// ────────────────────────────────────────────────────────────────────────────────
         /// </summary>
-        /// <param name="initBoard"></param>
-        /// <param name="kifu"></param>
-        /// <param name="curTesuu"></param>
-        /// <param name="endgameBoard"></param>
+        /// <param name="initBoard">初期盤面（置碁の場合は、ここに置石が入る）</param>
+        /// <param name="kifu">棋譜。座標、石の色、消費時間（秒)。要素は、手数 0 から始まっており、curTesuu の1つ手前まである。</param>
+        /// <param name="curTesuu">現在の手数</param>
+        /// <param name="endgameBoard">終局処理の結果を代入する。</param>
         void DoEndGame(
-                Board initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
-                int[,] kifu,   // 棋譜  [2048][3]
-                               //      [手数][0]...座標
-                               //		[手数][1]...石の色
-                               //		[手数][2]...消費時間（秒)
-                               // 手数は 0 から始まり、curTesuu の1つ手前まである。
-                int curTesuu,       // 現在の手数
-            ref int[] endgameBoard	// 終局処理の結果を代入する。
+                Board initBoard,
+                List<KifuElement> kifu,
+                int curTesuu,
+            ref int[] endgameBoard
             );
 
         /// <summary>
@@ -47,19 +46,15 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// 図形描画
         /// ────────────────────────────────────────────────────────────────────────────────
         /// </summary>
-        /// <param name="initBoard"></param>
-        /// <param name="kifu"></param>
-        /// <param name="curTesuu"></param>
-        /// <param name="endgameBoard"></param>
+        /// <param name="initBoard">初期盤面（置碁の場合は、ここに置石が入る）</param>
+        /// <param name="kifu">棋譜。座標、石の色、消費時間（秒)。要素は、手数 0 から始まっており、curTesuu の1つ手前まである。</param>
+        /// <param name="curTesuu">現在の手数</param>
+        /// <param name="endgameBoard">終局処理の結果を代入する。</param>
         void DoDrawFigure(
-                Board initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
-                int[,] kifu,   // 棋譜  [2048][3]
-                               //      [手数][0]...座標
-                               //		[手数][1]...石の色
-                               //		[手数][2]...消費時間（秒)
-                               // 手数は 0 から始まり、curTesuu の1つ手前まである。
-                int curTesuu,       // 現在の手数
-            ref int[] endgameBoard	// 終局処理の結果を代入する。
+                Board initBoard,
+                List<KifuElement> kifu,
+                int curTesuu,
+            ref int[] endgameBoard
             );
 
         /// <summary>
@@ -67,19 +62,15 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// 数字描画
         /// ────────────────────────────────────────────────────────────────────────────────
         /// </summary>
-        /// <param name="initBoard"></param>
-        /// <param name="kifu"></param>
-        /// <param name="curTesuu"></param>
-        /// <param name="endgameBoard"></param>
+        /// <param name="initBoard">初期盤面（置碁の場合は、ここに置石が入る）</param>
+        /// <param name="kifu">棋譜。座標、石の色、消費時間（秒)。要素は、手数 0 から始まっており、curTesuu の1つ手前まである。</param>
+        /// <param name="curTesuu">現在の手数</param>
+        /// <param name="endgameBoard">終局処理の結果を代入する。</param>
         void DoDrawNumber(
-                Board initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
-                int[,] kifu,   // 棋譜  [2048][3]
-                               //      [手数][0]...座標
-                               //		[手数][1]...石の色
-                               //		[手数][2]...消費時間（秒)
-                               // 手数は 0 から始まり、curTesuu の1つ手前まである。
-                int curTesuu,       // 現在の手数
-            ref int[] endgameBoard	// 終局処理の結果を代入する。
+                Board initBoard,
+                List<KifuElement> kifu,
+                int curTesuu,
+            ref int[] endgameBoard
             );
 
         /// <summary>
@@ -93,17 +84,17 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// 終局処理時に呼び出した場合は、終局判断の結果を返す。
         /// </summary>
         /// <param name="initBoard">初期盤面（置碁の場合は、ここに置石が入る）</param>
-        /// <param name="kifu">棋譜  [2048][3]。[手数][0]...座標。[手数][1]...石の色。[手数][2]...消費時間（秒)。手数は 0 から始まり、curTesuu の1つ手前まである。</param>
+        /// <param name="kifu">棋譜。座標、石の色、消費時間（秒)。要素は、手数 0 から始まっており、curTesuu の1つ手前まである。</param>
         /// <param name="curTesuu">現在の手数</param>
         /// <param name="isBlackTurn">手番。(黒か、白のみ)</param>
         /// <param name="komi">コミ</param>
         /// <returns></returns>
         int DoBestmove(
-                Board   initBoard,
-                int[,]  kifu,
-                int     curTesuu,
-                Color   color,
-                double  komi
+                Board               initBoard,
+                List<KifuElement>   kifu,
+                int                 curTesuu,
+                Color               color,
+                double              komi
         );
 
 
@@ -136,13 +127,19 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
 
         /// <summary>
         /// 石を置けるか調べます。
+        /// 棋譜汚しも、石を置けないと判定してしまいます。
+        /// NoMoveReason 列挙型で内容を確認してください。
         /// </summary>
+        /// <param name="color"></param>
+        /// <param name="node"></param>
+        /// <param name="board"></param>
+        /// <param name="noMoveReason">理由</param>
         /// <returns></returns>
         bool CanMove(
-                Color color,
-                int node,
-                Board board,
-            out NoMoveReason noMoveReason // 理由
+                Color           color,
+                int             node,
+                Board           board,
+            out NoMoveReason    noMoveReason
             );
 
         /// <summary>
@@ -161,9 +158,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// <param name="board"></param>
         /// <returns></returns>
         DroppedResult DropStone(
-            int node,
-            Color color,
-            Board board
+            int     node,
+            Color   color,
+            Board   board
         );
 
         /// <summary>

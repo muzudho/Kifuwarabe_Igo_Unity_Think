@@ -67,6 +67,7 @@
     <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_200_hitNobiSaver.cs" />
     <Compile Include="header\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_250_hitGnugo12Random.cs" />
     <Compile Include="header\n700_think___\nn800_best____\n700_800_200_think.cs" />
+    <Compile Include="header\n720_kifu____\n720_100_kifuElement.cs" />
     <Compile Include="header\n750_explain_\n750_100_figureType.cs" />
     <Compile Include="header\n800_scene___\n800_500_endgame.cs" />
     <Compile Include="header\n950_main____\n950_500_kifuwarabeThink.cs" />
@@ -91,6 +92,7 @@
     <Compile Include="source\n700_think___\nn400_tactics_\nnn200_hit_____\n700_400_200_250_hitGnugo12RandomImpl.cs" />
     <Compile Include="source\n700_think___\nn800_best____\n700_800_100_evaluationImpl.cs" />
     <Compile Include="source\n700_think___\nn800_best____\n700_800_200_thinkImpl.cs" />
+    <Compile Include="source\n720_kifu____\n720_100_kifuElementImpl.cs" />
     <Compile Include="source\n800_scene___\n800_500_endgameImpl.cs" />
     <Compile Include="source\n850_print___\n850_500_boardViewImpl.cs" />
     <Compile Include="source\n850_print___\n850_520_libertyOfNodesViewImpl.cs" />
