@@ -16,7 +16,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n930_view____
 
                 System.Console.WriteLine(string.Format("{0:D2}", libertyOfNodes.ValueOf(node)));
 
-                if (x == libertyOfNodes.GetSize() + 1)
+                if (x == libertyOfNodes.GetTableSize() - 1)
                 {
                     System.Console.WriteLine(string.Format("\n"));
                 }

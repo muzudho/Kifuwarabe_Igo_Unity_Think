@@ -4,7 +4,7 @@
     {
         public void Initialize(Table<int> board)
         {
-            this.SetSize(board.GetSize());
+            this.SetTableSize(board.GetTableSize());
 
             // 枠と、枠内全てを 0 に初期化。
             this.ForeachAllNodesWithWaku((int node, ref bool isBreak) =>{

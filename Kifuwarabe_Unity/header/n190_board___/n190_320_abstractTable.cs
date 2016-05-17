@@ -13,20 +13,36 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
     public abstract class AbstractTable<ELM> : Table<ELM>
     {
         /// <summary>
-        ///  19路盤を最大サイズとする
+        /// 横幅は 256路、縦幅は 19路盤を最大サイズとする変則サイズ☆（＾～＾）！
         /// </summary>
-        public const int BOARD_MAX = (19 + 2) * 256;
+        public const int ANOMALY_BOARD_256WIDTHS = 256;
+        public const int ANOMALY_BOARD_MAX = (19 + 2) * ANOMALY_BOARD_256WIDTHS;
 
 
-        //public abstract void Initialize(int[] initBoard);
-        public void Initialize(ELM[] initBoard)
+        // 盤上の石の色。
+        private ELM[] table = new ELM[AbstractTable<ELM>.ANOMALY_BOARD_MAX];
+
+
+        /// <summary>
+        /// コンストラクター☆
+        /// </summary>
+        public AbstractTable()
         {
+            //this.SetSize( 0);
+
+            ELM[] initBoard = new ELM[AbstractTable<Color>.ANOMALY_BOARD_MAX];
             // 現在局面を棋譜と初期盤面から作る
-            for (int iNode = 0; iNode < AbstractTable<ELM>.BOARD_MAX; iNode++)
+            for (int iNode = 0; iNode < AbstractTable<ELM>.ANOMALY_BOARD_MAX; iNode++)
             {
                 this.SetValue(iNode, initBoard[iNode]);    // 初期盤面をコピー
             }
         }
+
+        ~AbstractTable()
+        {
+        }
+
+
 
         /// <summary>
         /// 1手進めたことで消えたコウの場所を覚えておくものです。（戻せるのは１回だけです）
@@ -86,32 +102,16 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
 
         /// <summary>
-        /// 何路盤
+        /// テーブル・サイズは、何路盤のサイズより２大きい。
         /// </summary>
-        protected int m_size_;
-        public int GetSize()
+        protected int m_tableSize_;
+        public void SetTableSize(int value)
         {
-            return this.m_size_;
+            this.m_tableSize_ = value;
         }
-        public void SetSize(int size)
+        public int GetTableSize()
         {
-            this.m_size_ = size;
-        }
-
-        // 盤上の石の色。
-        private ELM[] table = new ELM[AbstractTable<ELM>.BOARD_MAX];
-
-
-        /// <summary>
-        /// コンストラクター☆
-        /// </summary>
-        public AbstractTable()
-        {
-            this.m_size_ = 0;
-        }
-
-        ~AbstractTable()
-        {
+            return this.m_tableSize_;
         }
 
 
@@ -131,7 +131,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
             int x,
             int y
         ){
-            return y * 256 + x;
+            return y * AbstractTable<Color>.ANOMALY_BOARD_256WIDTHS + x;
         }
 
         // (node)を(x,y)座標に変換
@@ -188,7 +188,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
             // 上辺（最後の手前まで）
             {
                 int y = 0;
-                for (int x = 0; x < this.m_size_ + 2 - 1; x++)
+                for (int x = 0; x < this.GetTableSize() - 1; x++)
                 {
                     int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
@@ -203,8 +203,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
             // 右辺（最後の手前まで）
             {
-                int x = this.m_size_ + 2 - 1;
-                for (int y = 0; y < this.m_size_ + 2 - 1; y++)
+                int x = this.GetTableSize() - 1;
+                for (int y = 0; y < this.GetTableSize() - 1; y++)
                 {
                     int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
@@ -219,8 +219,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
             // 下辺（最後の手前まで）
             {
-                int y = this.m_size_ + 2 - 1;
-                for (int x = this.m_size_ + 2 - 1; 0 < x; x--)
+                int y = this.GetTableSize() - 1;
+                for (int x = this.GetTableSize() - 1; 0 < x; x--)
                 {
                     int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
@@ -236,7 +236,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
             // 左辺（最後の手前まで）
             {
                 int x = 0;
-                for (int y = this.m_size_ + 2 - 1; 0 < y; y--)
+                for (int y = this.GetTableSize() - 1; 0 < y; y--)
                 {
                     int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
@@ -252,9 +252,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
         public void ForeachAllNodesWithWaku(Func05 func)
         {
-            for (int y = 0; y < this.m_size_ + 2; y++)
+            for (int y = 0; y < this.GetTableSize(); y++)
             {
-                for (int x = 0; x < this.m_size_ + 2; x++)
+                for (int x = 0; x < this.GetTableSize(); x++)
                 {
                     int node = AbstractTable<ELM>.ConvertToNode(x, y);
 
@@ -270,9 +270,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
         public void ForeachAllXyWithWaku(Func04 func)
         {
-            for (int y = 0; y < this.m_size_ + 2; y++)
+            for (int y = 0; y < this.GetTableSize(); y++)
             {
-                for (int x = 0; x < this.m_size_ + 2; x++)
+                for (int x = 0; x < this.GetTableSize(); x++)
                 {
                     bool isBreak = false;
                     func(x, y, ref isBreak);
@@ -286,9 +286,9 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
         public void ForeachAllNodesWithoutWaku(Func03 func)
         {
-            for (int y = 1; y < this.m_size_ + 1; y++)
+            for (int y = 1; y < this.GetTableSize() - 1; y++)
             {
-                for (int x = 1; x < this.m_size_ + 1; x++)
+                for (int x = 1; x < this.GetTableSize() - 1; x++)
                 {
                     int node = AbstractTable<ELM>.ConvertToNode(x, y);
 

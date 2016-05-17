@@ -30,15 +30,14 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
     /// <typeparam name="ELM"></typeparam>
     public interface Table<ELM>
     {
-
-
-        void Initialize(ELM[] initBoard);
-
         /// <summary>
-        /// 何路盤
+        /// テーブルサイズ。
+        /// 何路盤のサイズより２大きい。
         /// </summary>
-        int GetSize();
-        void SetSize(int size);
+        /// <returns></returns>
+        int GetTableSize();
+        void SetTableSize(int value);
+
 
         /// <summary>
         /// 次にコウになる位置。無ければ 0。

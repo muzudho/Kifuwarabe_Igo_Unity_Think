@@ -9,7 +9,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
     /// 
     /// 碁盤の要請：枠付き。
     /// </summary>
-    public class BoardImpl : AbstractTable<Color>
+    public class BoardImpl : AbstractTable<Color>, Board
     {
         public BoardImpl()
         {
@@ -26,6 +26,20 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         ~BoardImpl()
         {
         }
+
+
+        /// <summary>
+        /// 何路盤のサイズは、テーブルサイズより２小さい。
+        /// </summary>
+        public int GetBoardSize()
+        {
+            return this.m_tableSize_ - 2;
+        }
+        public void SetBoardSize(int value)
+        {
+            this.m_tableSize_ = value + 2;
+        }
+
 
         /// <summary>
         /// 指定したnode（石）に隣接している空きスペース（1以上3以下）を配列に入れて返します。

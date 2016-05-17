@@ -36,7 +36,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
         // どのような状況か調査。
         void Research(
             int node,
-            Table<Color> board
+            Board board
         );
 
         // 評価値を出します。

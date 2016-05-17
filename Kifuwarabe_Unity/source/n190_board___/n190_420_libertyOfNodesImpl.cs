@@ -10,9 +10,9 @@
         {
         }
 
-        public void Initialize(Table<Color> board)
+        public void CopyFrom(Table<Color> board)
         {
-            this.SetSize(board.GetSize());
+            this.SetTableSize(board.GetTableSize());
 
             // 枠を 0 に初期化。
             this.ForeachAllNodesOfWaku((int node, ref bool isBreak)=> {
@@ -23,7 +23,7 @@
             board.ForeachAllNodesWithoutWaku((int node, ref bool isBreak)=> {
 
                 Liberty liberty = new LibertyImpl();
-            liberty.Count(node, board.ValueOf(node), board);
+                liberty.Count(node, board.ValueOf(node), board);
 
                 // 呼吸点の数を覚えておく碁盤です。
                 this.SetValue(node, liberty.GetLiberty());

@@ -1,6 +1,7 @@
 ﻿using Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___;
 using Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____;
 using Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____;//GameType
+using Grayscale.Kifuwarabe_Igo_Unity_Think.n930_view____;
 using Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____;
 
 
@@ -15,27 +16,50 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
             KifuwarabeThink kwThink = new KifuwarabeThinkImpl();
             kwThink.DoBegin();
 
+
             // 指し手のテスト
+            Board initBoard;
             {
                 // 盤面のサイズ
                 int boardSize = 19;
 
-                //Board board = new BoardImpl();
-                //board.SetSize(boardSize);
-
-                // 初期盤面（置碁の場合は、ここに置石が入る）
-                Color[] initBoard = new Color[AbstractTable<Color>.BOARD_MAX];
-                for (int i = 0; i < AbstractTable<Color>.BOARD_MAX; i++)
+                // 手で打ち込んだテーブル☆（manualTable）
+                // 19路盤を作ります。
+                // 枠(3)がない場合、エラーの原因となります。
+                // 枠(3)を付けるので21x21の一次元配列にします。
+                int[] manualtable = new int[]
                 {
-                    initBoard[i] = Color.EMPTY;//空点
-                }
-                /*
-                // 枠を 3 に初期化。
-                board.ForeachAllNodesOfWaku((int node, ref bool isBreak) => {
-                    // 呼吸点の数を覚えておく碁盤です。
-                    board.SetValue(node, BoardImpl.WAKU);
-                });
-                */
+                    // テスト用の盤面を作ります。
+                    // 0: 空点
+                    // 1: 黒石
+                    // 2: 白石
+                    // 3: 枠
+                    // 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10,11,12,13,14,15,16,17,18,19, 20
+                       3, 3, 3, 3, 3, 3, 3, 3, 3, 3,  3, 3, 3, 3, 3, 3, 3, 3, 3, 3,  3,//[ 0]
+                       3, 1, 2, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 1] //黒石と白石を適当に置いた☆
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 2]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 3]
+                       3, 0, 0, 0, 1, 2, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 4] //黒石と白石を適当に置いた☆
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 5]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 6]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 7]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 8]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[ 9]
+
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[10]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[11]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[12]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[13]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[14]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[15]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[16]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[17]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[18]
+                       3, 0, 0, 0, 0, 0, 0, 0, 0, 0,  0, 0, 0, 0, 0, 0, 0, 0, 0, 0,  3,//[19]
+
+                       3, 3, 3, 3, 3, 3, 3, 3, 3, 3,  3, 3, 3, 3, 3, 3, 3, 3, 3, 3,  3,//[20]
+                };
+                ConvBoard.IntToColor(manualtable, boardSize, out initBoard);
 
 
                 // 棋譜  [][3]
@@ -59,14 +83,13 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
                 GameType endgameType = GameType.GAME_MOVE;
 
                 // 終局処理の結果を代入する。
-                int[] endgameBoard = new int[AbstractTable<Color>.BOARD_MAX];
+                int[] endgameBoard = new int[AbstractTable<Color>.ANOMALY_BOARD_MAX];
 
                 int bestmove = kwThink.DoBestmove(
                     initBoard,
                     kifu,
                     curTesuu,
                     isBlackTurn,
-                    boardSize,
                     komi,
                     endgameType,
                     ref endgameBoard
@@ -78,57 +101,76 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think
             }
 
             //*
-            // 着手禁止点のテスト
+            // 着手禁止点のテスト    （黒石にぶつかる場合）
             {
-                int bestmoveNode = 0x0303;
-                Color color = Color.BLACK;
-                // 盤面
-                Color[] boardArr = new Color[AbstractTable<Color>.BOARD_MAX];
-                for (int i = 0; i < AbstractTable<Color>.BOARD_MAX; i++)
-                {
-                    boardArr[i] = 0;//空点
-                }
-                // 入れなおす☆
-                Table<Color> board = new BoardImpl();
-                board.Initialize(boardArr);
-                board.SetValue(bestmoveNode, Color.BLACK);//黒石を置いておくぜ☆
+                // 碁盤表示
+                BoardViewImpl.PrintBoard(initBoard);
+
+
+                int bestmoveNode = 0x0101;//黒石にぶつける
 
                 NoMoveReason noMoveReason;
                 if (!UtilMove.CanMove(
-                    color,
+                    Color.BLACK,
                     bestmoveNode,
-                    board,
+                    initBoard,
                     out noMoveReason
                     ))
                 {
                     // 着手禁止点（または自分の眼をつぶす手の場合）
 
-                    int x, y;
-                    AbstractTable<Color>.ConvertToXy(out x, out y, bestmoveNode);
+                    string errorMessage = ConvBoard.ToErrorMessage(bestmoveNode, noMoveReason);
+                    System.Console.WriteLine(errorMessage);
+                }
+            }
+            //*/
 
-                    switch (noMoveReason)
-                    {
-                        case NoMoveReason.ExistsStone:
-                            // 石があるなら
-                            System.Console.WriteLine(string.Format("({0:D},{1:D})　石がある。\n", x, y));
-                            break;
-                        case NoMoveReason.OutOfBoard:
-                            // 枠なら
-                            System.Console.WriteLine(string.Format("({0:D},{1:D})　枠だった。\n", x, y));
-                            break;
-                        case NoMoveReason.Kou:
-                            // コウになる位置なら
-                            System.Console.WriteLine(string.Format("({0:D},{1:D})　コウになる。\n", x, y));
-                            break;
-                        case NoMoveReason.Suicide:
-                            // 自殺手になるなら
-                            System.Console.WriteLine(string.Format("({0:D},{1:D})　自殺手になる。\n", x, y));
-                            break;
-                        case NoMoveReason.OwnEye:
-                            // 自分の眼になるなら
-                            System.Console.WriteLine(string.Format("({0:D},{1:D})　自分の眼に打ち込む。\n", x, y));
-                            break;
-                    }
+            //*
+            // 着手禁止点のテスト    （白石にぶつかる場合）
+            {
+                // 碁盤表示
+                BoardViewImpl.PrintBoard(initBoard);
+
+
+                int bestmoveNode = 0x0405;//白石にぶつける
+
+                NoMoveReason noMoveReason;
+                if (!UtilMove.CanMove(
+                    Color.BLACK,
+                    bestmoveNode,
+                    initBoard,
+                    out noMoveReason
+                    ))
+                {
+                    // 着手禁止点（または自分の眼をつぶす手の場合）
+
+                    string errorMessage = ConvBoard.ToErrorMessage(bestmoveNode, noMoveReason);
+                    System.Console.WriteLine(errorMessage);
+                }
+            }
+            //*/
+
+            //*
+            // 着手禁止点のテスト    （枠にぶつかる場合）
+            {
+                // 碁盤表示
+                BoardViewImpl.PrintBoard(initBoard);
+
+
+                int bestmoveNode = 0x0000;//枠にぶつける
+
+                NoMoveReason noMoveReason;
+                if (!UtilMove.CanMove(
+                    Color.BLACK,
+                    bestmoveNode,
+                    initBoard,
+                    out noMoveReason
+                    ))
+                {
+                    // 着手禁止点（または自分の眼をつぶす手の場合）
+
+                    string errorMessage = ConvBoard.ToErrorMessage(bestmoveNode, noMoveReason);
+                    System.Console.WriteLine(errorMessage);
                 }
             }
             //*/

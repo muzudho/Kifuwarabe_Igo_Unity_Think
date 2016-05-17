@@ -74,17 +74,18 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// FIXME: なんか適当に返してないか☆？（＾～＾）？
         /// </summary>
         /// <param name="arr_endgameBoard"></param>
-        /// <param name="pBoard"></param>
+        /// <param name="board"></param>
         /// <returns></returns>
-        public static int EndgameDrawFigure(FigureType[] arr_endgameBoard, Table<Color> pBoard)
+        public static int EndgameDrawFigure(
+            FigureType[] arr_endgameBoard, Board board)
         {
             int x;
             int y;
             int node;
 
-            for (y = 1; y < pBoard.GetSize() + 1; y++)
+            for (y = 1; y < board.GetBoardSize() + 1; y++)
             {
-                for (x = 1; x < pBoard.GetSize() + 1; x++)
+                for (x = 1; x < board.GetBoardSize() + 1; x++)
                 {
                     node = AbstractTable<Color>.ConvertToNode(x, y);
                     if ((Core.GetRandom() % 2) == 0)
@@ -148,17 +149,18 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// FIXME: なんかこれも適当に返してないか☆？（＾～＾）？
         /// </summary>
         /// <param name="arr_endgameBoard"></param>
-        /// <param name="pBoard"></param>
+        /// <param name="board"></param>
         /// <returns></returns>
-        public static int EndgameDrawNumber(int[] arr_endgameBoard, Table<Color> pBoard)
+        public static int EndgameDrawNumber(
+            int[] arr_endgameBoard, Board board)
         {
             int x;
             int y;
             int node;
 
-            for (y = 1; y < pBoard.GetSize() + 1; y++)
+            for (y = 1; y < board.GetBoardSize() + 1; y++)
             {
-                for (x = 1; x < pBoard.GetSize() + 1; x++)
+                for (x = 1; x < board.GetBoardSize() + 1; x++)
                 {
                     node = AbstractTable<Color>.ConvertToNode(x, y);
                     arr_endgameBoard[node]  = (Core.GetRandom() % 110) - 55;

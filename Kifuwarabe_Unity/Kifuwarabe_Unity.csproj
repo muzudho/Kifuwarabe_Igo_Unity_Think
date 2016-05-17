@@ -44,10 +44,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="header\n090_core____\n090_100_core.cs" />
-    <Compile Include="header\n190_board___\n190_200_Color.cs" />
-    <Compile Include="header\n190_board___\n190_210_ConvColor.cs" />
+    <Compile Include="header\n190_board___\n190_200_color.cs" />
+    <Compile Include="header\n190_board___\n190_210_convColor.cs" />
     <Compile Include="header\n190_board___\n190_320_abstractTable.cs" />
     <Compile Include="header\n190_board___\n190_310_table.cs" />
+    <Compile Include="header\n190_board___\n190_330_board.cs" />
     <Compile Include="header\n190_board___\n190_400_liberty.cs" />
     <Compile Include="header\n190_board___\n190_420_libertyOfNodes.cs" />
     <Compile Include="header\n190_board___\n190_500_markingBoard.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="source\n190_board___\n190_330_boardImpl.cs" />
+    <Compile Include="source\n190_board___\n190_340_ConvBoard.cs" />
     <Compile Include="source\n190_board___\n190_400_libertyImpl.cs" />
     <Compile Include="source\n190_board___\n190_420_libertyOfNodesImpl.cs" />
     <Compile Include="source\n190_board___\n190_500_markingBoardImpl.cs" />

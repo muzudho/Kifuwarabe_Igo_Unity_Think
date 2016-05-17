@@ -17,7 +17,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
         /// <returns></returns>
         public static int Bestmove(
             Color color,
-            Table<Color> board,
+            Board board,
             LibertyOfNodes  libertyOfNodes
         ){
 

@@ -5,6 +5,6 @@
     public interface LibertyOfNodes : Table<int>
     {
 
-        void Initialize(Table<Color> board);
+        void CopyFrom(Table<Color> board);
     }
 }

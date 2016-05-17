@@ -3,7 +3,7 @@
     public class LibertyImpl : Liberty
     {
         // 既にこの石を検索した場合は真
-        public bool[] checkedBoard = new bool[AbstractTable<Color>.BOARD_MAX];
+        public bool[] checkedBoard = new bool[AbstractTable<Color>.ANOMALY_BOARD_MAX];
 
         // 連のリバティ（石の呼吸点）の数(再帰関数で使う)
         public int m_liberty_;
@@ -58,7 +58,7 @@
 
             this.SetLiberty(0);
             this.SetRenIshi(0);
-            for (i = 0; i < AbstractTable<Color>.BOARD_MAX; i++)
+            for (i = 0; i < AbstractTable<Color>.ANOMALY_BOARD_MAX; i++)
             {
                 this.checkedBoard[i] = false;
             }

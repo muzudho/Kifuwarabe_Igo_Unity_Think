@@ -9,13 +9,13 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
         public int Evaluate(
             Color color,
             int         node,
-            Table<Color> pBoard
+            Board board
         ){
             int score = 0;
 
 //# ifndef RANDOM_MOVE_ONLY
 
-            int boardSize = pBoard.GetSize();
+            int boardSize = board.GetBoardSize();
             if (boardSize < 9)
             {
                 // ９路盤より小さいものは対象外。
@@ -140,7 +140,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
             // 避けたい場所
             // 連の呼吸点が 0 ～ 1 しかない場合。
             Liberty liberty = new LibertyImpl();
-            liberty.Count(node, color, pBoard);
+            liberty.Count(node, color, board);
             if (liberty.GetLiberty() < 2)
             {
                 avoid++;

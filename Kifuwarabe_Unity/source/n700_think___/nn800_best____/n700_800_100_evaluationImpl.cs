@@ -13,7 +13,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
             ref bool		    isAbort         ,// 解なしなら 真。
                 Color color           ,// 手番の色
                 int             node            ,// 石を置く位置
-                Table<Color> board           ,
+                Board board           ,
                 LibertyOfNodes  libertyOfNodes
         )
         {

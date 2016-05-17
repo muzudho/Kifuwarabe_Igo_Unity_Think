@@ -30,7 +30,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         // 次の1手の座標を返す。PASSの場合0。
         // 終局処理時に呼び出した場合は、終局判断の結果を返す。
         int DoBestmove(
-                Color[] initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
+                Board initBoard,   // 初期盤面（置碁の場合は、ここに置石が入る）
                 int[,] kifu,   // 棋譜  [2048,3]
                                 //      [手数,0]...座標
                                 //		[手数,1]...石の色
@@ -38,7 +38,6 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
                                 // 手数は 0 から始まり、curTesuu の1つ手前まである。
                 int curTesuu,       // 現在の手数
                 bool isBlackTurn,   // 黒手番フラグ(黒番...1、白番...0)。ここだけ定数と違ってややこしい。
-                int boardSize,   // 盤面のサイズ
                 double komi,   // コミ
                 GameType endgameType,   // 0...通常の思考、1...終局処理、2...図形を表示、3...数値を表示。
             ref int[] endgameBoard	// 終局処理の結果を代入する。

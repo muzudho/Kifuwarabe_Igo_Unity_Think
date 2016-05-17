@@ -70,7 +70,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
         public void Research(
             int node,
-            Table<Color> pBoard
+            Board board
         ){
 
             this.SetSoto( false);
@@ -80,8 +80,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
 
             this.SetBocchi( true);
-            pBoard.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
-                Color adjColor = pBoard.ValueOf(adjNode);        // その色
+            board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
+                Color adjColor = board.ValueOf(adjNode);        // その色
 
                 if (adjColor == Color.BLACK || adjColor == Color.WHITE)
                 {
@@ -99,8 +99,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
             int x, y;
             AbstractTable<Color>.ConvertToXy(out x, out y, node);
 
-            if (x < 1 || pBoard.GetSize() < x ||
-                y < 1 || pBoard.GetSize() < y
+            if (x < 1 || board.GetBoardSize() < x ||
+                y < 1 || board.GetBoardSize() < y
                 )
             {
                 // 盤外
@@ -109,8 +109,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
                 goto gt_EndMethod;
             }
 
-            if (x == 1 || pBoard.GetSize() == x ||
-                y == 1 || pBoard.GetSize() == y
+            if (x == 1 || board.GetBoardSize() == x ||
+                y == 1 || board.GetBoardSize() == y
             )
             {
                 // 辺
@@ -123,8 +123,8 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
                 goto gt_EndMethod;
             }
 
-            if ((x == 1 || pBoard.GetSize() == x) &&
-                (y == 1 || pBoard.GetSize() == y)
+            if ((x == 1 || board.GetBoardSize() == x) &&
+                (y == 1 || board.GetBoardSize() == y)
             )
             {
                 // 角
