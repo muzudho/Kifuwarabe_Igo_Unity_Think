@@ -73,6 +73,11 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             ref int[] endgameBoard
             );
 
+        void PrintBestmove(
+            int bestmoveNode,
+            int[] thoughtTime
+        );
+
         /// <summary>
         ///────────────────────────────────────────────────────────────────────────────────
         /// ベストムーブ呼び出し
@@ -85,14 +90,12 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// </summary>
         /// <param name="initBoard">初期盤面（置碁の場合は、ここに置石が入る）</param>
         /// <param name="kifu">棋譜。座標、石の色、消費時間（秒)。要素は、手数 0 から始まっており、curTesuu の1つ手前まである。</param>
-        /// <param name="curTesuu">現在の手数</param>
-        /// <param name="isBlackTurn">手番。(黒か、白のみ)</param>
+        /// <param name="color">手番。(黒か、白のみ)</param>
         /// <param name="komi">コミ</param>
         /// <returns></returns>
         int DoBestmove(
                 Board               initBoard,
                 List<KifuElement>   kifu,
-                int                 curTesuu,
                 Color               color,
                 double              komi
         );
@@ -168,6 +171,20 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// </summary>
         /// <param name="board"></param>
         void UndropStoneOnce(Board board);
+
+        /// <summary>
+        /// 棋譜を進めるぜ☆（＾▽＾）
+        /// </summary>
+        /// <param name="initBoard">変更が加えられる盤面。</param>
+        /// <param name="kifu">棋譜。</param>
+        /// <param name="susumeruTesuu">棋譜を何手再生するか。</param>
+        /// <param name="thoughtTime"></param>
+        void PlayKifu(
+            Board initBoard,
+            List<KifuElement> kifu,
+            int susumeruTesuu,
+            out int[] thoughtTime
+            );
 
     }
 }

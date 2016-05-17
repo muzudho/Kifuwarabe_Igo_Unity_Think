@@ -4,7 +4,16 @@
 ────────────────────────────────────────
 
 
-解説は別ドキュメント参照。メソッドはアルファベット順。
+メソッドはアルファベット順。
+使い方の組み合わせ方などの詳細は  コンピューター思考部等の別ドキュメントか、
+ソースコード内のサンプル・プログラムを参照。
+
+
+概要
+    基本的に KifuwarabeThink クラスで  ライブラリを包み込み、
+    なるべく済ます設計としている。
+    それ以外のクラスが出てくるのは、便利なので  仕方なく使っている。
+
 
 
 
@@ -18,21 +27,48 @@ KifuwarabeThink クラス
 
         ────────────────────────────────────
 
-        bool CanMove(
-                        int     board[]     ,
-                        bool    blackTurn   ,
-                        int     boardSize   
-                    )
+        bool CanMove( ～ )
 
             （概要）
-            着手可能点かを調べる。
+            石を置けるか調べます。
+            棋譜汚しも、石を置けないと判定してしまいます。
+            NoMoveReason 列挙型で内容を確認してください。
+
+            （引数の説明）
+            Color           color
+            int             node
+            Board           board
+        out NoMoveReason    noMoveReason // 石を置けない理由
 
             （呼出例）
+            NoMoveReason noMoveReason;
             bool canMove = kwThink.CanMove(
-                                            board   ,
-                                            true    ,
-                                            19
+                                            Color.Black ,
+                                            0x0303      ,
+                                            board       ,
+                                            noMoveReason
                                           );
+
+        ────────────────────────────────────
+
+        Board CreateBoard( ～ )
+
+            （概要）
+            （引数の説明）
+            int         boardSize
+            int[]       manualTable
+
+            （呼出例）
+
+        ────────────────────────────────────
+
+        string CreateErrorMessage( ～ )
+
+            （概要）
+            （引数の説明）
+            int             node
+            NoMoveReason    noMoveReason
+            （呼出例）
 
         ────────────────────────────────────
 
@@ -46,27 +82,63 @@ KifuwarabeThink クラス
             KifuwarabeThink インスタンスを使用する前（例えば対局開始時）に
             １回だけ呼び出す必要がある。
 
+            （引数の説明）
+                引数なし
+
             （呼出例）
             kwThink.DoBegin( );
 
         ────────────────────────────────────
 
-        int DoBestmove(
-                            int[]  initBoard         ,
-                            int[,] kifu              ,  //[2048,3]
-                            int    tesuu             ,
-                            bool   blackTurn         ,
-                            int    boardSize         ,
-                            double komi              ,
-                            int    endgameType       ,
-                        ref int[]  endgameBoard
-                      )
+        int DoBestmove( ～ )
 
             （概要）
             次の指し手を求める。
 
+            （引数の説明）
+            Board               initBoard
+            List<KifuElement>   kifu        // 棋譜。座標、石の色、消費時間（秒)
+                                            // 要素は、手数 0 から始まっており、
+                                            // curTesuu の1つ手前まである。
+            Color               color
+            double              komi
+
             （呼出例）
             int sq = kwThink.DoBestmove( ～ );
+
+        ────────────────────────────────────
+
+        void DoDrawFigure( ～ )
+
+            （概要）
+            
+            （引数の説明）
+            Board               initBoard       // 初期盤面
+                                                // （置碁の場合は、ここに置石が入る）
+            List<KifuElement>   kifu            // 棋譜。座標、石の色、消費時間（秒)
+                                                // 要素は、手数 0 から始まっており、
+                                                // curTesuu の1つ手前まである。
+            int                 curTesuu        // 現在の手数
+        ref int[]               endgameBoard	// 終局処理の結果を代入する。
+
+            （呼出例）
+
+        ────────────────────────────────────
+
+        void DoDrawNumber( ～ )
+
+            （概要）
+
+            （引数の説明）
+            Board               initBoard       // 初期盤面
+                                                // （置碁の場合は、ここに置石が入る）
+            List<KifuElement>   kifu            // 棋譜。座標、石の色、消費時間（秒)
+                                                // 要素は、手数 0 から始まっており、
+                                                // curTesuu の1つ手前まである。
+            int                 curTesuu        // 現在の手数
+        ref int[]               endgameBoard	// 終局処理の結果を代入する。
+
+            （呼出例）
 
         ────────────────────────────────────
 
@@ -76,21 +148,41 @@ KifuwarabeThink クラス
             KifuwarabeThink インスタンスの使用終了時（例えば対局終了時）に
             １回だけ呼び出す必要がある。
 
+            （引数の説明）
+                引数なし
+
             （呼出例）
             kwThink.DoEnd( );
 
         ────────────────────────────────────
 
-        void SetPause(
-                            bool    isPause
-                    )
+        void DoEndGame( ～ )
 
             （概要）
-            長考の一時停止、または再開。
+            
+            （引数の説明）
+            Board               initBoard       // 初期盤面
+                                                // （置碁の場合は、ここに置石が入る）
+            List<KifuElement>   kifu            // 棋譜。座標、石の色、消費時間（秒)
+                                                // 要素は、手数 0 から始まっており、
+                                                // curTesuu の1つ手前まである。
+            int                 curTesuu        // 現在の手数
+        ref int[]               endgameBoard	// 終局処理の結果を代入する。
 
             （呼出例）
-            kwThink.SetPause( true );            // 一時停止するとき
-            kwThink.SetPause( false );           // 再開    するとき
+
+        ────────────────────────────────────
+
+        DroppedResult DropStone( ～ )
+
+            （概要）
+
+            （引数の説明）
+            int         node
+            Color       color
+            Board       board
+
+            （呼出例）
 
         ────────────────────────────────────
 
@@ -103,12 +195,92 @@ KifuwarabeThink クラス
             （概要）
             一時停止／再開  の状態確認。
 
+            （引数の説明）
+                引数なし
+
             （呼出例）
             bool isPause = kwThink.IsPause( );  // 真なら一時停止中、
                                                 // 偽なら思考前、思考中、
                                                 //       思考終了後のいずれか。
 
         ────────────────────────────────────
+
+    【P】
+
+        ────────────────────────────────────
+
+        void PrintBestmove( ～ )
+
+            （概要）
+            
+            （引数の説明）
+            int         bestmoveNode,
+            int[]       thoughtTime
+             
+            （呼出例）
+
+        ────────────────────────────────────
+
+        void PrintBoard( ～ )
+
+            （概要）
+            
+            （引数の説明）
+             Board      board
+             
+            （呼出例）
+
+        ────────────────────────────────────
+
+        void PlayKifu( ～ )
+
+            （概要）
+            棋譜を用いて、指定局面を進めます。
+            
+            （引数の説明）
+            Board               initBoard           // 変更が加えられる盤面。
+            List<KifuElement>   kifu                // 棋譜。
+            int                 susumeruTesuu       // 棋譜を何手再生するか。
+            out                 int[] thoughtTime   //
+             
+            （呼出例）
+
+        ────────────────────────────────────
+
+    【S】
+
+        ────────────────────────────────────
+
+        void SetPause( ～ )
+
+            （概要）
+            長考の一時停止、または再開。
+
+            （引数の説明）
+            bool        isPause
+
+            （呼出例）
+            kwThink.SetPause( true );            // 一時停止するとき
+            kwThink.SetPause( false );           // 再開    するとき
+
+        ────────────────────────────────────
+
+    【U】
+
+        ────────────────────────────────────
+
+        void UndropStoneOnce( ～ )
+
+            （概要）
+
+            （引数の説明）
+             Board      board
+
+            （呼出例）
+
+        ────────────────────────────────────
+
+
 
 
 以上

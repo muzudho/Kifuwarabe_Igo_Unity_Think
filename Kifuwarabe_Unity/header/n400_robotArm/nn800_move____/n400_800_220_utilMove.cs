@@ -22,14 +22,14 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn800_move____
             int x, y;
             AbstractTable<Color>.ConvertToXy(out x, out y, node);
 
-            if (board.ValueOf(node) == Color.BLACK || board.ValueOf(node) == Color.WHITE)
+            if (board.ValueOf(node) == Color.Black || board.ValueOf(node) == Color.White)
             {
                 // 石があるなら
                 canMove = false;
                 noMoveReason = NoMoveReason.ExistsStone;
                 goto gt_EndMethod;
             }
-            else if (board.ValueOf(node) == Color.WAKU)
+            else if (board.ValueOf(node) == Color.Waku)
             {
                 // 枠なら
                 canMove = false;

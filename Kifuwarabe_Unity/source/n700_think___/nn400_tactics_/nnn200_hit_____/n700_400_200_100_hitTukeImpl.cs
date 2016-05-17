@@ -14,7 +14,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
             Color invColor,
             int         node,
             Liberty[]   liberties,//[4]
-            Table<Color> pBoard
+            Board pBoard
         ){
             int score = 0;
 

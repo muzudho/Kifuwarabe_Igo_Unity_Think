@@ -31,7 +31,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
         public void Research(
                 Color color,
                 int node,
-                Table<Color> board
+                Board board
             )
         {
             Color invColor = ConvColor.INVCLR(color);   //白黒反転
@@ -41,7 +41,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
 
                 // 2016-03-12 16:45 Add
                 // 隣が相手の石、または枠ならカウントアップ。
-                if (adjColor == invColor || adjColor == Color.WAKU)
+                if (adjColor == invColor || adjColor == Color.Waku)
                 {
                     this.IncreaseAdjOppo();
                 }

@@ -10,7 +10,7 @@
         {
         }
 
-        public void CopyFrom(Table<Color> board)
+        public void CopyFrom(Board board)
         {
             this.SetTableSize(board.GetTableSize());
 

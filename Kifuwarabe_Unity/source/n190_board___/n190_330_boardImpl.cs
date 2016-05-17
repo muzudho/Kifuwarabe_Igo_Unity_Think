@@ -13,15 +13,23 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
     {
         public BoardImpl()
         {
-
             this.SetKouNodeForUndo( 0);
 	        this.SetMoveNodeForUndo( 0);
 	        this.SetKouNode(0);		// コウになる位置。
 
 	        this.SetHama(0, 0);
-	        this.SetHama(Color.BLACK, 0);	// 取った石の数
-	        this.SetHama(Color.WHITE, 0);
+	        this.SetHama(Color.Black, 0);	// 取った石の数
+	        this.SetHama(Color.White, 0);
         }
+
+        /*
+        /// <summary>
+        /// コピー・コンストラクター☆
+        /// </summary>
+        public BoardImpl(AbstractTable<Color> board):base(board)
+        {
+        }
+        */
 
         ~BoardImpl()
         {
@@ -48,7 +56,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         /// <param name="size123"></param>
         /// <returns></returns>
         public static List<int> GetOpenNodesOfStone(
-            Table<Color> board,
+            Board board,
             int node,
             int size123     // 1～3 のいずれかを指定してください。
         )
@@ -58,7 +66,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
             // 上側 → 右側 → 下側 → 左側
             board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) => {
 
-                if (board.ValueOf(adjNode) == Color.EMPTY && adjNode != board.GetKouNode())
+                if (board.ValueOf(adjNode) == Color.Empty && adjNode != board.GetKouNode())
                 {
                     // 空きスペースで、コウにならない位置なら。
                     openNodes.Add(adjNode);
@@ -85,7 +93,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         /// <param name="tNode"></param>
         /// <param name="color"></param>
         public static void DeleteRenStones(
-            Table<Color> board,
+            Board board,
             int tNode,
             Color color
         )

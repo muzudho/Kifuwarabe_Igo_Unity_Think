@@ -20,7 +20,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
 
         // 盤上の石の色。
-        private ELM[] table = new ELM[AbstractTable<ELM>.ANOMALY_BOARD_MAX];
+        private ELM[] m_table_ = new ELM[AbstractTable<ELM>.ANOMALY_BOARD_MAX];
 
 
         /// <summary>
@@ -37,6 +37,34 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
                 this.SetValue(iNode, initBoard[iNode]);    // 初期盤面をコピー
             }
         }
+
+        /*
+        /// <summary>
+        /// コピー・コンストラクター☆
+        /// </summary>
+        public AbstractTable(AbstractTable<ELM> source)
+        {
+            this.m_hama_ = source.m_hama_;
+            this.m_kouNodeForUndo_ = source.m_kouNodeForUndo_;
+            this.m_kouNode_ = source.m_kouNode_;
+            this.m_moveNodeForUndo_ = source.m_moveNodeForUndo_;
+            this.m_tableSize_ = source.m_tableSize_;
+            System.Array.Copy(source.m_table_, this.m_table_, source.m_table_.Length);
+        }
+
+        /// <summary>
+        /// コピー・コンストラクター☆
+        /// </summary>
+        public AbstractTable(Table<Color> source)
+        {
+            this.m_hama_ = source.m_hama_;
+            this.m_kouNodeForUndo_ = source.GetKouNodeForUndo();
+            this.m_kouNode_ = source.GetKouNode();
+            this.m_moveNodeForUndo_ = source.GetMoveNodeForUndo();
+            this.m_tableSize_ = source.GetTableSize();
+            System.Array.Copy(source.m_table_, this.m_table_, source.m_table_.Length);
+        }
+        */
 
         ~AbstractTable()
         {
@@ -118,7 +146,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
 
         // 上、右、下、左　に移動するのに使う加減値
-        private int[] dir4 = new int[4]{
+        private int[] m_dir4_ = new int[4]{
             -0x100,	// 上
 		    +0x001,	// 右
 		    +0x100,	// 下
@@ -147,25 +175,25 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         // 上側に隣接している位置
         public ELM NorthOf(int node)
         {
-            return this.ValueOf(node + this.dir4[0]);
+            return this.ValueOf(node + this.m_dir4_[0]);
         }
 
         // 右側に隣接している位置
         public ELM EastOf(int node)
         {
-            return this.ValueOf(node + this.dir4[1]);
+            return this.ValueOf(node + this.m_dir4_[1]);
         }
 
         // 下側に隣接している位置
         public ELM SouthOf(int node)
         {
-            return this.ValueOf(node + this.dir4[2]);
+            return this.ValueOf(node + this.m_dir4_[2]);
         }
 
         // 左側に隣接している位置
         public ELM WestOf(int node)
         {
-            return this.ValueOf(node + this.dir4[3]);
+            return this.ValueOf(node + this.m_dir4_[3]);
         }
 
         /// <summary>
@@ -175,11 +203,11 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         /// <param name="color"></param>
         public void SetValue(int node, ELM color)
         {
-            this.table[node] = color;
+            this.m_table_[node] = color;
         }
         public ELM ValueOf(int node)
         {
-            return this.table[node];
+            return this.m_table_[node];
         }
 
 
@@ -306,7 +334,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         {
             for (int iDir = 0; iDir < 4; iDir++) {
                 bool isBreak = false;
-                func(node + this.dir4[iDir], ref isBreak);
+                func(node + this.m_dir4_[iDir], ref isBreak);
                 if (isBreak)
                 {
                     break;
@@ -318,7 +346,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         {
             for (int iDir = 0; iDir < 4; iDir++) {
                 bool isBreak = false;
-                func(iDir, node + this.dir4[iDir], ref isBreak);
+                func(iDir, node + this.m_dir4_[iDir], ref isBreak);
                 if (isBreak)
                 {
                     break;

@@ -8,7 +8,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn2
         public int Evaluate(
             Color color,
             int node,
-            Table<Color> board,
+            Board board,
             LibertyOfNodes libertyOfNodes
         ){
             int score = 0;

@@ -19,11 +19,11 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
 
             switch (colorIndex)
             {
-                case 1: color = Color.BLACK; break;
-                case 2: color = Color.WHITE; break;
-                case 3: color = Color.WAKU; break;
+                case 1: color = Color.Black; break;
+                case 2: color = Color.White; break;
+                case 3: color = Color.Waku; break;
                 case 0://thru
-                default: color = Color.EMPTY; break;
+                default: color = Color.Empty; break;
             }
 
             return color;

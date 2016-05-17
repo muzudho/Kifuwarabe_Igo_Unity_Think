@@ -67,7 +67,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         )
         {
             return UtilMove.CanMove(
-                    Color.BLACK,
+                    color,
                     node,
                     board,
                     out noMoveReason
@@ -114,10 +114,14 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
         /// <summary>
         /// 棋譜を進めるぜ☆（＾▽＾）
         /// </summary>
-        private void GoToCurrent(
-            Board               initBoard,
+        /// <param name="board">変更が加えられる盤面。</param>
+        /// <param name="kifu">棋譜。</param>
+        /// <param name="susumeruTesuu">棋譜を何手再生するか。</param>
+        /// <param name="thoughtTime"></param>
+        public void PlayKifu(
+            Board               board,
             List<KifuElement>   kifu,
-            int                 curTesuu,
+            int                 susumeruTesuu,
             out int[]           thoughtTime
             )
         {
@@ -127,13 +131,13 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             int iTesuu;
             // 累計思考時間 [0]先手 [1]後手。置碁の場合、白の先手なので、常に黒が先手とは限らない。
             thoughtTime = new int[] { 0, 0 };  // 配列[2]
-            for (iTesuu = 0; iTesuu < curTesuu; iTesuu++)
+            for (iTesuu = 0; iTesuu < susumeruTesuu; iTesuu++)
             {
                 node    = kifu[iTesuu].GetNode(); // 座標、y*256 + x の形で入っている
                 color   = kifu[iTesuu].GetColor();    // 石の色
                 time    = kifu[iTesuu].GetElapsedSecond(); // 消費時間
                 thoughtTime[iTesuu & 1] += time; // 手数の下1桁を見て [0]先手、[1]後手。
-                if (UtilRobotArm.DropStone(node, color, initBoard) != DroppedResult.Success)
+                if (UtilRobotArm.DropStone(node, color, board) != DroppedResult.Success)
                 {
                     // 動かせなければそこで止める。（エラーがあった？？）
                     System.Console.WriteLine(string.Format("棋譜を進められなかったので止めた☆ \n"));
@@ -163,7 +167,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             // 棋譜を進めていくぜ☆
             //────────────────────────────────────────────────────────────────────────────────
             int[] thoughtTime;
-            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
+            this.PlayKifu(initBoard, kifu, curTesuu, out thoughtTime);
 
             // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
             GtpStatusType[] endgameBoard2 = new GtpStatusType[AbstractTable<Color>.ANOMALY_BOARD_MAX];
@@ -196,7 +200,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             // 棋譜を進めていくぜ☆
             //────────────────────────────────────────────────────────────────────────────────
             int[] thoughtTime;
-            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
+            this.PlayKifu(initBoard, kifu, curTesuu, out thoughtTime);
 
             // FIXME: 2度手間なのをなんとかしたいぜ☆（＞＿＜）！  ref 配列は、ラムダ式の中に入れられないぜ☆！（＾ｑ＾）
             FigureType[] endgameBoard2 = new FigureType[AbstractTable<Color>.ANOMALY_BOARD_MAX];
@@ -229,38 +233,16 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             // 棋譜を進めていくぜ☆
             //────────────────────────────────────────────────────────────────────────────────
             int[] thoughtTime;
-            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
+            this.PlayKifu(initBoard, kifu, curTesuu, out thoughtTime);
 
             EndgameImpl.EndgameDrawNumber(resultTable, initBoard);
         }
 
-        public int DoBestmove(
-                Board               initBoard,
-                List<KifuElement>   kifu,
-                int                 curTesuu,
-                Color               color,
-                double              komi
-        ){
-
-            //────────────────────────────────────────────────────────────────────────────────
-            // 棋譜を進めていくぜ☆
-            //────────────────────────────────────────────────────────────────────────────────
-            int[] thoughtTime;
-            this.GoToCurrent(initBoard, kifu, curTesuu, out thoughtTime);
-
-
-            //--------------------------------------------------------------------------------
-            // 思考ルーチン
-            //--------------------------------------------------------------------------------
-            int bestmoveNode = 0;   // コンピューターが打つ交点。
-
-            // 石（または連）の呼吸点を数えて、各交点に格納しておきます。
-            LibertyOfNodes libertyOfNodes = new LibertyOfNodesImpl();
-            libertyOfNodes.CopyFrom(initBoard);
-
-            // １手指します。
-            bestmoveNode = ThinkImpl.Bestmove(color, initBoard, libertyOfNodes);
-
+        public void PrintBestmove(
+            int     bestmoveNode,
+            int[]   thoughtTime
+            )
+        {
             System.Console.WriteLine(
                 string.Format(
                     // カンマで区切って4桁右詰め、コロンで区切って前ゼロ☆
@@ -275,6 +257,25 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             //System.Console.WriteLine(string.Format("着手=({0:D2},{1:2D})({2:x4}), 手数={3:D},手番={4:D},盤size={5:D},komi={6:f1}\n",(bestmoveNode&0xff),(bestmoveNode>>8),bestmoveNode, curTesuu,flgBlackTurn,boardSize,komi));
 
             //BoardViewImpl.PrintBoard(g_hConsoleWindow, &board);
+        }
+
+        public int DoBestmove(
+                Board               board,
+                List<KifuElement>   kifu,
+                Color               color,
+                double              komi
+        ){
+            //--------------------------------------------------------------------------------
+            // 思考ルーチン
+            //--------------------------------------------------------------------------------
+            int bestmoveNode = 0;   // コンピューターが打つ交点。
+
+            // 石（または連）の呼吸点を数えて、各交点に格納しておきます。
+            LibertyOfNodes libertyOfNodes = new LibertyOfNodesImpl();
+            libertyOfNodes.CopyFrom(board);
+
+            // １手指します。
+            bestmoveNode = ThinkImpl.Bestmove(color, board, libertyOfNodes);
 
             return bestmoveNode;
         }
@@ -304,7 +305,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n950_main____
             Board       board
         )
         {
-            return UtilRobotArm.DropStone(node, Color.BLACK, board);
+            return UtilRobotArm.DropStone(node, color, board);
         }
 
         /// <summary>

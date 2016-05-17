@@ -14,21 +14,21 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n190_board___
         /// <summary>
         /// 空きスペース
         /// </summary>
-        EMPTY,
+        Empty,
 
         /// <summary>
         /// 黒石
         /// </summary>
-        BLACK,
+        Black,
 
         /// <summary>
         /// 白石
         /// </summary>
-        WHITE,
+        White,
 
         /// <summary>
         /// 盤外
         /// </summary>
-        WAKU
+        Waku
     }
 }

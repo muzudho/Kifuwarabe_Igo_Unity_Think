@@ -30,7 +30,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
             int score = 0;                          // 読んでいる手の評価値
 
 
-            if (board.ValueOf(node) == Color.BLACK || board.ValueOf(node) == Color.WHITE)
+            if (board.ValueOf(node) == Color.Black || board.ValueOf(node) == Color.White)
             {
                 // 石があるなら
                 //# ifdef CHECK_LOG
@@ -40,7 +40,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn800_best____
                 isAbort = true;
                 goto gt_EndMethod;
             }
-            else if (board.ValueOf(node) == Color.WAKU)
+            else if (board.ValueOf(node) == Color.Waku)
             {
                 // 枠なら
                 //# ifdef CHECK_LOG

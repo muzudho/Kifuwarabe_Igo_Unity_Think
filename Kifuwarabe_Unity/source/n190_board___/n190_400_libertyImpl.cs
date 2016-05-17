@@ -44,10 +44,10 @@
 	        this.SetRenIshi( 0);
         }
 
-        public void Count(int node, Color color, Table<Color> board)
+        public void Count(int node, Color color, Board board)
         {
             // 眼に打ち込まないか、口の中に打ち込まないか、の処理のあとに
-            if (color == Color.EMPTY || color == Color.WAKU)
+            if (color == Color.Empty || color == Color.Waku)
             {
                 // 空っぽか、枠なら。
                 //System.Console.WriteLine( "空っぽか、枠。 \n" );
@@ -70,7 +70,7 @@
             return;
         }
 
-        public void CountElement(int tNode, Color color, Table<Color> board)
+        public void CountElement(int tNode, Color color, Board board)
         {
 
             this.checkedBoard[tNode] = true;    // この石は検索済み	

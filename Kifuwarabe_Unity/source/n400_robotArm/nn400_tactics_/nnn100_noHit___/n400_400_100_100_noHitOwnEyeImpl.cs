@@ -33,7 +33,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
             Color       color,
             int         node,
             Liberty[]   liberties,//[4]
-            Table<Color> board
+            Board board
         ){
             bool result = false;
 
@@ -45,7 +45,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n400_robotArm.nn400_tactics_.nnn1
                 // (２)呼吸点が 2 以上ある（＝石を置いても呼吸点が 1 以上残る、
                 //     自殺手にはならない）味方につながる。
                 if (
-                    adjColor == Color.WAKU
+                    adjColor == Color.Waku
                     ||
                     (adjColor == color && 2 <= liberties[iDir].GetLiberty())
                     )

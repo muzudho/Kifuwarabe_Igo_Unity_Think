@@ -17,19 +17,19 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
         /// <returns></returns>
         public static void EndgameStatus(
             GtpStatusType[] arr_endgameBoard,
-            Table<Color> board
+            Board board
         ){
             board.ForeachAllNodesWithoutWaku((int node, ref bool isBreak) =>{
 
                 Color color = board.ValueOf(node);
-                if (color == Color.EMPTY)
+                if (color == Color.Empty)
                 {
                     arr_endgameBoard[node] = GtpStatusType.GTP_DAME;
                     Color sum = 0;
                     board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak2)=> {
                         Color adjColor;   // 隣接(adjacent)する石の色
                         adjColor = board.ValueOf(adjNode);
-                        if (adjColor == Color.WAKU)
+                        if (adjColor == Color.Waku)
                         {
                             goto gt_Next;
                         }
@@ -39,12 +39,12 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
                         ;
                     });
 
-                    if (sum == Color.BLACK)
+                    if (sum == Color.Black)
                     {
                         // 黒字☆
                         arr_endgameBoard[node] = GtpStatusType.GTP_BLACK_TERRITORY;
                     }
-                    if (sum == Color.WHITE)
+                    if (sum == Color.White)
                     {
                         // 白地☆
                         arr_endgameBoard[node] = GtpStatusType.GTP_WHITE_TERRITORY;
@@ -87,48 +87,48 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n800_scene___
                     node = AbstractTable<Color>.ConvertToNode(x, y);
                     if ((Core.GetRandom() % 2) == 0)
                     {
-                        arr_endgameBoard[node] = FigureType.FIGURE_NONE;
+                        arr_endgameBoard[node] = FigureType.None;
                     }
                     else {
                         if (Core.GetRandom() % 2 !=0)
                         {
-                            arr_endgameBoard[node] = FigureType.FIGURE_BLACK;
+                            arr_endgameBoard[node] = FigureType.Black;
                         }
                         else {
-                            arr_endgameBoard[node] = FigureType.FIGURE_WHITE;
+                            arr_endgameBoard[node] = FigureType.White;
                         }
 
                         FigureType randamFt;
                         switch ((Core.GetRandom() % 9) + 1)
                         {
-                            case 1: randamFt = FigureType.FIGURE_TRIANGLE; break;
+                            case 1: randamFt = FigureType.Triangle; break;
                             case 2:
-                                randamFt = FigureType.FIGURE_SQUARE;
+                                randamFt = FigureType.Square;
                                 break;
                             case 3:
-                                randamFt = FigureType.FIGURE_CIRCLE;
+                                randamFt = FigureType.Circle;
                                 break;
                             case 4:
-                                randamFt = FigureType.FIGURE_CROSS;
+                                randamFt = FigureType.Cross;
                                 break;
                             case 5:
-                                randamFt = FigureType.FIGURE_QUESTION;
+                                randamFt = FigureType.Question;
                                 break;
                             case 6:
-                                randamFt = FigureType.FIGURE_HORIZON;
+                                randamFt = FigureType.Horizon;
                                 break;
                             case 7:
-                                randamFt = FigureType.FIGURE_VERTICAL;
+                                randamFt = FigureType.Vertical;
                                 break;
                             case 8:
-                                randamFt = FigureType.FIGURE_LINE_LEFTUP;
+                                randamFt = FigureType.LineLeftup;
                                 break;
                             case 9:
-                                randamFt = FigureType.FIGURE_LINE_RIGHTUP;
+                                randamFt = FigureType.LineRightup;
                                 break;
                             default:
                                 // エラー☆
-                                randamFt = FigureType.FIGURE_NONE;
+                                randamFt = FigureType.None;
                                 break;
                         }
 

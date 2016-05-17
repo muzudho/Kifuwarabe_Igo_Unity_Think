@@ -83,7 +83,7 @@ namespace Grayscale.Kifuwarabe_Igo_Unity_Think.n700_think___.nn400_tactics_.nnn1
             board.ForeachArroundNodes(node, (int adjNode, ref bool isBreak) =>{
                 Color adjColor = board.ValueOf(adjNode);        // その色
 
-                if (adjColor == Color.BLACK || adjColor == Color.WHITE)
+                if (adjColor == Color.Black || adjColor == Color.White)
                 {
                     // ぼっちではない。
                     this.SetBocchi( false);

@@ -6,7 +6,7 @@
         void Count(
             int node,
             Color color,
-            Table<Color> board
+            Board board
         );
 
         // リバティ（石の呼吸点）と石の数える再帰関数
@@ -14,7 +14,7 @@
         void CountElement(
             int tNode,
             Color color,
-            Table<Color> board
+            Board board
         );
 
         /// <summary>
